@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+/* Design tokens pulled from the MWC Figma file (Homepage, node 308:810).
+   The file has no published variables, so these are the raw fills/type used. */
+:root {
+  --color-bg: #fbfcff; /* page / "paper" */
+  --color-fg: #000611; /* ink */
+  --color-navy: #072871; /* primary brand blue */
+  --color-sky: #2089d8; /* accent blue */
+  --color-deep: #001440; /* deep navy */
+  --color-night: #000611;
+
+  /* Design unit: 1 Figma px on the 1440 frame, scaled to the viewport and
+     capped at 1440. Used for desktop layouts so the editorial, staggered
+     typography keeps its exact proportions between ~1024 and 1440+. */
+  --u: calc(min(100cqw, 1440px) / 1440);
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-fg: var(--color-fg);
+  --color-navy: var(--color-navy);
+  --color-sky: var(--color-sky);
+  --color-deep: var(--color-deep);
+  --color-night: var(--color-night);
+  --color-muted: rgb(0 6 17 / 0.5);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Switzer", var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Design-unit utilities, e.g. `lg:fs-u-104` = 104 Figma px at 1440 wide. */
+@utility fs-u-* {
+  font-size: calc(var(--u) * --value(integer));
+}
+@utility left-u-* {
+  left: calc(var(--u) * --value(integer));
+}
+@utility top-u-* {
+  top: calc(var(--u) * --value(integer));
+}
+@utility w-u-* {
+  width: calc(var(--u) * --value(integer));
+}
+@utility h-u-* {
+  height: calc(var(--u) * --value(integer));
+}
+@utility mt-u-* {
+  margin-top: calc(var(--u) * --value(integer));
+}
+@utility pt-u-* {
+  padding-top: calc(var(--u) * --value(integer));
+}
+@utility pb-u-* {
+  padding-bottom: calc(var(--u) * --value(integer));
+}
+@utility pl-u-* {
+  padding-left: calc(var(--u) * --value(integer));
+}
+@utility gap-u-* {
+  gap: calc(var(--u) * --value(integer));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  container-type: inline-size;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 3px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Page shell: 16px gutter on mobile, the 32px Figma margin on desktop. */
+.shell {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: 16px;
+}
+@media (min-width: 1024px) {
+  .shell {
+    padding-inline: calc(var(--u) * 32);
+  }
+}
+
+/* Motion tokens for pure-CSS states — mirror src/lib/motion.ts. */
+:root {
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Arrow CTAs: press feedback + the arrow nudges toward its destination. */
+.cta {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.cta:active {
+  transform: scale(0.97);
+}
+.cta .cta-arrow {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover .cta-arrow,
+  .cta-sticky:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .cta .cta-arrow {
+    transition: none;
+  }
+  .cta:active,
+  .cta:hover .cta-arrow,
+  .cta-sticky:hover .cta-arrow {
+    transform: none;
+  }
+}
+
+/* Hero geometry. The hero fills the viewport; the photo (1440×1400 in Figma)
+   runs past it by the "overhang" so its mountain cut-out starts below the
+   fold. The overhang follows the photo's rendered scale (it is fitted by width
+   on wide screens, by height on tall ones) so the peaks, 385/1400 of the photo
+   tall, can't climb into view. At 1440×900 it is 500px: the Figma frame. */
+.hero-scene {
+  --hero-h: max(100svh, 600px);
+  --hero-s: calc(100cqw / 1440); /* uncapped width scale */
+  --hero-over: max(calc(var(--hero-s) * 500), calc(var(--hero-h) * 0.42));
+}
+@media (min-width: 1024px) {
+  .hero-scene {
+    --hero-h: max(100svh, calc(var(--u) * 700));
+  }
+}
+
+/* How far the viewport extends past the 1440 content frame on each side
+   (0 at ≤1440). Used by full-bleed bands inside a .shell. */
+:root {
+  --bleed: max(0px, calc((100cqw - 1440px) / 2));
+}
+
+/* Logo marquee (Trusted Companies). One loop = one logo set's width. */
+:root {
+  --marquee-duration: 40s;
+}
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee var(--marquee-duration) linear infinite;
+}
+/* let people stop it to read a logo */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Nav theme (set on <html data-nav-theme> by SiteNav from the section under
+   the bar). White text on a translucent black bar over dark sections; ink
+   text on a translucent white bar over light ones; both frosted. */
+:root {
+  --nav-fg: #fbfcff;
+  --nav-fill: rgb(0 6 17 / 0.3);
+  --nav-blur: 16px;
+}
+:root[data-nav-theme="light"] {
+  --nav-fg: #000611;
+  --nav-fill: rgb(251 252 255 / 0.7);
+}
+.nav-fg,
+.cta-sticky {
+  color: var(--nav-fg);
+  transition: color var(--duration-base) var(--ease-out);
+}
+.nav-fill {
+  background: var(--nav-fill);
+  -webkit-backdrop-filter: blur(var(--nav-blur)) saturate(140%);
+  backdrop-filter: blur(var(--nav-blur)) saturate(140%);
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+
+/* Footer column grid (Figma "Footer Navigation": Services 329, Projects 253,
+   Organizations 210, Company 181, spread across 1376). Shared by the brand
+   row so its description lines up with the Projects column. */
+@media (min-width: 1024px) {
+  .footer-cols {
+    display: grid;
+    grid-template-columns:
+      calc(var(--u) * 329) calc(var(--u) * 253) calc(var(--u) * 210)
+      calc(var(--u) * 181);
+    justify-content: space-between;
+  }
+}
