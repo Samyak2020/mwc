@@ -11,8 +11,9 @@ import { heroScroll } from "@/lib/motion";
 // as two independent black shapes. Raising them cuts the photo further, so the
 // navy section underneath "pops up" through it in a jagged form.
 
-// Optimised copy of the 2880×2800 PNG via Next's image endpoint.
-const SRC = "/_next/image?url=%2Ffigma%2Fhero-v2.png&w=1920&q=75";
+// Optimised copy of the 2880×2800 PNG via Next's image endpoint, requested at
+// full resolution (it is never upscaled past 2880) so it stays sharp on retina.
+const SRC = "/_next/image?url=%2Ffigma%2Fhero-v2.png&w=3840&q=90";
 
 // Peaks in frame units (viewBox 1440×1400). Each shape continues well below
 // the frame so it still fills the bottom after it has risen.

@@ -76,5 +76,38 @@ export const metricsScroll = {
   valueWindow: { sharp: 24, fade: 110 },
 } as const;
 
+// Controlled image parallax: photos drift inside fixed frames (Apple-style:
+// spring-smoothed, no overshoot, settles into focus at the screen centre).
+export const parallax = {
+  // max drift either way, as % of the image box
+  travel: 6,
+  // over-scale: at the edges of the travel (must exceed 1 + 2·travel%) …
+  scaleEdge: 1.16,
+  // … easing to this as the image reaches the centre ("settles into focus")
+  scaleCentre: 1.1,
+  // critically damped follow (Apple: damping 1.0, response ~0.3–0.4 s)
+  spring: { bounce: 0, visualDuration: 0.35 },
+  // workstreams only: horizontal stretch at speed, encodes momentum
+  stretch: { max: 0.02, atVelocity: 6000 }, // up to +2% scaleX at ≥6000 px/s
+} as const;
+
+// Smooth scrolling (Lenis): fraction of the remaining distance covered per
+// frame. Lower = silkier but laggier; 0.1 keeps it responsive.
+export const smoothScroll = {
+  lerp: 0.1,
+  wheelMultiplier: 1,
+} as const;
+
+// next/image quality for photography (allow-listed in next.config.ts).
+export const PHOTO_QUALITY = 90;
+
+// Image reveal: photos wipe in top → bottom over the primary navy.
+export const imageReveal = {
+  duration: 1.1,
+  ease: [0.76, 0, 0.24, 1] as const, // strong in-out: a deliberate curtain
+  // hero starts with the load sequence, just ahead of the headline
+  heroDelay: 0,
+} as const;
+
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.

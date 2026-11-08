@@ -4,11 +4,12 @@ import { useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Arrow } from "@/components/ui/Arrow";
 import { HeroPhoto } from "@/components/HeroPhoto";
+import { ImageReveal } from "@/components/motion/ImageReveal";
 import { StickyCta } from "@/components/StickyCta";
 import { Industries } from "@/components/Industries";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FadeIn } from "@/components/motion/Stagger";
-import { heroScroll, heroSequence, scrollSpring } from "@/lib/motion";
+import { heroScroll, heroSequence, imageReveal, scrollSpring } from "@/lib/motion";
 
 // Hero + navy "Industries" section (Figma 338:692 now starts at y=0, so the
 // navy runs behind the whole hero and nothing white can show through).
@@ -46,7 +47,10 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[calc(var(--hero-h)+var(--hero-over))]"
       >
-        <HeroPhoto progress={rise} />
+        {/* wipes in top → bottom over the navy on load */}
+        <ImageReveal trigger="load" delay={imageReveal.heroDelay}>
+          <HeroPhoto progress={rise} />
+        </ImageReveal>
       </div>
 
       <header ref={headerRef} data-hero className="relative z-[2] text-bg">

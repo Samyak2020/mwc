@@ -6,7 +6,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { preload } from "react-dom";
 import { Arrow } from "@/components/ui/Arrow";
 import { Texture } from "@/components/ui/Texture";
-import { barSpring, duration, ease } from "@/lib/motion";
+import { barSpring, duration, ease, PHOTO_QUALITY } from "@/lib/motion";
 import { FabricLayer, type FabricDir } from "@/components/motion/FabricLayer";
 
 // Content + photos from Figma "MWC Helps - Hover Cards" (483:451).
@@ -31,7 +31,7 @@ const industries: Industry[] = [
   },
   {
     name: "Utilities",
-    image: "/figma/industry-utilities.png",
+    image: "/figma/industry-utilities-hd.jpg",
     crop: { top: "0%", height: "163.39%" },
     overlay: 0.4,
     description:
@@ -40,7 +40,7 @@ const industries: Industry[] = [
   },
   {
     name: "Public Agencies",
-    image: "/figma/industry-public.png",
+    image: "/figma/industry-public-hd.jpg",
     overlay: 0.4,
     description:
       "Federal, state and local projects delivered by a certified service-disabled veteran-owned small business.",
@@ -48,7 +48,7 @@ const industries: Industry[] = [
   },
   {
     name: "Commercial, Industrial and General Contractors",
-    image: "/figma/industry-commercial.png",
+    image: "/figma/industry-commercial-hd.jpg",
     overlay: 0.4,
     description:
       "Owner-side project oversight and project delivery personnel for commercial, industrial and on-site energy projects. Contractor support",
@@ -56,7 +56,7 @@ const industries: Industry[] = [
   },
   {
     name: "Oil and Gas",
-    image: "/figma/industry-oil-gas.png",
+    image: "/figma/industry-oil-gas-hd.jpg",
     overlay: 0.4,
     description:
       "Turnarounds and pipeline projects managed with contractor safety oversight from mobilization to closeout.",
@@ -72,11 +72,11 @@ function IndustryPhoto({ industry }: { industry: Industry }) {
       {industry.crop ? (
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-x-0" style={{ top: industry.crop.top, height: industry.crop.height }}>
-            <Image src={industry.image} alt="" fill sizes="100vw" className="object-cover" />
+            <Image src={industry.image} alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
           </div>
         </div>
       ) : (
-        <Image src={industry.image} alt="" fill sizes="100vw" className="object-cover" />
+        <Image src={industry.image} alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
       )}
       <div className="absolute inset-0" style={{ background: `rgb(0 6 17 / ${industry.overlay})` }} />
       <Texture top="-47.55%" height="237.1%" />
@@ -100,7 +100,7 @@ export function Industries({ contentY }: { contentY: MotionValue<number> }) {
   // Warm the cache so the first pull never reveals an empty frame.
   useEffect(() => {
     for (const { image } of industries) {
-      const { props } = getImageProps({ src: image, alt: "", fill: true, sizes: "100vw" });
+      const { props } = getImageProps({ src: image, alt: "", fill: true, sizes: "100vw", quality: PHOTO_QUALITY });
       preload(props.src, { as: "image", imageSrcSet: props.srcSet, imageSizes: props.sizes, fetchPriority: "low" });
     }
   }, []);

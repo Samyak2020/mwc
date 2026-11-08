@@ -61,9 +61,8 @@
   gap: calc(var(--u) * --value(integer));
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* Smooth scrolling is handled by Lenis (SmoothScroll.tsx); a CSS
+   scroll-behavior here would fight it. */
 
 body {
   container-type: inline-size;

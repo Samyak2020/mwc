@@ -14,13 +14,12 @@ import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FabricLayer, type FabricDir } from "@/components/motion/FabricLayer";
 import { Cropped } from "@/components/ui/Cropped";
 import { Texture } from "@/components/ui/Texture";
-import { metricsScroll } from "@/lib/motion";
+import { metricsScroll, PHOTO_QUALITY } from "@/lib/motion";
 
 type Metric = {
   label: string;
   value: string;
   card: string;
-  outline?: boolean;
   /** Background shown while this card is centred (Figma 483:452). */
   background: { image: string; overlay: number; crop?: { left: string; top: string; width: string; height: string } };
 };
@@ -30,15 +29,14 @@ const metrics: Metric[] = [
     label: "Capital project value supported",
     value: "$220M",
     card: "var(--color-sky)",
-    background: { image: "/figma/metric-bg-1.jpg", overlay: 0.25 },
+    background: { image: "/figma/metric-bg-1-hd.jpg", overlay: 0.25 },
   },
   {
     label: "Project assignments completed",
     value: "132",
     card: "var(--color-navy)",
-    outline: true,
     background: {
-      image: "/figma/metric-bg-2.jpg",
+      image: "/figma/metric-bg-2-hd.jpg",
       overlay: 0.3,
       crop: { left: "-7.75%", top: "0%", width: "127.95%", height: "100%" },
     },
@@ -48,7 +46,7 @@ const metrics: Metric[] = [
     value: "15",
     card: "var(--color-deep)",
     background: {
-      image: "/figma/metric-bg-3.jpg",
+      image: "/figma/metric-bg-3-hd.jpg",
       overlay: 0.3,
       crop: { left: "0%", top: "-20.71%", width: "100%", height: "208.5%" },
     },
@@ -57,7 +55,7 @@ const metrics: Metric[] = [
     label: "Combined years of relevant field experience",
     value: "120+",
     card: "var(--color-night)",
-    background: { image: "/figma/metric-bg-4.jpg", overlay: 0.3 },
+    background: { image: "/figma/metric-bg-4-hd.jpg", overlay: 0.3 },
   },
 ];
 
@@ -85,7 +83,7 @@ function MetricPhoto({ metric }: { metric: Metric }) {
       {metric.background.crop ? (
         <Cropped src={metric.background.image} {...metric.background.crop} />
       ) : (
-        <Image src={metric.background.image} alt="" fill sizes="100vw" className="object-cover" />
+        <Image src={metric.background.image} alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
       )}
       <div className="absolute inset-0" style={{ background: `rgb(0 0 0 / ${metric.background.overlay})` }} />
       <Texture opacity={0.15} top="-48.7%" height="223.2%" />
@@ -124,7 +122,6 @@ function MetricCard({
         style={{
           opacity: valueOpacity,
           y: valueY,
-          ...(metric.outline ? { color: "transparent", WebkitTextStroke: "1.5px var(--color-bg)" } : {}),
         }}
       >
         {metric.value}
