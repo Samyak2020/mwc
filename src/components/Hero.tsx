@@ -58,12 +58,28 @@ export function Hero() {
           {/* room for the fixed nav on mobile (desktop positions absolutely) */}
           <div aria-hidden className="h-[34px] shrink-0 lg:hidden" />
 
-          {/* Intro + CTA (Figma y=197) */}
+          {/* Headline (Figma y=158–403), anchored to the top of the hero */}
+          <RevealHeading
+            as="h1"
+            trigger="load"
+            delay={heroSequence.headlineDelay}
+            className="display relative pt-16 text-[44px] sm:text-[64px] lg:absolute lg:inset-x-0 lg:top-u-158 lg:m-0 lg:h-u-245 lg:p-0 lg:fs-u-104"
+          >
+            <Line className="block lg:absolute lg:left-u-32 lg:top-0">Capital</Line>
+            <Line className="block pl-[0.6em] lg:absolute lg:left-u-92 lg:top-u-87 lg:p-0">Projects,</Line>
+            <span className="block text-right lg:contents">
+              <Line className="lg:absolute lg:left-u-672 lg:top-u-87">Delivered</Line>{" "}
+              <Line className="lg:absolute lg:left-u-1386 lg:top-u-79 lg:-translate-x-full">As</Line>
+            </span>
+            <Line className="block text-right lg:absolute lg:left-u-853 lg:top-u-174 lg:text-left">Approved</Line>
+          </RevealHeading>
+
+          {/* Intro + CTA (Figma y=709–836): description, rule, CTA — bottom-aligned, 40px above the bottom of the hero */}
           <FadeIn
             delay={heroSequence.chromeDelay}
-            className="mt-16 flex flex-col gap-4 lg:absolute lg:left-u-32 lg:top-u-197 lg:mt-0 lg:w-u-1376"
+            className="mt-auto flex flex-col gap-5 pt-16 lg:absolute lg:left-u-32 lg:top-auto lg:bottom-[calc(var(--u)*40)] lg:mt-0 lg:w-u-1376 lg:pt-0"
           >
-            <p className="w-full max-w-[324px] text-base font-medium leading-[1.1]">
+            <p className="w-full max-w-[324px] text-base font-medium leading-[1.2]">
               Experienced project and construction managers, schedulers and safety leaders for complex,
               high-risk projects.
             </p>
@@ -83,23 +99,6 @@ export function Hero() {
             </div>
             <StickyCta anchorRef={ctaRef} onReady={onStickyReady} />
           </FadeIn>
-
-          {/* Headline (Figma y=579–824), anchored to the bottom of the viewport
-              with the same 76px gap the 900px-tall frame has. */}
-          <RevealHeading
-            as="h1"
-            trigger="load"
-            delay={heroSequence.headlineDelay}
-            className="display relative mt-auto pt-16 text-[44px] sm:text-[64px] lg:absolute lg:inset-x-0 lg:bottom-[calc(var(--u)*76)] lg:m-0 lg:h-u-245 lg:p-0 lg:fs-u-104"
-          >
-            <Line className="block lg:absolute lg:left-u-32 lg:top-0">Capital</Line>
-            <Line className="block pl-[0.6em] lg:absolute lg:left-u-92 lg:top-u-87 lg:p-0">Projects,</Line>
-            <span className="block text-right lg:contents">
-              <Line className="lg:absolute lg:left-u-672 lg:top-u-87">Delivered</Line>{" "}
-              <Line className="lg:absolute lg:left-u-1386 lg:top-u-79 lg:-translate-x-full">As</Line>
-            </span>
-            <Line className="block text-right lg:absolute lg:left-u-853 lg:top-u-174 lg:text-left">Approved</Line>
-          </RevealHeading>
         </div>
       </header>
 

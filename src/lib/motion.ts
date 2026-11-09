@@ -38,6 +38,10 @@ export const heroScroll = {
   parallax: 240,
   // Portion of the hero scroll over which the sticky CTA becomes a button.
   ctaMorph: [0.72, 1] as const,
+  // Photo darkening: the image ships with a 35% ink overlay (Figma); while
+  // the hero scrolls away it deepens to 75%. `over` is the share of the hero
+  // scroll it takes to get there.
+  darken: { from: 0.35, to: 0.75, over: 0.6 },
 } as const;
 
 // Industries hover: the backdrop photo is "tugged" in like fabric from the
