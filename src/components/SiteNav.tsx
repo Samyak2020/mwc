@@ -42,7 +42,8 @@ function useNavTheme(bar: React.RefObject<HTMLElement | null>) {
   }, [bar]);
 }
 
-// Fixed site header (Figma "Frame 1618873061", 1400×66 at 20,12): logo + pill
+// Fixed site header (Figma "Frame 1618873061", 1400×66 at x 20; raised 20px
+// from Figma's y 12 to y −8 per client): logo + pill
 // nav 72px apart, "Talk to a Project Lead" at the far end. Transparent over
 // the hero; fills with translucent ink once the hero scrolls away.
 export function SiteNav() {
@@ -54,7 +55,7 @@ export function SiteNav() {
 
   return (
     <motion.div
-      className="nav-fg fixed top-3 right-3 left-3 z-40 lg:top-[calc(var(--u)*12)] lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)]"
+      className="nav-fg fixed -top-2 right-3 left-3 z-40 lg:top-[calc(var(--u)*-8)] lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: duration.slow, ease: ease.out, delay: heroSequence.chromeDelay }}
