@@ -15,8 +15,8 @@ export const metadata: Metadata = { title: "MWC | Comp 4" };
 
 // Design comp 4 (Figma "Homepage" 639:4144, section 2 per 646:4583). Hero is
 // comp 3's full-height hero with a flat 45% overlay; industries is comp 1's
-// interaction on white; project support is the field journey (white
-// version); leadership, team and footer are shared.
+// interaction on white; project support is the field journey (dark
+// version, as at /lab/field); leadership, team and footer are shared.
 export default function Comp4() {
   return (
     <>
@@ -24,7 +24,7 @@ export default function Comp4() {
       <main>
         <Hero2 fullHeight flatOverlay description="The experience to run complex capital projects." />
         <IndustriesLight />
-        <FieldJourney light />
+        <FieldJourney />
         <Metrics4 />
         <TrustedBy label={false} className="mt-16 lg:mt-u-108" />
         <ResourcesList />

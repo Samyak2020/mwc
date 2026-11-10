@@ -261,10 +261,7 @@ export function FieldJourney({ light = false }: { light?: boolean } = {}) {
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.9),rgb(var(--fj-scrim)/0))]" />
           <div className="absolute inset-x-0 bottom-0 h-[52%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.92)_35%,rgb(var(--fj-scrim)/0))] lg:hidden" />
           <div className="absolute inset-y-0 left-0 hidden w-[36%] bg-[linear-gradient(90deg,rgb(var(--fj-scrim)/0.88),rgb(var(--fj-scrim)/0))] lg:block" />
-          {/* (white version: the frosted details panel replaces the right-hand fade) */}
-          {!light && (
-            <div className="absolute inset-y-0 right-0 hidden w-[44%] bg-[linear-gradient(270deg,rgb(var(--fj-scrim)/0.92)_30%,rgb(var(--fj-scrim)/0))] lg:block" />
-          )}
+          {/* (no right-hand fade: the frosted details panel, 50%, keeps that copy readable) */}
         </div>
 
         <div className="shell pointer-events-none h-full">
