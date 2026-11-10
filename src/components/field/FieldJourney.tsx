@@ -265,11 +265,11 @@ export function FieldJourney({ light = false }: { light?: boolean } = {}) {
         </div>
 
         <div className="shell pointer-events-none h-full">
-          {/* sticky heading: never changes. 64px, sitting 64px below the nav
+          {/* sticky heading: never changes. 64px, sitting 48px below the nav
               bar (nav: 12px from the top, 66 tall) while the section is pinned */}
           <h2
             id="field-heading"
-            className="display absolute top-24 left-4 max-w-[683px] text-[36px] sm:text-[48px] lg:top-[calc(12px+var(--u)*66+64px)] lg:left-u-32 lg:w-u-683 lg:text-[64px]"
+            className="display absolute top-24 left-4 max-w-[683px] text-[36px] sm:text-[48px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[64px]"
           >
             Project Support Built Around Your Scope
           </h2>
