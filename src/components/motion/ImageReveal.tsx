@@ -7,6 +7,8 @@ type ImageRevealProps = {
   /** "load" plays on mount (hero); "view" plays once when scrolled into view. */
   trigger?: "load" | "view";
   delay?: number;
+  /** "down" wipes top → bottom (default), "right" wipes left → right */
+  direction?: "down" | "right";
   className?: string;
   children: React.ReactNode;
 };
@@ -19,7 +21,13 @@ type ImageRevealProps = {
 // The in-view check lives on an outer, unclipped wrapper: Chrome's
 // IntersectionObserver honours the target's own clip-path, so a fully closed
 // curtain would report zero area and never trigger.
-export function ImageReveal({ trigger = "view", delay = 0, className = "absolute inset-0", children }: ImageRevealProps) {
+export function ImageReveal({
+  trigger = "view",
+  delay = 0,
+  direction = "down",
+  className = "absolute inset-0",
+  children,
+}: ImageRevealProps) {
   const reduce = useReducedMotion();
   const curtain: Variants = reduce
     ? {
@@ -27,7 +35,8 @@ export function ImageReveal({ trigger = "view", delay = 0, className = "absolute
         shown: { opacity: 1, transition: { duration: 0.4, delay } },
       }
     : {
-        hidden: { clipPath: "inset(0% 0% 100% 0%)", scale: 1.06 },
+        // the curtain opens from the top (down) or from the left (right)
+        hidden: { clipPath: direction === "right" ? "inset(0% 100% 0% 0%)" : "inset(0% 0% 100% 0%)", scale: 1.06 },
         shown: {
           clipPath: "inset(0% 0% 0% 0%)",
           scale: 1,

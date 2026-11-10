@@ -139,5 +139,18 @@ export const fieldJourney = {
   bladeTurns: 5,
 } as const;
 
+// Comp 3 workstream timeline: the centre line draws down with the scroll;
+// its tip sits at this fraction of the viewport height, and a card turns
+// solid once the tip reaches it.
+export const timeline = {
+  tipAt: 0.55,
+  spring: { stiffness: 220, damping: 32, mass: 0.4 },
+  inactiveOpacity: 0.5,
+  // card photos open from 200×300 to 280×400 (Figma px) as they come up to
+  // the screen centre and stay open after; `reach` is how far before the
+  // centre (share of the card's travel through the viewport) it starts
+  widen: { from: { w: 200, h: 300 }, to: { w: 280, h: 400 }, reach: 0.22 },
+} as const;
+
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.
