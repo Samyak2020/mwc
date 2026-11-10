@@ -147,5 +147,30 @@ export const metricsBolt = {
   spring: { stiffness: 120, damping: 30, mass: 0.6 },
 } as const;
 
+// Field journey (workstreams as one isometric site): the section pins and
+// scroll flies the camera overview → plan → build → operate → overview.
+export const fieldJourney = {
+  // pinned scroll length, in viewport heights
+  length: 4.5,
+  // follow-through on the scroll position (no overshoot)
+  spring: { stiffness: 170, damping: 28, mass: 0.4 },
+  // [start, end] of each camera move, as a share of the pinned scroll;
+  // between moves the camera holds on a zone
+  moves: {
+    enter: [0.02, 0.14],
+    planToBuild: [0.28, 0.45],
+    buildToOperate: [0.57, 0.72],
+    exit: [0.83, 0.95],
+  },
+  // mid-flight the camera pulls back to this multiple of the overview scale
+  midZoom: 1.2,
+  // brightness of the zones that aren't in focus
+  dim: 0.4,
+  // the plant comes apart over this stretch (Decommission)
+  decommission: [0.86, 0.99],
+  // wind-turbine rotor turns over the whole journey
+  bladeTurns: 5,
+} as const;
+
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.

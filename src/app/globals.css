@@ -224,3 +224,65 @@ body {
     justify-content: space-between;
   }
 }
+
+/* ── Field journey: isometric line-art site (src/components/field) ──────
+   Strokes stay 1px at any zoom (non-scaling); faces are opaque so nearer
+   objects hide what is behind them. Four tones: top, left, right, round. */
+.field path {
+  fill: none;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.field .ft { fill: #16223d; stroke: #a5b4d2; }
+.field .fl { fill: #0d172d; stroke: #a5b4d2; }
+.field .fr { fill: #070d1d; stroke: #a5b4d2; }
+.field .fc { fill: #0b1428; stroke: #a5b4d2; }
+.field .ln { stroke: #a5b4d2; }
+.field .lf { stroke: rgb(165 180 210 / 0.42); }
+.field .wr { stroke: rgb(165 180 210 / 0.28); }
+.field .ld { stroke: rgb(165 180 210 / 0.5); stroke-dasharray: 3 4; }
+.field .gg { stroke: rgb(251 252 255 / 0.055); }
+.field .gf { stroke: rgb(251 252 255 / 0.07); }
+.field .rd { stroke: rgb(251 252 255 / 0.2); }
+.field .rdc { stroke: rgb(251 252 255 / 0.14); stroke-dasharray: 6 8; }
+.field .pl { stroke: rgb(165 180 210 / 0.6); }
+.field .tr { fill: #0a1326; stroke: rgb(165 180 210 / 0.45); }
+/* proposed (planned) massing: translucent, hidden edges dashed */
+.field .gt { fill: rgb(251 252 255 / 0.1); stroke: rgb(251 252 255 / 0.75); }
+.field .gl { fill: rgb(251 252 255 / 0.06); stroke: rgb(251 252 255 / 0.75); }
+.field .gr { fill: rgb(251 252 255 / 0.03); stroke: rgb(251 252 255 / 0.75); }
+.field .gd { stroke: rgb(251 252 255 / 0.32); stroke-dasharray: 3 3; }
+/* accents: callouts, dimensions, power */
+.field .ac { stroke: var(--color-sky); }
+.field .acd { stroke: rgb(32 137 216 / 0.75); stroke-dasharray: 2 4; }
+.field .mk { fill: var(--color-sky); stroke: none; }
+.field text {
+  font: 600 8.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.12em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.field .lt { fill: #000611; }
+/* labels meant to be read from the overview */
+.field .lt-big { font-size: 16px; }
+.field .dt { fill: #5fb4f6; }
+.field .dt-start { text-anchor: start; }
+/* lines that draw in with their zone's focus (--f: 0 → 1) */
+.field .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--f, 1));
+}
+.field .pw { stroke: #3aa2f2; stroke-width: 1.75; }
+.field .pwg { stroke: rgb(32 137 216 / 0.22); stroke-width: 7; }
+.field .pwn { fill: #000611; stroke: #3aa2f2; stroke-width: 1.5; }
+/* Decommission (--d: 0 → 1 on the plant): tagged pieces lift away and fade,
+   their footprints and the removal crew fade in */
+.field [data-rm] {
+  --e: clamp(0, calc((var(--d, 0) - var(--dl, 0)) * 2.4), 1);
+  transform: translateY(calc(var(--e) * var(--lift, 60) * -1px));
+  opacity: calc(1 - var(--e) * 0.74);
+}
+.field .fp { stroke: rgb(32 137 216 / 0.9); stroke-dasharray: 3 4; opacity: var(--d, 0); }
+.field .dc { opacity: var(--d, 0); }

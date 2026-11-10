@@ -19,7 +19,7 @@ type Workstream = {
 };
 
 // Figma "Workstream Cards" (575:1227)
-const workstreams: Workstream[] = [
+export const workstreams: Workstream[] = [
   {
     title: "Plan and Develop",
     image: "/figma/ws-plan-hd.jpg",
