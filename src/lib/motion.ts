@@ -88,16 +88,10 @@ export const imageReveal = {
 
 // ── Comp 2 ─────────────────────────────────────────────────────────────
 
-// Hero: the MWC "bolt" rises into frame from behind the scaffolding photo,
-// then the three layers (sky, bolt, scaffolding) separate on scroll.
+// Hero: the photo drifts down slower than the page as the hero scrolls
+// away (Figma px travelled by the time the hero has left the screen).
 export const comp2Hero = {
-  // load: bolt starts this far down (Figma px), hidden behind the cut-out
-  boltFrom: 320,
-  boltSpring: { type: "spring", bounce: 0.18, visualDuration: 1.4 } as Transition,
-  boltDelay: 0.2,
-  // scroll: px travelled (downwards, slower than the page) per layer by the
-  // time the hero has scrolled out; deeper layers move more = feel farther
-  depth: { sky: 260, bolt: 170, scaffold: 60 },
+  depth: { sky: 260 },
 } as const;
 
 // Wavy accordion (Industries): panel widths follow an under-damped spring;

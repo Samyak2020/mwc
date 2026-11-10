@@ -76,10 +76,10 @@ function Card({ a, clone = false }: { a: Article; clone?: boolean }) {
 
 // Revised Figma y=4654–5297: "Client Resources" + See all + arrows, cards
 // that slide one over per arrow press and repeat endlessly.
-export function ClientResources() {
+export function ClientResources({ className = "pt-24 lg:pt-u-206" }: { className?: string } = {}) {
   const { order, x, rowRef, prev, next } = useLoop(articles);
   return (
-    <section aria-labelledby="resources-heading" className="shell pt-24 lg:pt-u-206">
+    <section aria-labelledby="resources-heading" className={`shell ${className}`}>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <RevealHeading id="resources-heading" className="display text-[44px] text-fg sm:text-[64px] lg:fs-u-64">
           <Line className="block">Client Resources</Line>

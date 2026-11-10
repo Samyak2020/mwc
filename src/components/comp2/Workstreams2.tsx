@@ -128,9 +128,8 @@ function Card({ ws, rowX, enabled }: { ws: Workstream; rowX: MotionValue<number>
           <Texture top="-70.29%" height="280.21%" />
         </ImageReveal>
 
-        {/* jagged band along the bottom: sky edge + white fill (rotated 180° in Figma) */}
-        <img src="/comp2/ws-band-a.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[27.67%] w-full rotate-180" />
-        <img src="/comp2/ws-band-b.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[26.67%] w-full rotate-180" />
+        {/* jagged band along the bottom: sky edge + white fill (Figma 624:428) */}
+        <img src="/comp2/ws-band-v2.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[29.17%] w-full" />
 
         <h3
           className={`absolute bottom-5 left-5 w-[240px] font-display text-[32px] leading-[0.9] font-black tracking-[-0.01em] text-fg lg:bottom-auto lg:left-u-24 lg:fs-u-40 ${ws.titleClass}`}
@@ -141,15 +140,15 @@ function Card({ ws, rowX, enabled }: { ws: Workstream; rowX: MotionValue<number>
 
       <div className="flex w-[300px] flex-col pt-3 lg:w-u-329">
         <div className="flex flex-col gap-12 pb-3">
-          <p className="text-base leading-[1.5] font-medium tracking-[-0.005em] text-bg/80">{ws.description}</p>
+          <p className="text-base leading-[1.5] font-medium tracking-[-0.005em] text-bg">{ws.description}</p>
           <ul className="flex flex-col gap-3">
             {ws.services.map((s) => (
               <li key={s}>
                 <a
                   href="#"
-                  className="block border-b border-bg/10 pb-2 text-base leading-[1.3] font-medium tracking-[-0.005em] text-bg/80 transition-colors hover:text-bg"
+                  className="block border-b border-bg/10 pb-2 text-base leading-[1.3] font-bold tracking-[-0.005em] text-bg transition-colors hover:text-sky"
                 >
-                  {s} →
+                  {s}
                 </a>
               </li>
             ))}

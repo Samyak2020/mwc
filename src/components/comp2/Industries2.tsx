@@ -42,7 +42,7 @@ const industries: AccordionItem[] = [
 // "Depth of Experience Across Industries" (content frame y=80–716).
 export function Industries2() {
   return (
-    <section aria-labelledby="industries-heading" className="shell pt-20 pb-8 lg:pt-u-80 lg:pb-u-120">
+    <section aria-labelledby="industries-heading" className="shell pt-20 pb-8 lg:pt-u-163 lg:pb-u-120">
       <RevealHeading id="industries-heading" className="display text-[36px] text-bg sm:text-[48px] lg:fs-u-56">
         <Line className="block">Depth of Experience</Line>
         <Line className="block">Across Industries</Line>

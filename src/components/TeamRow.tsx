@@ -49,10 +49,10 @@ function Card({ m, clone = false }: { m: Member; clone?: boolean }) {
 
 // Revised Figma y=6820–7568: intro, "Meet the Team" + arrows, staggered
 // member cards that slide one over per arrow press and repeat endlessly.
-export function TeamRow() {
+export function TeamRow({ className = "pt-24 lg:pt-u-184" }: { className?: string } = {}) {
   const { order, x, rowRef, prev, next } = useLoop(team);
   return (
-    <section aria-labelledby="team-heading" className="shell pt-24 lg:pt-u-184">
+    <section aria-labelledby="team-heading" className={`shell ${className}`}>
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <FadeUp className="max-w-[678px] lg:w-u-678">
           <h2
