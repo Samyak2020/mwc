@@ -127,7 +127,8 @@ const Drawing = memo(function Drawing({ scene }: { scene: Scene }) {
 
 const stages = workstreams.map((w, i) => ({ n: i + 1, title: w.title, description: w.description, services: w.services }));
 
-export function FieldJourney() {
+/** `light`: the white version (comp 4): light faces, ink/navy lines, white scrims. */
+export function FieldJourney({ light = false }: { light?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -236,9 +237,9 @@ export function FieldJourney() {
   return (
     <section
       ref={sectionRef}
-      data-nav-theme="dark"
+      data-nav-theme={light ? "light" : "dark"}
       aria-labelledby="field-heading"
-      className="relative bg-night text-bg"
+      className={`relative ${light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
       style={{ height: `calc(100svh * ${1 + fieldJourney.length})` }}
     >
       <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden">
@@ -246,7 +247,7 @@ export function FieldJourney() {
         <svg
           ref={svgRef}
           aria-hidden
-          className="field absolute inset-0 h-full w-full transition-opacity duration-[var(--duration-base)]"
+          className={`field ${light ? "field-light " : ""}absolute inset-0 h-full w-full transition-opacity duration-[var(--duration-base)]`}
           style={{ opacity: ready ? 1 : 0 }}
         >
           <g ref={camRef}>
@@ -256,18 +257,22 @@ export function FieldJourney() {
 
         {/* scrims: keep the copy readable and fade the grid at the edges */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-x-0 top-0 h-[34%] bg-[linear-gradient(180deg,rgb(0_6_17/0.9),rgb(0_6_17/0))]" />
-          <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[linear-gradient(0deg,rgb(0_6_17/0.9),rgb(0_6_17/0))]" />
-          <div className="absolute inset-x-0 bottom-0 h-[52%] bg-[linear-gradient(0deg,rgb(0_6_17/0.92)_35%,rgb(0_6_17/0))] lg:hidden" />
-          <div className="absolute inset-y-0 left-0 hidden w-[36%] bg-[linear-gradient(90deg,rgb(0_6_17/0.88),rgb(0_6_17/0))] lg:block" />
-          <div className="absolute inset-y-0 right-0 hidden w-[44%] bg-[linear-gradient(270deg,rgb(0_6_17/0.92)_30%,rgb(0_6_17/0))] lg:block" />
+          <div className="absolute inset-x-0 top-0 h-[34%] bg-[linear-gradient(180deg,rgb(var(--fj-scrim)/0.9),rgb(var(--fj-scrim)/0))]" />
+          <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.9),rgb(var(--fj-scrim)/0))]" />
+          <div className="absolute inset-x-0 bottom-0 h-[52%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.92)_35%,rgb(var(--fj-scrim)/0))] lg:hidden" />
+          <div className="absolute inset-y-0 left-0 hidden w-[36%] bg-[linear-gradient(90deg,rgb(var(--fj-scrim)/0.88),rgb(var(--fj-scrim)/0))] lg:block" />
+          {/* (white version: the frosted details panel replaces the right-hand fade) */}
+          {!light && (
+            <div className="absolute inset-y-0 right-0 hidden w-[44%] bg-[linear-gradient(270deg,rgb(var(--fj-scrim)/0.92)_30%,rgb(var(--fj-scrim)/0))] lg:block" />
+          )}
         </div>
 
         <div className="shell pointer-events-none h-full">
-          {/* sticky heading: never changes */}
+          {/* sticky heading: never changes. 64px, sitting 32px below the nav
+              bar (nav: 12px from the top, 66 tall) while the section is pinned */}
           <h2
             id="field-heading"
-            className="display absolute top-24 left-4 max-w-[683px] text-[36px] sm:text-[48px] lg:top-[calc(var(--u)*74)] lg:left-u-32 lg:w-u-683 lg:fs-u-64"
+            className="display absolute top-24 left-4 max-w-[683px] text-[36px] sm:text-[48px] lg:top-[calc(12px+var(--u)*66+32px)] lg:left-u-32 lg:w-u-683 lg:text-[64px]"
           >
             Project Support Built Around Your Scope
           </h2>
@@ -286,12 +291,16 @@ export function FieldJourney() {
             </motion.div>
           </AnimatePresence>
 
-          {/* right: description + related services */}
+          {/* right: description + related services, 40 below the title line,
+              on a frosted panel (padding pulled outwards so the copy keeps its
+              Figma column at x 963) */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={`body-${stage}`}
               {...swap}
-              className="pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 lg:inset-x-auto lg:top-[41.6%] lg:left-u-963 lg:w-u-445"
+              className={`pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 p-5 backdrop-blur-md lg:inset-x-auto lg:top-[calc(41.6%+40px)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
+                light ? "bg-white/50" : "bg-night/50"
+              }`}
             >
               <p className="text-[15px] leading-[1.5] font-medium tracking-[-0.005em] lg:text-base">{s.description}</p>
               <ul className="hidden flex-col gap-2 lg:flex">
@@ -299,9 +308,9 @@ export function FieldJourney() {
                   <li key={name}>
                     <a
                       href="#"
-                      className="block border-b border-bg/10 pb-2 text-base leading-[1.3] font-medium tracking-[-0.005em] transition-colors hover:text-sky"
+                      className="block py-1 text-base leading-[1.3] font-bold tracking-[-0.005em] transition-colors hover:text-sky"
                     >
-                      {name} →
+                      {name}
                     </a>
                   </li>
                 ))}

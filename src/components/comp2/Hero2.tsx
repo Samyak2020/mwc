@@ -15,11 +15,14 @@ import { comp2Hero, heroSequence, scrollSpring } from "@/lib/motion";
 export function Hero2({
   description = "Veteran-led field teams, your crews and leadership trust.",
   fullHeight = false,
+  flatOverlay = false,
 }: {
   description?: string;
   /** Comp 3: the hero fills the viewport at any size, content centred in it
    *  (Figma 583:2220) instead of the fixed 1440×1014 frame. */
   fullHeight?: boolean;
+  /** Comp 4: a flat 45% black layer and 15% grain instead of the fade to ink */
+  flatOverlay?: boolean;
 } = {}) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -41,15 +44,25 @@ export function Hero2({
       <header
         ref={ref}
         data-hero
-        data-nav-theme="light"
+        // the darker comp 4 photo takes the white nav (Figma 646:4472)
+        data-nav-theme={flatOverlay ? "dark" : "light"}
         className="relative isolate flex h-svh min-h-[560px] flex-col overflow-hidden bg-night text-bg"
       >
         <div aria-hidden className="absolute inset-0">
           <motion.div className="absolute inset-x-0 -top-[4%] -bottom-[4%]" style={{ y: photoY }}>
             <Cropped src="/comp2/hero-v2.jpg" left="-30.75%" top="-16.38%" width="152.98%" height="144.86%" sizes="153vw" priority />
           </motion.div>
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_6_17/0)_0%,#000611_100%)]" />
-          <Texture opacity={0.1} top="-45.29%" height="240.37%" />
+          {flatOverlay ? (
+            <>
+              <div className="absolute inset-0 bg-black/45" />
+              <Texture opacity={0.15} top="-72.34%" height="331.19%" />
+            </>
+          ) : (
+            <>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_6_17/0)_0%,#000611_100%)]" />
+              <Texture opacity={0.1} top="-45.29%" height="240.37%" />
+            </>
+          )}
         </div>
 
         {/* headline, intro and CTA centred in the viewport, clear of the nav */}

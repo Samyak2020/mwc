@@ -152,5 +152,12 @@ export const timeline = {
   widen: { from: { w: 200, h: 300 }, to: { w: 280, h: 400 }, reach: 0.22 },
 } as const;
 
+// Comp 4 CTA generator: the line-art control-panel door swings out on its
+// hinges (degrees) with a soft spring when the generator or button is hovered.
+export const generatorDoor = {
+  angle: -112,
+  spring: { type: "spring", stiffness: 140, damping: 18, mass: 0.9 } as Transition,
+} as const;
+
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.

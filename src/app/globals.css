@@ -286,3 +286,26 @@ body {
 }
 .field .fp { stroke: rgb(32 137 216 / 0.9); stroke-dasharray: 3 4; opacity: var(--d, 0); }
 .field .dc { opacity: var(--d, 0); }
+
+/* Field journey, white version (comp 4): pale faces, navy lines. */
+.field-light .ft { fill: #ffffff; stroke: #072871; }
+.field-light .fl { fill: #eef2f9; stroke: #072871; }
+.field-light .fr { fill: #dde4f0; stroke: #072871; }
+.field-light .fc { fill: #f3f6fb; stroke: #072871; }
+.field-light .ln { stroke: #072871; }
+.field-light .lf { stroke: rgb(7 40 113 / 0.45); }
+.field-light .wr { stroke: rgb(7 40 113 / 0.3); }
+.field-light .ld { stroke: rgb(7 40 113 / 0.5); }
+.field-light .gg { stroke: rgb(0 6 17 / 0.06); }
+.field-light .gf { stroke: rgb(0 6 17 / 0.08); }
+.field-light .rd { stroke: rgb(0 6 17 / 0.22); }
+.field-light .rdc { stroke: rgb(0 6 17 / 0.16); }
+.field-light .pl { stroke: rgb(7 40 113 / 0.6); }
+.field-light .tr { fill: #ffffff; stroke: rgb(7 40 113 / 0.5); }
+.field-light .gt { fill: rgb(32 137 216 / 0.1); stroke: #072871; }
+.field-light .gl { fill: rgb(32 137 216 / 0.06); stroke: #072871; }
+.field-light .gr { fill: rgb(32 137 216 / 0.03); stroke: #072871; }
+.field-light .gd { stroke: rgb(7 40 113 / 0.35); }
+.field-light .lt { fill: #fbfcff; }
+.field-light .dt { fill: #1d7ec6; }
+.field-light .pwn { fill: #fbfcff; }
