@@ -40,7 +40,8 @@ function MemberCard({ m, clone = false }: { m: Member; clone?: boolean }) {
 // Desktop: the arrows slide the row one card in the clicked direction and
 // it loops (copies of the last/first card wait just off each edge, so the
 // incoming side is never empty). Mobile: a swipeable row; arrows scroll it.
-export function Team() {
+export function Team({ variant = "comp1" }: { variant?: "comp1" | "comp2" } = {}) {
+  const comp2 = variant === "comp2";
   const scroller = useRef<HTMLUListElement>(null);
   const [order, setOrder] = useState(team);
   const [desktop, setDesktop] = useState(false);
@@ -78,15 +79,31 @@ export function Team() {
   const first = order[0];
 
   return (
-    <section aria-labelledby="team-heading" className="shell pt-24 lg:pt-u-200">
+    <section aria-labelledby="team-heading" className={`shell pt-24 ${comp2 ? "lg:pt-u-142" : "lg:pt-u-200"}`}>
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <h2
           id="team-heading"
-          className="max-w-[678px] font-display text-[28px] leading-none font-semibold tracking-[-0.02em] text-fg sm:text-[40px] lg:w-u-678 lg:fs-u-40"
+          className={`max-w-[678px] font-display text-[28px] leading-none font-semibold tracking-[-0.02em] text-fg lg:w-u-678 ${
+            comp2 ? "lg:fs-u-32 lg:leading-[0.95]" : "sm:text-[40px] lg:fs-u-40"
+          }`}
         >
           Each engagement is led by a senior project or construction manager who has run comparable work.
         </h2>
 
+        {comp2 ? (
+          // Figma "Team Navigation" (581:1905): text link, then prev / next
+          <div className="flex items-center gap-4">
+            <a href="#" className="cta px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg">
+              Meet the Team
+            </a>
+            <button type="button" aria-label="Previous team member" onClick={() => go(-1)} className="cta shrink-0">
+              <Image src="/comp2/btn-prev.svg" alt="" width={55} height={50} className="-scale-x-100" />
+            </button>
+            <button type="button" aria-label="Next team member" onClick={() => go(1)} className="cta shrink-0">
+              <Image src="/figma/btn-next.svg" alt="" width={55} height={50} />
+            </button>
+          </div>
+        ) : (
         <div className="flex items-center gap-4">
           <button type="button" aria-label="Previous team member" onClick={() => go(-1)} className="cta shrink-0">
             <Image src="/figma/btn-prev.svg" alt="" width={55} height={50} className="-scale-x-100" />
@@ -102,6 +119,7 @@ export function Team() {
             <Arrow />
           </a>
         </div>
+        )}
       </div>
 
       <div className="mt-8 lg:mt-u-32 lg:overflow-hidden">

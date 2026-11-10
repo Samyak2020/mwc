@@ -46,7 +46,7 @@ function useNavTheme(bar: React.RefObject<HTMLElement | null>) {
 // from Figma's y 12 to y −8 per client): logo + pill
 // nav 72px apart, "Talk to a Project Lead" at the far end. Transparent over
 // the hero; fills with translucent ink once the hero scrolls away.
-export function SiteNav() {
+export function SiteNav({ solidCta = false }: { solidCta?: boolean }) {
   const [open, setOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const progress = useHeroProgress();
@@ -55,7 +55,10 @@ export function SiteNav() {
 
   return (
     <motion.div
-      className="nav-fg fixed -top-2 right-3 left-3 z-40 lg:top-[calc(var(--u)*-8)] lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)]"
+      // comp 2: 12px down from the top of the screen; comp 1 stays raised to −8
+      className={`nav-fg fixed right-3 left-3 z-40 lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)] ${
+        solidCta ? "top-3" : "-top-2 lg:top-[calc(var(--u)*-8)]"
+      }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: duration.slow, ease: ease.out, delay: heroSequence.chromeDelay }}
@@ -89,12 +92,23 @@ export function SiteNav() {
             </ul>
           </div>
 
-          {/* Where the sticky "Talk to a Project Lead" parks (see StickyCta).
-              An invisible copy reserves the exact size. */}
-          <div data-cta-slot aria-hidden className="invisible hidden items-center gap-[9px] px-3 py-4 text-base leading-[1.1] font-semibold lg:flex">
-            TALK TO A PROJECT LEAD
-            <Arrow width={50} />
-          </div>
+          {solidCta ? (
+            // Comp 2: a permanent navy button (Figma "Workstreams CTA")
+            <a
+              href="#contact"
+              className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
+            >
+              TALK TO A PROJECT LEAD
+              <Arrow />
+            </a>
+          ) : (
+            // Where the sticky "Talk to a Project Lead" parks (see StickyCta).
+            // An invisible copy reserves the exact size.
+            <div data-cta-slot aria-hidden className="invisible hidden items-center gap-[9px] px-3 py-4 text-base leading-[1.1] font-semibold lg:flex">
+              TALK TO A PROJECT LEAD
+              <Arrow width={50} />
+            </div>
+          )}
 
           {/* Mobile menu (not in the desktop Figma frame) */}
           <button

@@ -30,15 +30,29 @@ const articles: Article[] = [
 ];
 
 // Figma y=5076–5804: "Project Resources" heading + three article cards.
-export function Resources() {
+// Comp 2 reuses it with a one-line "Client Resources" heading (Figma 578:1757).
+export function Resources({
+  lines = ["Project", "Resources"],
+  sectionClass = "pt-24 lg:pt-u-200",
+  headingClass = "text-[44px] sm:text-[64px] lg:fs-u-80",
+  listClass = "lg:mt-u-31",
+}: {
+  lines?: string[];
+  sectionClass?: string;
+  headingClass?: string;
+  listClass?: string;
+} = {}) {
   return (
-    <section aria-labelledby="resources-heading" className="shell pt-24 lg:pt-u-200">
-      <RevealHeading id="resources-heading" className="display text-[44px] text-fg sm:text-[64px] lg:fs-u-80">
-        <Line className="block">Project</Line>
-        <Line className="block">Resources</Line>
+    <section aria-labelledby="resources-heading" className={`shell ${sectionClass}`}>
+      <RevealHeading id="resources-heading" className={`display text-fg ${headingClass}`}>
+        {lines.map((l) => (
+          <Line key={l} className="block">
+            {l}
+          </Line>
+        ))}
       </RevealHeading>
 
-      <StaggerList className="mt-10 grid gap-12 md:grid-cols-3 md:gap-5 lg:mt-u-31 lg:gap-u-20">
+      <StaggerList className={`mt-10 grid gap-12 md:grid-cols-3 md:gap-5 lg:gap-u-20 ${listClass}`}>
         {articles.map((a) => (
           <StaggerItem key={a.title}>
             <a href="#" className="group flex flex-col gap-8">

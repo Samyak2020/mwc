@@ -113,5 +113,39 @@ export const imageReveal = {
   heroDelay: 0,
 } as const;
 
+// ── Comp 2 ─────────────────────────────────────────────────────────────
+
+// Hero: the MWC "bolt" rises into frame from behind the scaffolding photo,
+// then the three layers (sky, bolt, scaffolding) separate on scroll.
+export const comp2Hero = {
+  // load: bolt starts this far down (Figma px), hidden behind the cut-out
+  boltFrom: 320,
+  boltSpring: { type: "spring", bounce: 0.18, visualDuration: 1.4 } as Transition,
+  boltDelay: 0.2,
+  // scroll: px travelled (downwards, slower than the page) per layer by the
+  // time the hero has scrolled out; deeper layers move more = feel farther
+  depth: { sky: 260, bolt: 170, scaffold: 60 },
+} as const;
+
+// Wavy accordion (Industries): panel widths follow an under-damped spring;
+// each panel edge bows out in proportion to how fast it is moving.
+export const wavyAccordion = {
+  stiffness: 170, // per s² (unit mass)
+  damping: 19,
+  // bow (px of edge bulge at mid-height) per px/s of edge speed …
+  bowPerVelocity: 0.045,
+  // … capped here, as a fraction of the panel height
+  maxBow: 0.09,
+  // panel content fades in once the panel is this open (0–1)
+  contentFrom: 0.65,
+} as const;
+
+// Metrics backdrop bolt: drawn left → right along its centreline as the
+// section scrolls in (scroll-linked, spring-smoothed).
+export const metricsBolt = {
+  offset: ["start 85%", "end end"] as const,
+  spring: { stiffness: 120, damping: 30, mass: 0.6 },
+} as const;
+
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.
