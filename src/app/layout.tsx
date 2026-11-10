@@ -7,7 +7,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "MWC | Capital Projects, Delivered as Approved",
+  title: "MWC | Predictable Outcomes for High-Risk Capital Projects",
   description:
     "Owner's representative, project controls and construction management for gas, solar, battery storage and transmission projects. Veteran-led and certified SDVOSB.",
   robots: { index: false, follow: false }, // keep client previews out of search engines

@@ -42,11 +42,10 @@ function useNavTheme(bar: React.RefObject<HTMLElement | null>) {
   }, [bar]);
 }
 
-// Fixed site header (Figma "Frame 1618873061", 1400×66 at x 20; raised 20px
-// from Figma's y 12 to y −8 per client): logo + pill
-// nav 72px apart, "Talk to a Project Lead" at the far end. Transparent over
-// the hero; fills with translucent ink once the hero scrolls away.
-export function SiteNav({ solidCta = false }: { solidCta?: boolean }) {
+// Fixed site header (Figma "On lighter bg", 1400×66 at x 20): logo + pill nav
+// 72px apart, the navy "Talk to a Project Lead" button at the far end.
+// Transparent over the hero; fills with translucent ink once it scrolls away.
+export function SiteNav() {
   const [open, setOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const progress = useHeroProgress();
@@ -55,10 +54,8 @@ export function SiteNav({ solidCta = false }: { solidCta?: boolean }) {
 
   return (
     <motion.div
-      // comp 2: 12px down from the top of the screen; comp 1 stays raised to −8
-      className={`nav-fg fixed right-3 left-3 z-40 lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)] ${
-        solidCta ? "top-3" : "-top-2 lg:top-[calc(var(--u)*-8)]"
-      }`}
+      // 12px down from the top of the screen
+      className="nav-fg fixed top-3 right-3 left-3 z-40 lg:right-[calc(var(--bleed)+var(--u)*20)] lg:left-[calc(var(--bleed)+var(--u)*20)]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: duration.slow, ease: ease.out, delay: heroSequence.chromeDelay }}
@@ -92,23 +89,14 @@ export function SiteNav({ solidCta = false }: { solidCta?: boolean }) {
             </ul>
           </div>
 
-          {solidCta ? (
-            // Comp 2: a permanent navy button (Figma "Workstreams CTA")
-            <a
-              href="#contact"
-              className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
-            >
-              TALK TO A PROJECT LEAD
-              <Arrow />
-            </a>
-          ) : (
-            // Where the sticky "Talk to a Project Lead" parks (see StickyCta).
-            // An invisible copy reserves the exact size.
-            <div data-cta-slot aria-hidden className="invisible hidden items-center gap-[9px] px-3 py-4 text-base leading-[1.1] font-semibold lg:flex">
-              TALK TO A PROJECT LEAD
-              <Arrow width={50} />
-            </div>
-          )}
+          {/* "Talk to a Project Lead": a permanent navy button (Figma "Workstreams CTA") */}
+          <a
+            href="#contact"
+            className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
+          >
+            TALK TO A PROJECT LEAD
+            <Arrow />
+          </a>
 
           {/* Mobile menu (not in the desktop Figma frame) */}
           <button

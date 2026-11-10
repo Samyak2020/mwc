@@ -1,26 +1,21 @@
 "use client";
 
 import { useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Arrow } from "@/components/ui/Arrow";
 import { HeroPhoto } from "@/components/HeroPhoto";
 import { ImageReveal } from "@/components/motion/ImageReveal";
-import { StickyCta } from "@/components/StickyCta";
 import { Industries } from "@/components/Industries";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FadeIn } from "@/components/motion/Stagger";
 import { heroScroll, heroSequence, imageReveal, scrollSpring } from "@/lib/motion";
 
-// Hero + navy "Industries" section (Figma 338:692 now starts at y=0, so the
-// navy runs behind the whole hero and nothing white can show through).
-// The hero fills the viewport; the photo runs past it so its mountain
-// cut-out sits at the fold. As the hero scrolls away the peaks rise while the
-// industries content (layered beneath the photo) drifts in more slowly.
+// Hero + "Industries" (revised Figma 548:1071). The hero fills the viewport;
+// the photo runs past it so its mountain cut-out sits at the fold. As the hero
+// scrolls away the peaks rise and the photo darkens, while the industries
+// section (layered beneath the photo) drifts in more slowly.
 export function Hero() {
   const headerRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
-  const [stickyReady, setStickyReady] = useState(false);
-  const onStickyReady = useCallback((ready: boolean) => setStickyReady(ready), []);
   const reduce = useReducedMotion();
 
   // 0 at the top of the page → 1 once the hero has scrolled out.
@@ -54,50 +49,34 @@ export function Hero() {
       </div>
 
       <header ref={headerRef} data-hero className="relative z-[2] text-bg">
-        <div className="shell flex min-h-[var(--hero-h)] flex-col pt-6 pb-10 lg:block lg:h-[var(--hero-h)] lg:min-h-0 lg:p-0">
-          {/* room for the fixed nav on mobile (desktop positions absolutely) */}
-          <div aria-hidden className="h-[34px] shrink-0 lg:hidden" />
-
-          {/* Headline (Figma y=158–403), anchored to the top of the hero */}
+        <div className="shell flex min-h-[var(--hero-h)] flex-col items-center justify-center gap-12 pt-24 pb-24 text-center lg:block lg:h-[var(--hero-h)] lg:min-h-0 lg:p-0">
+          {/* Headline (Figma 614:4895): centred, 1028 wide, top 307 */}
           <RevealHeading
             as="h1"
             trigger="load"
             delay={heroSequence.headlineDelay}
-            className="display relative pt-16 text-[44px] sm:text-[64px] lg:absolute lg:inset-x-0 lg:top-u-158 lg:m-0 lg:h-u-245 lg:p-0 lg:fs-u-104"
+            className="display text-[40px] [text-shadow:0_2px_20px_rgb(0_0_0/0.1)] sm:text-[56px] lg:absolute lg:top-u-307 lg:left-1/2 lg:w-u-1028 lg:-translate-x-1/2 lg:fs-u-80 lg:tracking-[-0.015em]"
           >
-            <Line className="block lg:absolute lg:left-u-32 lg:top-0">Capital</Line>
-            <Line className="block pl-[0.6em] lg:absolute lg:left-u-92 lg:top-u-87 lg:p-0">Projects,</Line>
-            <span className="block text-right lg:contents">
-              <Line className="lg:absolute lg:left-u-672 lg:top-u-87">Delivered</Line>{" "}
-              <Line className="lg:absolute lg:left-u-1386 lg:top-u-79 lg:-translate-x-full">As</Line>
-            </span>
-            <Line className="block text-right lg:absolute lg:left-u-853 lg:top-u-174 lg:text-left">Approved</Line>
+            <Line className="block">Predictable Outcomes</Line>
+            <Line className="block">for High-Risk Capital</Line>
+            <Line className="block">Projects</Line>
           </RevealHeading>
 
-          {/* Intro + CTA (Figma y=709–836): description, rule, CTA — bottom-aligned, 40px above the bottom of the hero */}
+          {/* Intro + CTA (Figma 629:958): centred, top 665 */}
           <FadeIn
             delay={heroSequence.chromeDelay}
-            className="mt-auto flex flex-col gap-5 pt-16 lg:absolute lg:left-u-32 lg:top-auto lg:bottom-[calc(var(--u)*40)] lg:mt-0 lg:w-u-1376 lg:pt-0"
+            className="flex flex-col items-center gap-7 lg:absolute lg:top-u-665 lg:left-1/2 lg:w-u-281 lg:-translate-x-1/2"
           >
-            <p className="w-full max-w-[324px] text-base font-medium leading-[1.2]">
-              Experienced project and construction managers, schedulers and safety leaders for complex,
-              high-risk projects.
+            <p className="w-[281px] text-xl leading-[1.1] font-medium lg:w-u-281">
+              Veteran-led field teams, your crews and leadership trust.
             </p>
-            <div className="flex flex-col items-end">
-              <span aria-hidden className="block h-px w-full bg-bg/50" />
-              {/* On desktop the sticky copy takes over from here once measured */}
-              <a
-                ref={ctaRef}
-                href="#contact"
-                className={`cta flex items-center justify-center gap-[9px] px-3 py-4 text-base font-semibold leading-[1.1] tracking-[-0.005em] ${
-                  stickyReady ? "lg:invisible" : ""
-                }`}
-              >
-                TALK TO A PROJECT LEAD
-                <Arrow width={50} />
-              </a>
-            </div>
-            <StickyCta anchorRef={ctaRef} onReady={onStickyReady} />
+            <a
+              href="#contact"
+              className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+            >
+              Talk to a Project Lead
+              <Arrow />
+            </a>
           </FadeIn>
         </div>
       </header>

@@ -15,7 +15,7 @@ const SHAPE =
 const SPINE = "M-40 760 L515 337 L688.6 488.6 L986.9 152.6 L1243 405 L1730 760";
 
 /** Absolutely positioned; place inside a relative, overflow-hidden parent. */
-export function DrawnBolt({ className = "" }: { className?: string }) {
+export function DrawnBolt({ className = "", fill = "#072466" }: { className?: string; fill?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const maskId = "bolt-draw-" + useId().replace(/[^a-zA-Z0-9_-]/g, "");
@@ -37,7 +37,7 @@ export function DrawnBolt({ className = "" }: { className?: string }) {
           />
         </mask>
       </defs>
-      <path d={SHAPE} fill="#072466" mask={`url(#${maskId})`} />
+      <path d={SHAPE} fill={fill} mask={`url(#${maskId})`} />
     </svg>
     </div>
   );

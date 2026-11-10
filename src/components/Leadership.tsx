@@ -1,67 +1,95 @@
-import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { ParallaxImage } from "@/components/motion/ParallaxImage";
-import { ImageReveal } from "@/components/motion/ImageReveal";
+import { Arrow } from "@/components/ui/Arrow";
 import { Texture } from "@/components/ui/Texture";
+import { ImageReveal } from "@/components/motion/ImageReveal";
+import Image from "next/image";
+import { PHOTO_QUALITY } from "@/lib/motion";
+import { RevealHeading, Line } from "@/components/motion/LineReveal";
+import { FadeUp } from "@/components/comp2/FadeUp";
 
-// Figma Homepage y=6210–6880 (updated): portrait on the left (562×670); on the
-// right a 64px three-line heading, then two text columns: certification
-// (329 wide) and the overview (445 wide, starting lower), with the entity
-// identifiers + capability link along the bottom, level with the portrait.
-// The right side is a real grid rather than absolute positions, so its text
-// can never collide at smaller desktop widths.
+// Revised Figma y=5497–6636: heading; left column (about, then the
+// certification block at the bottom), right column (overview + portrait).
 export function Leadership() {
   return (
-    <section aria-labelledby="leadership-heading" className="shell pt-24 lg:pt-u-215 lg:pb-u-55">
-      <div className="flex flex-col gap-10 lg:min-h-[calc(var(--u)*670)] lg:flex-row lg:items-stretch lg:gap-u-20">
-        {/* Portrait (Figma x 32, 562×670) */}
-        <div className="relative order-2 aspect-[562/670] w-full max-w-[562px] shrink-0 overflow-hidden bg-navy lg:order-none lg:aspect-auto lg:h-auto lg:w-u-562 lg:max-w-none">
-          <Texture />
-          <ImageReveal>
-            <ParallaxImage
-              src="/figma/leadership.png"
-              alt="Andrew Schaaf, MWC"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
-          </ImageReveal>
+    <section aria-labelledby="leadership-heading" className="shell pt-24 lg:pt-u-200">
+      <RevealHeading id="leadership-heading" className="display text-[44px] text-fg sm:text-[64px] lg:fs-u-64">
+        <Line className="block">Veteran Leadership</Line>
+        <Line className="block">and Field Experience</Line>
+      </RevealHeading>
+
+      <div className="mt-12 grid gap-12 lg:mt-u-110 lg:grid-cols-[calc(var(--u)*445)_calc(var(--u)*796)] lg:justify-between lg:gap-0">
+        {/* left: about at the top, certification block at the bottom */}
+        <div className="flex flex-col justify-between gap-12">
+          <FadeUp className="flex flex-col">
+            <p className="text-sm leading-[1.5] font-bold tracking-[0.095em] text-fg/50">ABOUT</p>
+            <p className="mt-4 font-display text-[32px] leading-[0.9] font-black tracking-[-0.015em] text-fg uppercase lg:fs-u-40">
+              Andrew Schaaf
+            </p>
+            <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/50">Owner and President of MWC</p>
+          </FadeUp>
+
+          <FadeUp className="flex flex-col gap-16">
+            <p className="text-lg leading-[1.3] font-medium tracking-[-0.005em] text-fg/90">
+              Work awarded to MWC counts toward federal service-disabled veteran-owned contracting goals and utility
+              supplier diversity spend.
+            </p>
+            {/* Certification badge (627:530) */}
+            <div className="flex items-center justify-between gap-2">
+              <img src="/comp2/laurel-left.svg" alt="" aria-hidden width={56} height={97} className="shrink-0" />
+              <div className="flex max-w-[329px] flex-col items-center gap-2 text-center lg:w-u-329 lg:max-w-none lg:shrink-0">
+                <p className="text-xl leading-[1.3] font-medium tracking-[-0.005em] text-fg/90">
+                  Service-Disabled Veteran-Owned Small Business
+                </p>
+                <p className="w-[228px] text-sm leading-[1.3] tracking-[-0.015em]">
+                  <span className="block text-fg/40">certified by the</span>
+                  <span className="block text-fg/70">U.S. Small Business Administration</span>
+                </p>
+              </div>
+              <img src="/comp2/laurel-right.svg" alt="" aria-hidden width={57} height={101} className="shrink-0" />
+            </div>
+            <div className="flex flex-col items-start gap-4">
+              <p className="text-sm leading-[1.3] tracking-[-0.005em] text-fg/50">
+                Unique Entity Identifier U9WJDCH3V369
+                <br />
+                Commercial and Government Entity code 96A46
+              </p>
+              <a
+                href="#"
+                className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+              >
+                Download A Capability Statement
+                <Arrow />
+              </a>
+            </div>
+          </FadeUp>
         </div>
 
-        {/* Right side (Figma x 614–1408): 329 | 20 | 445 columns */}
-        <div className="contents lg:flex lg:min-w-0 lg:flex-1 lg:flex-col">
-          <RevealHeading
-            id="leadership-heading"
-            className="display order-1 text-[40px] text-fg sm:text-[56px] lg:order-none lg:w-u-678 lg:fs-u-64"
-          >
-            <Line className="block">Veteran</Line>
-            <Line className="block">Leadership and</Line>
-            <Line className="block">Field Experience</Line>
-          </RevealHeading>
-
-          <div className="order-3 flex flex-col gap-8 lg:order-none lg:mt-u-14 lg:grid lg:grid-cols-[calc(var(--u)*329)_calc(var(--u)*445)] lg:items-start lg:gap-x-[calc(var(--u)*20)] lg:gap-y-0">
-            <p className="max-w-[329px] text-sm leading-[1.51] tracking-[-0.005em] text-fg/80 lg:max-w-none">
-              Service-Disabled Veteran-Owned Small Business, certified by the U.S. Small Business Administration
+        {/* right: overview + portrait (796×650, crop top −23.52%) */}
+        <div className="flex flex-col gap-8 lg:mt-u-151 lg:gap-u-33">
+          <FadeUp>
+            <p className="text-xl leading-[1.3] font-medium tracking-[-0.005em] text-fg/90 lg:fs-u-24">
+              MWC is led by <strong className="font-bold">Andrew Schaaf</strong>, a commissioned officer with nearly 30
+              years of military service and a career in power plant operations, commissioning and decommissioning.
             </p>
-
-            <div className="flex max-w-[445px] flex-col gap-5 text-lg leading-[1.3] font-medium tracking-[-0.005em] text-fg/90 lg:mt-u-151 lg:max-w-none">
-              <p>
-                MWC is led by Andrew Schaaf, a commissioned officer with nearly 30 years of military service and a
-                career in power plant operations, commissioning and decommissioning.
-              </p>
-              <p>
-                Work awarded to MWC counts toward federal service-disabled veteran-owned contracting goals and utility
-                supplier diversity spend.
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom row, level with the portrait's bottom edge */}
-          <div className="order-4 flex flex-wrap items-end gap-x-8 gap-y-3 text-sm leading-[1.3] tracking-[-0.005em] lg:order-none lg:mt-auto lg:grid lg:grid-cols-[calc(var(--u)*329)_calc(var(--u)*445)] lg:gap-x-[calc(var(--u)*20)] lg:pt-8">
-            <div className="text-muted">
-              <p>Unique Entity Identifier U9WJDCH3V369</p>
-              <p>Commercial and Government Entity code 96A46</p>
-            </div>
-            <a href="#" className="justify-self-start whitespace-nowrap text-black underline hover:text-navy">
-              Download A Capability Statement
-            </a>
+          </FadeUp>
+          {/* The portrait is upright and the frame is wide: fit it to the frame's
+              height so he sits centred, head to chest, with a soft blur of the
+              same studio backdrop filling the sides. */}
+          <div className="relative aspect-[796/650] w-full overflow-hidden bg-navy">
+            <ImageReveal>
+              {/* the studio backdrop's own greys (sampled from the photo's edges),
+                  darkening towards the bottom like the suit */}
+              <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,#3a3936_0%,#45433f_45%,#2c3038_70%,#1a2230_100%)]" />
+              <Image
+                src="/figma/leadership.png"
+                alt="Andrew Schaaf"
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                quality={PHOTO_QUALITY}
+                // feather the photo's side edges (it spans 23–77% of the frame) into the backdrop
+                className="object-contain object-bottom [mask-image:linear-gradient(90deg,transparent_22%,black_29%,black_71%,transparent_78%)]"
+              />
+              <Texture />
+            </ImageReveal>
           </div>
         </div>
       </div>

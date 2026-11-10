@@ -16,7 +16,7 @@ export const metadata: Metadata = { title: "MWC | Comp 2" };
 export default function Comp2() {
   return (
     <>
-      <SiteNav solidCta />
+      <SiteNav />
       <main>
         <Hero2 />
         {/* Figma "Homepage Content": ink behind industries + workstreams; the

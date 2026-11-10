@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "MWC | Field journey (preview)" };
 export default function FieldLab() {
   return (
     <>
-      <SiteNav solidCta />
+      <SiteNav />
       <main className="bg-night text-bg">
         <div data-nav-theme="dark" className="shell flex h-[70svh] items-end pb-16">
           <p className="max-w-[445px] text-base leading-[1.5] font-medium text-bg/70">

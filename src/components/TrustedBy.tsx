@@ -34,13 +34,15 @@ function LogoSet({ hidden = false }: { hidden?: boolean }) {
   );
 }
 
-export function TrustedBy() {
+export function TrustedBy({ label = true, className = "mt-6 lg:mt-u-24" }: { label?: boolean; className?: string } = {}) {
   return (
-    <section aria-label="Trusted companies" className="shell mt-6 lg:mt-u-24">
+    <section aria-label="Trusted companies" className={`shell ${className}`}>
       <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+        {label && (
         <p className="shrink-0 border-fg/25 p-2 text-base leading-[1.3] font-medium tracking-[-0.005em] text-muted sm:w-[234px] sm:border-r">
           Trusted by 20+ Companies
         </p>
+        )}
         <div className="marquee h-[37px] w-full min-w-0 flex-1 overflow-hidden opacity-80">
           <div className="marquee-track flex h-full w-max items-center opacity-50">
             <LogoSet />

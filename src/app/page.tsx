@@ -4,12 +4,13 @@ import { ProjectSupport } from "@/components/ProjectSupport";
 import { WorkstreamsSection } from "@/components/Workstreams";
 import { Experience } from "@/components/Experience";
 import { TrustedBy } from "@/components/TrustedBy";
-import { Resources } from "@/components/Resources";
+import { ClientResources } from "@/components/ClientResources";
 import { Leadership } from "@/components/Leadership";
-import { Team } from "@/components/Team";
-import { ProjectLeadCta } from "@/components/ProjectLeadCta";
-import { Footer } from "@/components/Footer";
+import { TeamRow } from "@/components/TeamRow";
+import { Cta2 } from "@/components/comp2/Cta2";
+import { Footer2 } from "@/components/comp2/Footer2";
 
+// Comp 1, revised (Figma "Revised homepage 1" 548:1071).
 export default function Home() {
   return (
     <>
@@ -19,13 +20,13 @@ export default function Home() {
         <ProjectSupport />
         <WorkstreamsSection />
         <Experience />
-        <TrustedBy />
-        <Resources />
+        <TrustedBy label={false} className="mt-10 lg:mt-u-38" />
+        <ClientResources />
         <Leadership />
-        <Team />
-        <ProjectLeadCta />
+        <TeamRow />
+        <Cta2 />
       </main>
-      <Footer />
+      <Footer2 />
     </>
   );
 }

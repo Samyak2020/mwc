@@ -6,14 +6,14 @@ import { preload } from "react-dom";
 import { heroScroll } from "@/lib/motion";
 
 // The hero photo drawn inside an SVG so its mountain cut-out can be animated.
-// hero-v3.png (Figma "Vector 4", 1440×1400, 35% ink overlay baked in) has the
+// hero-v4.png (revised Figma "Vector 4" 548:1120, 1440×1400, overlay baked in) has the
 // two-peak silhouette punched out; the mask repeats it (traced from the PNG's
 // alpha) as two independent black shapes. Raising them cuts the photo further,
 // so the navy section underneath "pops up" through it in a jagged form.
 
 // Optimised copy of the 2880×2800 PNG via Next's image endpoint, requested at
 // full resolution (it is never upscaled past 2880) so it stays sharp on retina.
-const SRC = "/_next/image?url=%2Ffigma%2Fhero-v3.png&w=3840&q=90";
+const SRC = "/_next/image?url=%2Fcomp1r%2Fhero-v4.png&w=3840&q=90";
 
 // Peaks in frame units (viewBox 1440×1400). Each shape continues well below
 // the frame so it still fills the bottom after it has risen.

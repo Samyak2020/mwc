@@ -1,34 +1,37 @@
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { ScrollFillText } from "@/components/motion/ScrollFillText";
+import { FadeUp } from "@/components/comp2/FadeUp";
 
-// Figma y=2138–3037: "Project Support, Built Around Your Scope" and the
-// Workstreams statement. The pinned workstream cards follow (Workstreams.tsx).
+// Revised Figma y=2316–2721: staggered "Project Support, Built Around Your
+// Scope" heading and the Workstreams intro. The pinned cards follow
+// (Workstreams.tsx).
 export function ProjectSupport() {
   return (
-    <section id="workstreams" aria-labelledby="support-heading" className="shell pt-16 lg:pt-u-64">
+    <section id="workstreams" aria-labelledby="support-heading" className="shell pt-20 lg:pt-u-120">
       <RevealHeading
         id="support-heading"
-        className="display relative text-[40px] text-fg sm:text-[56px] lg:h-u-128 lg:fs-u-80 lg:whitespace-nowrap"
+        className="display relative text-[40px] text-fg sm:text-[56px] lg:h-u-104 lg:fs-u-64 lg:whitespace-nowrap"
       >
         <span className="block lg:contents">
-          <Line className="lg:absolute lg:left-0 lg:top-0">Project</Line>{" "}
-          <Line className="lg:absolute lg:left-u-384 lg:top-0">Support,</Line>
+          <Line className="lg:absolute lg:top-0 lg:left-0">Project</Line>{" "}
+          <Line className="lg:absolute lg:top-0 lg:left-u-306">Support,</Line>
         </span>
-        <span className="block text-right lg:contents">
-          <Line className="lg:absolute lg:left-u-302 lg:top-u-74">Built Around</Line>{" "}
-          <Line className="lg:absolute lg:left-u-885 lg:top-u-74">Your Scope</Line>
+        <span className="block pl-[0.6em] lg:contents">
+          <Line className="lg:absolute lg:top-u-60 lg:left-u-116">Built Around</Line>{" "}
+          <Line className="lg:absolute lg:top-u-60 lg:left-u-582">Your Scope</Line>
         </span>
       </RevealHeading>
 
-      <p className="mt-8 max-w-[678px] text-lg leading-[1.3] font-medium tracking-[-0.005em] text-fg/90 lg:mt-u-64 lg:ml-[calc(var(--u)*465)] lg:w-u-678">
-        Whether you are planning a new facility, managing construction, preparing for an outage or retiring a
-        plant, you need to know how that work will be managed and who is accountable.
-      </p>
-
-      <ScrollFillText
-        className="mt-24 mb-16 font-display text-[28px] leading-none font-semibold tracking-[-0.02em] text-fg sm:text-[40px] lg:mt-u-395 lg:mb-0 lg:fs-u-48"
-        text="MWC’s Workstreams provide that structure. Our codified delivery system establishes how project management, field oversight, scheduling, safety, documentation and reporting work together."
-      />
+      <FadeUp className="mt-10 flex max-w-[562px] flex-col gap-8 text-lg leading-[1.5] font-medium tracking-[-0.005em] text-fg/90 lg:mt-u-80 lg:ml-[calc(var(--u)*116)] lg:w-u-562">
+        <p>
+          <strong className="font-bold">MWC’s Workstreams</strong> are codified delivery systems that establish how
+          project management, field oversight, scheduling, safety, documentation and reporting work together.
+        </p>
+        <p>
+          Your scope determines which disciplines are applied, how responsibilities are assigned and what information
+          your team receives. Whether you need one specialist or an integrated project team, you get a defined approach
+          to managing the work.
+        </p>
+      </FadeUp>
     </section>
   );
 }
