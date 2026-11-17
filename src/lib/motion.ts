@@ -108,6 +108,22 @@ export const navMenu = {
   build: { stepDelay: 0.07, draw: 0.45, fill: 0.3 },
 } as const;
 
+// Page transition: a navy panel wipes up over the page with the MWC mark
+// (150px from the top) and the destination's name, then wipes away upward
+// off the new page. Cover + reveal = 0.8s.
+export const pageTransition = {
+  cover: 0.4,
+  reveal: 0.4,
+  ease: [0.76, 0, 0.24, 1] as const,
+} as const;
+
+// About page team carousel: the row slides to the chosen card; a card turns
+// over to show its bio.
+export const teamCarousel = {
+  slide: { duration: 0.7, ease: [0.65, 0, 0.35, 1] as const },
+  flip: { type: "spring", stiffness: 140, damping: 20, mass: 1 } as const,
+} as const;
+
 // next/image quality for photography (allow-listed in next.config.ts).
 export const PHOTO_QUALITY = 90;
 

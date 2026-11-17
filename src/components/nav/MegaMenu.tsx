@@ -10,7 +10,7 @@ import { duration, ease, navMenu } from "@/lib/motion";
 // links, and a picture on the right — a live line drawing for Industries, a
 // placeholder for Services until imagery is chosen.
 
-export type MenuKey = "industries" | "services" | "projects";
+export type MenuKey = "industries" | "services" | "projects" | "company";
 
 type Link = { label: string; href: string };
 type Industry = Link & { key: IndustryKey; description: string };
@@ -135,7 +135,17 @@ export const projectGroups: { label: string; href?: string; links: Link[] }[] =
     },
   ];
 
-const labelCls = "text-base leading-[1.2] tracking-[0.01em] text-fg/50";
+export const companyGroups: { label: string; href?: string; links: Link[] }[] = [
+  {
+    label: "Company",
+    links: [
+      { label: "About MWC", href: "/about" },
+      { label: "Careers", href: "/careers" },
+    ],
+  },
+];
+
+const labelCls ="text-base leading-[1.2] tracking-[0.01em] text-fg/50";
 const linkCls =
   "group/link inline-flex items-start gap-2 text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
 
@@ -244,7 +254,7 @@ function LinksPanel({
   image,
 }: {
   groups: Group[];
-  viewAll: [string, string];
+  viewAll?: [string, string];
   cols: string;
   image: string;
 }) {
@@ -278,7 +288,7 @@ function LinksPanel({
               </li>
             ))}
           </ul>
-          {gi === groups.length - 1 && (
+          {viewAll && gi === groups.length - 1 && (
             <div className="mt-10">
               <ViewAll href={viewAll[0]}>{viewAll[1]}</ViewAll>
             </div>
@@ -331,13 +341,15 @@ export function MenuContent({ menu }: { menu: MenuKey }) {
             cols="minmax(0,1.4fr) minmax(0,1.4fr) minmax(0,0.2fr)"
             image="420"
           />
-        ) : (
+        ) : menu === "projects" ? (
           <LinksPanel
             groups={projectGroups}
             viewAll={["/projects", "View all projects"]}
             cols="minmax(0,1fr) minmax(0,1fr)"
             image="500"
           />
+        ) : (
+          <LinksPanel groups={companyGroups} cols="minmax(0,1fr) minmax(0,1fr)" image="500" />
         )}
       </motion.div>
     </AnimatePresence>
@@ -456,7 +468,6 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
       {[
         ["Client Resources", "#"],
         ["Blogs", "#"],
-        ["Company", "#"],
       ].map(([label, href]) => (
         <li key={label} className="border-b border-fg/10">
           <a
@@ -468,6 +479,13 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
           </a>
         </li>
       ))}
+      <Group title="Company">
+        {companyGroups[0].links.map((l) => (
+          <a key={l.href} href={l.href} className={sub} onClick={onNavigate}>
+            {l.label}
+          </a>
+        ))}
+      </Group>
       <li className="mt-6">
         <a
           href="#contact"

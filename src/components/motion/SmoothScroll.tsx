@@ -22,6 +22,9 @@ export function SmoothScroll() {
       anchors: true,
     });
 
+    // the page transition resets scroll through it
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);

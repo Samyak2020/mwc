@@ -14,7 +14,7 @@ const items: Item[] = [
   { label: "Projects", href: "/projects", menu: "projects" },
   { label: "Client Resources", href: "#" },
   { label: "Blogs", href: "#" },
-  { label: "Company", href: "#" },
+  { label: "Company", href: "/about", menu: "company" },
 ];
 
 // Comp 4 v2 nav (Figma 729:1484 / 729:1483) with dropdowns after maisa.ai:

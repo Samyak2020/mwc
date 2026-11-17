@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { PageTransition } from "@/components/motion/PageTransition";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="antialiased">
         <SmoothScroll />
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          {children}
+          <PageTransition />
+        </MotionProvider>
       </body>
     </html>
   );

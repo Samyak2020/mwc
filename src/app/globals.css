@@ -178,12 +178,25 @@ body {
 .marquee-track {
   animation: marquee var(--marquee-duration) linear infinite;
 }
+/* vertical text band (about page): one loop = half the track's height */
+@keyframes marquee-y {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+.marquee-track-y {
+  animation: marquee-y var(--marquee-duration) linear infinite;
+}
 /* let people stop it to read a logo */
 .marquee:hover .marquee-track {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  .marquee-track,
+  .marquee-track-y {
     animation: none;
   }
 }
