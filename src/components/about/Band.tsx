@@ -3,11 +3,11 @@
 // or vertically up the edge of a portrait. The phrases are set twice and the
 // track moves by half its length, so the loop is seamless.
 
-const phrases = ["About MWC", "Veteran-led", "Predictable outcomes", "SDVOSB certified"];
+const aboutPhrases = ["About MWC", "Veteran-led", "Predictable outcomes", "SDVOSB certified"];
 
 const text = "text-xs leading-none font-bold tracking-[0.08em] whitespace-nowrap uppercase";
 
-function Run({ vertical }: { vertical: boolean }) {
+function Run({ vertical, phrases }: { vertical: boolean; phrases: string[] }) {
   return (
     <div className={`flex shrink-0 ${vertical ? "flex-col" : ""}`}>
       {phrases.map((p) => (
@@ -24,7 +24,15 @@ function Run({ vertical }: { vertical: boolean }) {
   );
 }
 
-export function Band({ vertical = false, className = "" }: { vertical?: boolean; className?: string }) {
+export function Band({
+  vertical = false,
+  className = "",
+  phrases = aboutPhrases,
+}: {
+  vertical?: boolean;
+  className?: string;
+  phrases?: string[];
+}) {
   return (
     <div
       aria-hidden
@@ -34,10 +42,10 @@ export function Band({ vertical = false, className = "" }: { vertical?: boolean;
       <div
         className={`${vertical ? "marquee-track-y flex h-max flex-col" : "marquee-track flex h-full w-max items-center"} ${text}`}
       >
-        <Run vertical={vertical} />
-        <Run vertical={vertical} />
-        <Run vertical={vertical} />
-        <Run vertical={vertical} />
+        <Run vertical={vertical} phrases={phrases} />
+        <Run vertical={vertical} phrases={phrases} />
+        <Run vertical={vertical} phrases={phrases} />
+        <Run vertical={vertical} phrases={phrases} />
       </div>
     </div>
   );

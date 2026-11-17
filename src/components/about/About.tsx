@@ -26,33 +26,50 @@ const ctaCls =
 
 /* --------------------------------------------------------------- hero */
 
-export function AboutHero() {
+export function AboutHero({
+  id = "about-title",
+  lines = ["About", "MWC"],
+  intro = "Learn what sets MWC apart: experienced leadership, proven project workstreams and a commitment to representing your interests.",
+  image = "/comp2/hero-v2.jpg",
+  alt = "MWC field leads walking a power generation site",
+  titleClassName = "text-[72px] leading-[0.85] sm:text-[120px] lg:fs-u-160",
+  band,
+}: {
+  id?: string;
+  lines?: string[];
+  intro?: string;
+  image?: string;
+  alt?: string;
+  titleClassName?: string;
+  /** phrases for the running band under the photo (About's by default) */
+  band?: string[];
+} = {}) {
   return (
-    <section data-nav-theme="light" aria-labelledby="about-title" className="shell pt-32 lg:pt-u-170">
+    <section data-nav-theme="light" aria-labelledby={id} className="shell pt-32 lg:pt-u-170">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <RevealHeading
           as="h1"
-          id="about-title"
+          id={id}
           trigger="load"
           delay={heroSequence.headlineDelay}
-          className="display text-[72px] leading-[0.85] sm:text-[120px] lg:fs-u-160"
+          className={`display ${titleClassName}`}
         >
-          <Line className="block">About</Line>
-          <Line className="block">MWC</Line>
+          {lines.map((l) => (
+            <Line key={l} className="block">
+              {l}
+            </Line>
+          ))}
         </RevealHeading>
         <FadeIn delay={heroSequence.chromeDelay} className="max-w-[420px] lg:w-u-420 lg:pb-u-12">
-          <p className="text-lg leading-[1.45] tracking-[-0.005em] lg:fs-u-20">
-            Learn what sets MWC apart: experienced leadership, proven project workstreams and a commitment to representing
-            your interests.
-          </p>
+          <p className="text-lg leading-[1.45] tracking-[-0.005em] lg:fs-u-20">{intro}</p>
         </FadeIn>
       </div>
 
       <div className="relative mt-10 h-[420px] overflow-hidden rounded-[4px] bg-navy sm:h-[560px] lg:mt-u-56 lg:h-u-720">
         <ImageReveal trigger="load" delay={heroSequence.headlineDelay + 0.2}>
           <Image
-            src="/comp2/hero-v2.jpg"
-            alt="MWC field leads walking a power generation site"
+            src={image}
+            alt={alt}
             fill
             priority
             sizes="100vw"
@@ -62,7 +79,7 @@ export function AboutHero() {
           <div aria-hidden className="absolute inset-0 bg-black/10" />
           <Texture opacity={0.12} />
         </ImageReveal>
-        <Band className="absolute inset-x-0 bottom-0 h-8" />
+        <Band phrases={band} className="absolute inset-x-0 bottom-0 h-8" />
       </div>
     </section>
   );

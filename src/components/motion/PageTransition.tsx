@@ -10,6 +10,7 @@ import { Ridge } from "@/components/ui/Ridge";
 const pageNames: Record<string, string> = {
   "/comp-4": "Home",
   "/about": "About Us",
+  "/careers": "Careers",
   "/privacy": "Privacy Policy",
   "/terms": "Terms of Use",
 };
