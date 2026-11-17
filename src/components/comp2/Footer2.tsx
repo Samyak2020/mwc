@@ -1,4 +1,5 @@
 import { Rise } from "@/components/motion/Rise";
+import { Ridge } from "@/components/ui/Ridge";
 
 const columns = [
   {
@@ -39,8 +40,16 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
   // comp 4 v2: the columns rise in one after another
   const Col = logoV2 ? Rise : "div";
   return (
-    <footer data-nav-theme="dark" className="bg-[#062567] text-bg">
-      <div className="shell pt-14 pb-10 lg:pt-u-54 lg:pb-[calc(var(--u)*40)]">
+    <footer data-nav-theme="dark" className="relative overflow-hidden bg-[#062567] text-bg">
+      {/* comp 4 v2: the logo's mountain, very faint, behind the lower half */}
+      {logoV2 && (
+        <Ridge
+          body="rgb(251 252 255 / 0.07)"
+          line="rgb(32 137 216 / 0.3)"
+          className="absolute -right-[6%] bottom-0 w-[75%] lg:w-[55%]"
+        />
+      )}
+      <div className="shell relative pt-14 pb-10 lg:pt-u-54 lg:pb-[calc(var(--u)*40)]">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           {/* comp 4 v2: the new two-tone mark (Figma 733:1613, 102.7×59.8) */}
           {logoV2 ? (

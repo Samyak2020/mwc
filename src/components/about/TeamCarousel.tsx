@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "@/components/ui/Arrow";
+import { Ridge } from "@/components/ui/Ridge";
 import { duration, ease, PHOTO_QUALITY, teamCarousel } from "@/lib/motion";
 
 // Team carousel (layout after the reference's "Leadership" row): the names on
@@ -124,7 +125,10 @@ function Card({
             reduce && !flipped ? "invisible" : ""
           }`}
         >
-          <span className="flex flex-col gap-1">
+          {/* the logo's mountain along the foot of the card */}
+          {/* draws each time the card turns over */}
+          {flipped && <Ridge trigger="mount" duration={0.9} className="absolute right-0 bottom-0 w-[85%]" />}
+          <span className="relative flex flex-col gap-1">
             <span className="display text-[28px] leading-[0.95] lg:fs-u-40">{m.name}</span>
             <span className="mt-2 text-base text-bg/75">{m.role}</span>
             <span className="text-sm text-bg/55">{m.years}</span>

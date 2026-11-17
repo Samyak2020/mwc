@@ -9,6 +9,7 @@ import { ImageReveal } from "@/components/motion/ImageReveal";
 import { FadeIn } from "@/components/motion/Stagger";
 import { Rise, RiseEach, RiseWords } from "@/components/motion/Rise";
 import { Band } from "./Band";
+import { Ridge } from "@/components/ui/Ridge";
 import { DisciplineIcon, type DisciplineKey } from "./DisciplineIcons";
 import { TeamCarousel } from "./TeamCarousel";
 import { heroSequence, PHOTO_QUALITY } from "@/lib/motion";
@@ -73,9 +74,13 @@ export function AboutQuote({ quote, by, dark = false }: { quote: string; by: str
   return (
     <section
       data-nav-theme={dark ? "dark" : "light"}
-      className={dark ? "mt-24 bg-navy py-24 text-bg lg:mt-u-160 lg:py-u-160" : "pt-24 lg:pt-u-160"}
+      className={dark ? "relative mt-24 overflow-hidden bg-navy py-24 text-bg lg:mt-u-160 lg:py-u-160" : "pt-24 lg:pt-u-160"}
     >
-      <figure className="shell">
+      {/* the logo's mountain, drawn across the foot of the navy band */}
+      {dark && (
+        <Ridge className="absolute -right-[4%] bottom-0 w-[70%] lg:w-[52%]" />
+      )}
+      <figure className="shell relative">
         <blockquote>
           <RiseWords
             text={`“${quote}”`}
@@ -227,24 +232,27 @@ export function AboutFramework() {
         as="ul"
         itemAs="li"
         className="shell mt-12 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto pb-2 lg:scroll-px-[calc(var(--u)*32)] [scrollbar-width:none] lg:mt-u-64 [&::-webkit-scrollbar]:hidden"
-        itemClassName="relative h-[460px] w-[300px] shrink-0 snap-start overflow-hidden rounded-[4px] bg-navy text-bg sm:w-[360px] lg:h-u-560 lg:w-u-440"
+        itemClassName="w-[300px] shrink-0 snap-start sm:w-[360px] lg:w-u-440"
       >
         {workstreams.map((w) => (
-          <a key={w.name} href="/all-services" className="group absolute inset-0 block">
-            <Image
-              src={w.image}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 31vw, 80vw"
-              quality={PHOTO_QUALITY}
-              className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.04]"
-            />
-            <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_6_17/0.7)_0%,rgb(0_6_17/0)_45%)]" />
-            <Texture opacity={0.12} />
-            <div className="absolute inset-x-0 top-0 flex flex-col gap-2 p-6">
-              <h3 className="text-xl leading-[1.2] font-semibold tracking-[-0.005em]">{w.name}</h3>
-              <p className="max-w-[320px] text-sm leading-[1.45] text-bg/85">{w.text}</p>
+          <a key={w.name} href="/all-services" className="group flex flex-col gap-5">
+            {/* the comp 1 card: photo with the jagged mountain band along the bottom (sky edge + navy) */}
+            <div className="relative h-[400px] overflow-hidden rounded-[4px] bg-navy text-bg lg:h-u-480">
+              <Image
+                src={w.image}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 31vw, 80vw"
+                quality={PHOTO_QUALITY}
+                className="object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+              />
+              <Texture opacity={0.12} />
+              <img src="/about/ws-band.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[31%] w-full" />
+              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.9] font-black tracking-[-0.01em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
+                {w.name}
+              </h3>
             </div>
+            <p className="max-w-[380px] text-base leading-[1.5] tracking-[-0.005em] text-fg/80">{w.text}</p>
           </a>
         ))}
       </RiseEach>

@@ -124,6 +124,15 @@ export const teamCarousel = {
   flip: { type: "spring", stiffness: 140, damping: 20, mass: 1 } as const,
 } as const;
 
+// Logo mountain motif: the shaded body draws first, then the ridge line above
+// it starts when the body is `overlap` of the way through.
+export const ridge = {
+  draw: 1.4, // per stroke, on scroll
+  transitionDraw: 0.45, // per stroke, inside the page transition
+  ease: [0.65, 0, 0.35, 1] as const,
+  overlap: 0.7,
+} as const;
+
 // next/image quality for photography (allow-listed in next.config.ts).
 export const PHOTO_QUALITY = 90;
 
