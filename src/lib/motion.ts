@@ -121,7 +121,9 @@ export const pageTransition = {
 // over to show its bio.
 export const teamCarousel = {
   slide: { duration: 0.7, ease: [0.65, 0, 0.35, 1] as const },
-  flip: { type: "spring", stiffness: 140, damping: 20, mass: 1 } as const,
+  // bio reveal: sky wipes up, then navy (step each); the text fades in over
+  // the last `text` seconds, so everything lands at 2 × step = 0.5s
+  wipe: { step: 0.25, text: 0.1, ease: [0.65, 0, 0.35, 1] as const },
 } as const;
 
 // Logo mountain motif: the shaded body draws first, then the ridge line above

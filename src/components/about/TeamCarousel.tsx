@@ -11,8 +11,8 @@ import { PHOTO_QUALITY, teamCarousel } from "@/lib/motion";
 // the left with a dot for the one in view and arrows under them; on the right
 // a row of tall cards. The current card shows its photo full bleed; the
 // others show it smaller on a pale panel, dimmed. Clicking a name, an arrow or a card
-// brings it forward. Hovering a card shows "Bio"; clicking it turns the card
-// over to the same details plus the biography.
+// brings it forward. Hovering a card shows "Bio"; clicking it wipes sky then navy up
+// over the card (0.5s) to the same details plus the biography.
 
 type Member = { name: string; role: string; years: string; image: string; portrait?: boolean };
 
@@ -40,20 +40,24 @@ function Card({
   onFlip: () => void;
 }) {
   const reduce = useReducedMotion();
+  const { step, text, ease: wipeEase } = teamCarousel.wipe;
+  // open: sky rises from its bar to the top, then navy follows; close reverses
+  const wipe = (order: 0 | 1) => ({
+    initial: false as const,
+    animate: { clipPath: flipped ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)" },
+    transition: reduce
+      ? { duration: 0 }
+      : { duration: step, ease: wipeEase, delay: flipped ? order * step : (1 - order) * step },
+  });
   return (
     <li
       // cards out of the main frame are dimmed; the current one is full strength
-      className={`h-[420px] w-[280px] shrink-0 transition-opacity duration-700 [perspective:1600px] sm:h-[480px] sm:w-[340px] lg:h-u-520 lg:w-u-440 ${
+      className={`h-[420px] w-[280px] shrink-0 transition-opacity duration-700 sm:h-[480px] sm:w-[340px] lg:h-u-520 lg:w-u-440 ${
         active ? "opacity-100" : "opacity-40 hover:opacity-70"
       }`}
     >
-      <motion.div
-        className="relative h-full w-full [transform-style:preserve-3d]"
-        initial={false}
-        animate={{ rotateY: flipped && !reduce ? 180 : 0 }}
-        transition={teamCarousel.flip}
-      >
-        {/* front */}
+      <div className="relative h-full w-full overflow-hidden rounded-[4px]">
+        {/* front: the team card (as on the homepage) */}
         <button
           type="button"
           aria-label={`${m.name}, ${m.role}: show bio`}
@@ -63,11 +67,8 @@ function Card({
             onSelect();
             onFlip();
           }}
-          className={`group absolute inset-0 flex flex-col overflow-hidden rounded-[4px] text-left [backface-visibility:hidden] ${
-            reduce && flipped ? "invisible" : ""
-          }`}
+          className="group absolute inset-0 flex flex-col text-left"
         >
-          {/* the team card (as on the homepage): photo, name on sky, role + experience on navy */}
           <span className="relative block min-h-0 flex-1 overflow-hidden bg-navy">
             {m.portrait && (
               <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,#3a3936_0%,#45433f_45%,#2c3038_70%,#1a2230_100%)]" />
@@ -101,32 +102,34 @@ function Card({
           </span>
         </button>
 
-        {/* back: the same details and the biography */}
-        <button
+        {/* the bio: sky wipes up over the card, navy follows, then the text appears */}
+        <motion.span aria-hidden className="pointer-events-none absolute inset-0 bg-sky" {...wipe(0)} />
+        <motion.span aria-hidden className="pointer-events-none absolute inset-0 bg-navy" {...wipe(1)} />
+        <motion.button
           type="button"
           aria-label={`${m.name}: back to photo`}
           aria-hidden={!flipped}
           tabIndex={flipped ? 0 : -1}
           onClick={onFlip}
-          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[4px] bg-navy p-6 text-left text-bg/90 [backface-visibility:hidden] lg:p-u-40 ${reduce ? "" : "[transform:rotateY(180deg)]"} ${
-            reduce && !flipped ? "invisible" : ""
-          }`}
+          className={`absolute inset-0 flex flex-col justify-between p-6 text-left text-bg/90 lg:p-u-40 ${flipped ? "" : "pointer-events-none"}`}
+          initial={false}
+          animate={{ opacity: flipped ? 1 : 0 }}
+          transition={{ duration: reduce ? 0 : text, ease: wipeEase, delay: flipped && !reduce ? step * 2 - text : 0 }}
         >
-          {/* the logo's mountain along the foot of the card */}
-          {/* draws each time the card turns over */}
+          {/* the logo's mountain draws in along the foot each time the bio opens */}
           {flipped && <Ridge trigger="mount" duration={0.9} className="absolute right-0 bottom-0 w-[85%]" />}
           <span className="relative flex flex-col gap-1">
             <span className="display text-[28px] leading-[0.95] lg:fs-u-40">{m.name}</span>
             <span className="mt-2 text-base text-bg/75">{m.role}</span>
             <span className="text-sm text-bg/55">{m.years}</span>
           </span>
-          <span className="text-base leading-[1.55] text-bg/90 lg:fs-u-18">{BIO}</span>
-          <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase">
+          <span className="relative text-base leading-[1.55] text-bg/90 lg:fs-u-18">{BIO}</span>
+          <span className="relative inline-flex items-center gap-2 text-sm font-semibold uppercase">
             <Arrow width={18} className="rotate-180" />
             Back
           </span>
-        </button>
-      </motion.div>
+        </motion.button>
+      </div>
     </li>
   );
 }
