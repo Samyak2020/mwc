@@ -197,7 +197,7 @@ export function LegalPage({
             <p className="text-lg leading-[1.55] text-fg lg:fs-u-20">{intro}</p>
             {sections.map((s, i) => (
               <section key={s.title} id={slug(i)} aria-labelledby={`${slug(i)}-h`} className="scroll-mt-32 pt-12 lg:pt-u-64">
-                <h2 id={`${slug(i)}-h`} className="display text-[24px] leading-[1.1] normal-case! text-fg sm:text-[28px] lg:fs-u-32">
+                <h2 id={`${slug(i)}-h`} className="font-display text-[24px] leading-[1.1] font-bold tracking-[-0.012em] text-fg sm:text-[28px] lg:fs-u-32">
                   {i + 1}. {s.title}
                 </h2>
                 <div className="mt-5 flex flex-col gap-4 lg:mt-u-24">

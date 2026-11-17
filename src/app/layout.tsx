@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=switzer@500,600,900&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=switzer@500,600,700,900&display=swap"
         />
       </head>
       <body className="antialiased">
