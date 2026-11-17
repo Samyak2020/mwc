@@ -27,12 +27,16 @@ const BIO =
   "Biography to come. This is a placeholder for the approved bio: background, the kinds of projects led, certifications, and what this person brings to an MWC engagement in the field and with your team.";
 
 function Card({
+  ref,
+  style,
   m,
   active,
   flipped,
   onSelect,
   onFlip,
 }: {
+  ref?: React.Ref<HTMLLIElement>;
+  style?: React.CSSProperties;
   m: Member;
   active: boolean;
   flipped: boolean;
@@ -51,6 +55,8 @@ function Card({
   });
   return (
     <li
+      ref={ref}
+      style={style}
       // cards out of the main frame are dimmed; the current one is full strength
       className={`h-[420px] w-[280px] shrink-0 transition-opacity duration-700 sm:h-[480px] sm:w-[340px] lg:h-u-520 lg:w-u-440 ${
         active ? "opacity-100" : "opacity-40 hover:opacity-70"
@@ -134,30 +140,40 @@ function Card({
   );
 }
 
+const mod = (n: number, m: number) => ((n % m) + m) % m;
+
 export function TeamCarousel() {
-  const [active, setActive] = useState(0);
+  // an endless row: `pos` counts cards travelled and never wraps, so going past
+  // the last member simply carries on to the first (no slide back to the start)
+  const [pos, setPos] = useState(0);
   const [flipped, setFlipped] = useState<number | null>(null);
   const reduce = useReducedMotion();
-  const track = useRef<HTMLUListElement>(null);
-  const [offset, setOffset] = useState(0);
+  const probe = useRef<HTMLLIElement>(null);
+  const [step, setStep] = useState(0);
+  const N = team.length;
+  const active = mod(pos, N);
 
-  // slide so the current card sits at the start of the row
+  // one card + gap, measured (card widths change with the breakpoint)
   useEffect(() => {
-    const measure = () => {
-      const row = track.current;
-      const el = row?.children[active] as HTMLElement | undefined;
-      // on-screen positions: the row's own slide cancels out of the difference
-      if (row && el) setOffset(el.getBoundingClientRect().left - row.getBoundingClientRect().left);
-    };
+    const measure = () => probe.current && setStep(probe.current.getBoundingClientRect().width + 8);
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [active]);
+  }, []);
 
-  const go = (i: number) => {
+  const move = (delta: number) => {
     setFlipped(null);
-    setActive((i + team.length) % team.length);
+    setPos((p) => p + delta);
   };
+  // a name: travel the short way round to it
+  const goTo = (i: number) => {
+    const fwd = mod(i - active, N);
+    move(fwd <= N / 2 ? fwd : fwd - N);
+  };
+
+  // cards on screen plus one either side, keyed by their place in the endless row
+  const slots: number[] = [];
+  for (let k = pos - 2; k <= pos + 5; k++) slots.push(k);
 
   return (
     <div className="mt-14 grid gap-8 lg:mt-u-96 lg:grid-cols-[calc(var(--u)*300)_minmax(0,1fr)] lg:gap-u-32">
@@ -169,7 +185,7 @@ export function TeamCarousel() {
               <button
                 type="button"
                 aria-current={i === active}
-                onClick={() => go(i)}
+                onClick={() => goTo(i)}
                 className={`flex items-center gap-4 text-lg leading-[1.3] transition-colors ${i === active ? "text-fg" : "text-fg/45 hover:text-fg/75"}`}
               >
                 <span
@@ -187,7 +203,7 @@ export function TeamCarousel() {
               key={d}
               type="button"
               aria-label={d < 0 ? "Previous team member" : "Next team member"}
-              onClick={() => go(active + d)}
+              onClick={() => move(d)}
               className="flex size-12 items-center justify-center rounded-full border border-fg/20 transition-colors hover:border-fg/60"
             >
               <Arrow width={18} className={d < 0 ? "rotate-180" : ""} />
@@ -199,23 +215,28 @@ export function TeamCarousel() {
       {/* cards run off the right edge of the page */}
       <div className="-mr-4 overflow-hidden lg:mr-[calc(-1*(var(--u)*32+var(--bleed)))]">
         <motion.ul
-          ref={track}
-          className="flex gap-2"
-          animate={{ x: -offset }}
+          className="relative h-[420px] sm:h-[480px] lg:h-u-520"
+          initial={false}
+          animate={{ x: -pos * step }}
           transition={reduce ? { duration: 0 } : teamCarousel.slide}
         >
-          {team.map((m, i) => (
-            <Card
-              key={m.name}
-              m={m}
-              active={i === active}
-              flipped={flipped === i}
-              onSelect={() => {
-                if (i !== active) setActive(i);
-              }}
-              onFlip={() => setFlipped((f) => (f === i ? null : i))}
-            />
-          ))}
+          {slots.map((k) => {
+            const i = mod(k, N);
+            return (
+              <Card
+                key={k}
+                ref={k === pos ? probe : undefined}
+                style={{ position: "absolute", top: 0, left: k * step }}
+                m={team[i]}
+                active={k === pos}
+                flipped={flipped === k}
+                onSelect={() => {
+                  if (k !== pos) move(k - pos);
+                }}
+                onFlip={() => setFlipped((f) => (f === k ? null : k))}
+              />
+            );
+          })}
         </motion.ul>
       </div>
     </div>
