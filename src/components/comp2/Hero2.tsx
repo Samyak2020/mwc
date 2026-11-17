@@ -16,7 +16,10 @@ export function Hero2({
   description = "Veteran-led field teams, your crews and leadership trust.",
   fullHeight = false,
   flatOverlay = false,
+  v2 = false,
 }: {
+  /** Comp 4 v2 (Figma 728:1110): wider 3-line headline (1159), 24px intro */
+  v2?: boolean;
   description?: string;
   /** Comp 3: the hero fills the viewport at any size, content centred in it
    *  (Figma 583:2220) instead of the fixed 1440×1014 frame. */
@@ -67,22 +70,47 @@ export function Hero2({
 
         {/* headline, intro and CTA centred in the viewport, clear of the nav */}
         <div className="relative flex flex-1 flex-col items-center justify-center px-4 pt-20 pb-10 text-center">
-          <RevealHeading
-            as="h1"
-            trigger="load"
-            delay={heroSequence.headlineDelay}
-            className="display max-w-[878px] text-[40px] sm:text-[56px] lg:w-u-878 lg:fs-u-80 lg:tracking-[-0.015em]"
-          >
-            <Line className="block">Predictable</Line>
-            <Line className="block">Outcomes for</Line>
-            <Line className="block">High-Risk Capital</Line>
-            <Line className="block">Projects</Line>
-          </RevealHeading>
+          {v2 ? (
+            <RevealHeading
+              as="h1"
+              trigger="load"
+              delay={heroSequence.headlineDelay}
+              className="display max-w-[1159px] text-[40px] sm:text-[56px] lg:w-u-1159 lg:fs-u-80 lg:tracking-[-0.015em]"
+            >
+              <Line className="block">Predictable Outcomes for</Line>
+              <Line className="block">High-Risk Capital</Line>
+              <Line className="block">Projects</Line>
+            </RevealHeading>
+          ) : (
+            <RevealHeading
+              as="h1"
+              trigger="load"
+              delay={heroSequence.headlineDelay}
+              className="display max-w-[878px] text-[40px] sm:text-[56px] lg:w-u-878 lg:fs-u-80 lg:tracking-[-0.015em]"
+            >
+              <Line className="block">Predictable</Line>
+              <Line className="block">Outcomes for</Line>
+              <Line className="block">High-Risk Capital</Line>
+              <Line className="block">Projects</Line>
+            </RevealHeading>
+          )}
           <FadeIn
             delay={heroSequence.chromeDelay}
-            className="mt-12 flex flex-col items-center gap-6 lg:mt-[min(calc(var(--u)*170),12svh)]"
+            className={
+              v2
+                ? "mt-12 flex flex-col items-center gap-6 lg:mt-[min(calc(var(--u)*190),16svh)]"
+                : "mt-12 flex flex-col items-center gap-6 lg:mt-[min(calc(var(--u)*170),12svh)]"
+            }
           >
-            <p className="w-[281px] text-lg leading-[1.1] font-medium lg:w-u-281">{description}</p>
+            <p
+              className={
+                v2
+                  ? "w-[300px] text-xl leading-[1.1] font-semibold sm:w-[350px] sm:text-2xl lg:w-u-350 lg:fs-u-24"
+                  : "w-[281px] text-lg leading-[1.1] font-medium lg:w-u-281"
+              }
+            >
+              {description}
+            </p>
             <a
               href="#contact"
               className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"

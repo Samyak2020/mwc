@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Arrow } from "@/components/ui/Arrow";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { GeneratorVector } from "@/components/comp4/GeneratorVector";
+import { Rise } from "@/components/motion/Rise";
 import { PHOTO_QUALITY } from "@/lib/motion";
 
 // Comp 4 footer CTA (Figma "Project Lead Image" 639:4271, 1440×730, sky):
@@ -21,13 +22,15 @@ export function Cta4() {
       id="contact"
       data-nav-theme="dark"
       aria-labelledby="cta-heading"
-      className="relative mt-24 h-[560px] overflow-hidden bg-sky text-bg sm:h-[640px] lg:mt-u-120 lg:h-u-730"
+      className="relative mt-24 h-[560px] overflow-hidden bg-sky text-bg sm:h-[640px] lg:mt-u-174 lg:h-u-730"
     >
-      <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-69">
-        <RevealHeading id="cta-heading" className="display text-[44px] sm:text-[64px] lg:fs-u-72">
-          <Line className="block">Bring us your</Line>
-          <Line className="block">project</Line>
+      <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-109">
+        {/* v2 (Figma 728:1206): 56px, 918 wide, 32 above the button */}
+        <RevealHeading id="cta-heading" className="display text-[40px] sm:text-[56px] lg:w-u-918 lg:fs-u-56">
+          <Line className="block">Ready for More Predictable</Line>
+          <Line className="block">Project Outcomes?</Line>
         </RevealHeading>
+        <Rise delay={0.2}>
         <a
           href="mailto:info@mwconsultllc.com"
           onPointerEnter={on}
@@ -36,9 +39,10 @@ export function Cta4() {
           onBlur={off}
           className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
         >
-          Talk to a Project Lead
+          Scope Your Project
           <Arrow />
         </a>
+        </Rise>
       </div>
 
       {/* "Generators" (639:4278): 730×512 artwork box at x 350 (centre −370),

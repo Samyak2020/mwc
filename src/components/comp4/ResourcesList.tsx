@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { StaggerList, StaggerItem } from "@/components/motion/Stagger";
+import { Rise, RiseEach } from "@/components/motion/Rise";
 import { Texture } from "@/components/ui/Texture";
 import { PHOTO_QUALITY } from "@/lib/motion";
 
@@ -40,9 +40,10 @@ export function ResourcesList() {
       </RevealHeading>
 
       <div className="mt-10 lg:mt-0">
-        <StaggerList className="flex flex-col gap-10 sm:gap-5">
+        {/* article cards rise in one after another */}
+        <RiseEach as="ul" itemAs="li" className="flex flex-col gap-10 sm:gap-5">
           {articles.map((a) => (
-            <StaggerItem key={a.title}>
+            <div key={a.title}>
               <a href="#" className="group grid gap-5 sm:grid-cols-2 sm:gap-8 lg:gap-u-32">
                 <div
                   className="relative overflow-hidden bg-navy"
@@ -67,15 +68,17 @@ export function ResourcesList() {
                   <p className="text-base leading-[1.5] tracking-[0.005em] text-fg/80">{a.description}</p>
                 </div>
               </a>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerList>
+        </RiseEach>
+        <Rise className="mt-7">
         <a
           href="#"
-          className="cta mt-7 inline-flex items-center border border-fg/50 bg-white px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+          className="cta inline-flex items-center border border-fg/50 bg-white px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
         >
           See all resources
         </a>
+        </Rise>
       </div>
     </section>
   );

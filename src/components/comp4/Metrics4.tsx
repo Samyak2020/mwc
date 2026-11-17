@@ -1,5 +1,5 @@
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { StaggerList, StaggerItem } from "@/components/motion/Stagger";
+import { Rise, RiseEach } from "@/components/motion/Rise";
 
 const metrics = [
   { value: "$220M", label: "Capital project value supported" },
@@ -14,32 +14,32 @@ const metrics = [
 export function Metrics4() {
   return (
     <section aria-labelledby="experience-heading" className="shell pt-24 text-fg lg:grid lg:grid-cols-[calc(var(--u)*468)_1fr] lg:pt-u-110">
-      <p className="flex items-center gap-2.5 self-start text-sm leading-[1.5] font-bold tracking-[0.05em] uppercase">
+      <Rise as="p" className="flex items-center gap-2.5 self-start text-sm leading-[1.5] font-bold tracking-[0.05em] uppercase">
         <span aria-hidden className="flex gap-0.5">
           <span className="size-2 bg-sky" />
           <span className="size-2 bg-[#033192]" />
           <span className="size-2 bg-[#001b56]" />
         </span>
         Impact over the years
-      </p>
+      </Rise>
 
       <div className="mt-6 lg:mt-0">
-        <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:ml-[calc(var(--u)*20)] lg:w-u-911 lg:fs-u-64">
+        <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:ml-[calc(var(--u)*20)] lg:w-u-911 lg:fs-u-56">
           <Line className="block">Project Experience and</Line>
           <Line className="block">Performance</Line>
         </RevealHeading>
 
-        <StaggerList className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:mt-u-92 lg:w-u-908">
+        <RiseEach as="ul" itemAs="li" className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:mt-u-92 lg:w-u-908">
           {metrics.map((m, i) => (
-            <StaggerItem
+            <div
               key={m.label}
               className={`flex flex-col gap-8 border-t border-fg/20 pt-10 pb-12 pl-5 lg:gap-u-40 lg:pt-u-40 lg:pb-u-48 ${i % 2 ? "sm:pl-[calc(var(--u)*31)]" : ""}`}
             >
               <p className="display text-[48px] lg:fs-u-56">{m.value}</p>
               <p className="max-w-[329px] text-lg leading-[1.5] tracking-[0.005em]">{m.label}</p>
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerList>
+        </RiseEach>
       </div>
     </section>
   );

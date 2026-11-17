@@ -211,6 +211,37 @@ body {
   backdrop-filter: blur(var(--nav-blur)) saturate(140%);
   transition: background-color var(--duration-base) var(--ease-out);
 }
+/* Comp 4 v2 nav (Figma 729:1484 "On dark BG" / 729:1483 "On lighter bg"):
+   a lighter tint that is always on, and a two-tone logo per theme. */
+:root {
+  --nav-fill-v2: rgb(0 6 17 / 0.2);
+  --logo-peak: #fffdf9;
+  --logo-shade: #acacac;
+  --logo-text: #fffdf9;
+}
+:root[data-nav-theme="light"] {
+  --nav-fill-v2: rgb(255 253 249 / 0.1);
+  --logo-peak: #656565;
+  --logo-shade: #000611;
+  --logo-text: #000611;
+}
+/* menu open: the bar turns solid paper with ink text, whatever is beneath */
+.nav-open {
+  --nav-fg: #000611;
+  --nav-fill-v2: #fbfcff;
+  --logo-peak: #656565;
+  --logo-shade: #000611;
+  --logo-text: #000611;
+}
+.nav-fill-v2 {
+  background: var(--nav-fill-v2);
+  -webkit-backdrop-filter: blur(var(--nav-blur)) saturate(140%);
+  backdrop-filter: blur(var(--nav-blur)) saturate(140%);
+  transition: background-color var(--duration-base) var(--ease-out);
+}
+.nav-fg svg path {
+  transition: fill var(--duration-base) var(--ease-out);
+}
 
 /* Footer column grid (Figma "Footer Navigation": Services 329, Projects 253,
    Organizations 210, Company 181, spread across 1376). Shared by the brand

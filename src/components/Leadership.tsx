@@ -4,7 +4,7 @@ import { ImageReveal } from "@/components/motion/ImageReveal";
 import Image from "next/image";
 import { PHOTO_QUALITY } from "@/lib/motion";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { FadeUp } from "@/components/comp2/FadeUp";
+import { Rise } from "@/components/motion/Rise";
 
 // Revised Figma y=5497–6636: heading; left column (about, then the
 // certification block at the bottom), right column (overview + portrait).
@@ -19,15 +19,15 @@ export function Leadership() {
       <div className="mt-12 grid gap-12 lg:mt-u-110 lg:grid-cols-[calc(var(--u)*445)_calc(var(--u)*796)] lg:justify-between lg:gap-0">
         {/* left: about at the top, certification block at the bottom */}
         <div className="flex flex-col justify-between gap-12">
-          <FadeUp className="flex flex-col">
+          <Rise className="flex flex-col">
             <p className="text-sm leading-[1.5] font-bold tracking-[0.095em] text-fg/50">ABOUT</p>
             <p className="mt-4 font-display text-[32px] leading-[0.9] font-black tracking-[-0.015em] text-fg uppercase lg:fs-u-40">
               Andrew Schaaf
             </p>
             <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/50">Owner and President of MWC</p>
-          </FadeUp>
+          </Rise>
 
-          <FadeUp className="flex flex-col gap-16">
+          <Rise className="flex flex-col gap-16">
             <p className="text-lg leading-[1.3] font-medium tracking-[-0.005em] text-fg/90">
               Work awarded to MWC counts toward federal service-disabled veteran-owned contracting goals and utility
               supplier diversity spend.
@@ -60,17 +60,17 @@ export function Leadership() {
                 <Arrow />
               </a>
             </div>
-          </FadeUp>
+          </Rise>
         </div>
 
         {/* right: overview + portrait (796×650, crop top −23.52%) */}
         <div className="flex flex-col gap-8 lg:mt-u-151 lg:gap-u-33">
-          <FadeUp>
+          <Rise>
             <p className="text-xl leading-[1.3] font-medium tracking-[-0.005em] text-fg/90 lg:fs-u-24">
               MWC is led by <strong className="font-bold">Andrew Schaaf</strong>, a commissioned officer with nearly 30
               years of military service and a career in power plant operations, commissioning and decommissioning.
             </p>
-          </FadeUp>
+          </Rise>
           {/* The portrait is upright and the frame is wide: fit it to the frame's
               height so he sits centred, head to chest, with a soft blur of the
               same studio backdrop filling the sides. */}

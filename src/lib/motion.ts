@@ -75,6 +75,39 @@ export const smoothScroll = {
   wheelMultiplier: 1,
 } as const;
 
+// Comp 4 v2 industry cards (Figma 728:1239): the hovered card widens to the
+// open size while the others share the rest; its copy fades up once the card
+// is mostly open.
+export const industryCards = {
+  open: 562, // open card width on the 1440 frame
+  resize: { duration: 0.7, ease: [0.65, 0, 0.35, 1] as const },
+  contentDelay: 0.25,
+} as const;
+
+// Scroll reveals (comp 4 v2, after sereinwealth.com): content rises a short
+// way, fades in and comes into focus from a slight blur as it enters the
+// viewport. Elements in a group follow one another a step apart.
+export const scrollReveal = {
+  y: 22,
+  blur: 6,
+  duration: 0.7,
+  ease: [0.16, 1, 0.3, 1] as const,
+  step: 0.12, // between elements of a group (cards, columns)
+  wordStep: 0.035, // between words of a split paragraph
+  // how far into the viewport an element must be before it plays
+  margin: "0px 0px -12% 0px",
+} as const;
+
+// Nav dropdown (after maisa.ai): a white panel drops from the bar, the page
+// behind blurs; the industry drawings build up step by step.
+export const navMenu = {
+  openDelay: 0.08, // hover intent before opening (s)
+  closeDelay: 0.18, // grace period when the pointer leaves (s)
+  panel: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  content: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const },
+  build: { stepDelay: 0.07, draw: 0.45, fill: 0.3 },
+} as const;
+
 // next/image quality for photography (allow-listed in next.config.ts).
 export const PHOTO_QUALITY = 90;
 

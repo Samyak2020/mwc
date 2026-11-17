@@ -1,3 +1,5 @@
+import { Rise } from "@/components/motion/Rise";
+
 const columns = [
   {
     label: "Organizations",
@@ -33,12 +35,19 @@ const columns = [
 ];
 
 // Figma "Footer" (594:3205): navy, 1440×737.
-export function Footer2() {
+export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
+  // comp 4 v2: the columns rise in one after another
+  const Col = logoV2 ? Rise : "div";
   return (
     <footer data-nav-theme="dark" className="bg-[#062567] text-bg">
       <div className="shell pt-14 pb-10 lg:pt-u-54 lg:pb-[calc(var(--u)*40)]">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <img src="/comp2/footer-logo.svg" alt="MWC" width={79} height={60} />
+          {/* comp 4 v2: the new two-tone mark (Figma 733:1613, 102.7×59.8) */}
+          {logoV2 ? (
+            <img src="/comp4v2/footer-logo.svg" alt="MWC" width={103} height={60} />
+          ) : (
+            <img src="/comp2/footer-logo.svg" alt="MWC" width={79} height={60} />
+          )}
           <p className="max-w-[471px] text-base leading-[1.3] font-medium tracking-[-0.005em] lg:mt-0.5 lg:w-u-471">
             Owner’s representative, project controls and construction management for gas, solar, battery storage and
             transmission projects. Veteran-led and certified SDVOSB.
@@ -50,7 +59,7 @@ export function Footer2() {
           className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:mt-u-133 lg:flex lg:items-start lg:justify-between lg:gap-0"
         >
           {columns.map((col, i) => (
-            <div key={col.label} className={`flex flex-col gap-8 ${i === 0 ? "lg:w-u-210" : "lg:whitespace-nowrap"}`}>
+            <Col key={col.label} {...(logoV2 ? { order: i } : {})} className={`flex flex-col gap-8 ${i === 0 ? "lg:w-u-210" : "lg:whitespace-nowrap"}`}>
               <p className="text-sm leading-[1.3] font-semibold tracking-[0.06em] text-bg/60 uppercase">{col.label}</p>
               <ul className="flex flex-col gap-1">
                 {col.links.map((l) => (
@@ -61,7 +70,7 @@ export function Footer2() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Col>
           ))}
         </nav>
 
