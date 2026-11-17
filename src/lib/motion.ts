@@ -135,6 +135,14 @@ export const ridge = {
   overlap: 0.7,
 } as const;
 
+// Legal hero: the stacked ridge bands rise a few artwork units and settle,
+// slowly and out of step, so the background barely breathes.
+export const ridgeBands = {
+  rise: 18, // artwork units (≈10px at 1440)
+  period: 9, // seconds per rise-and-settle
+  stagger: 1.4, // seconds between bands
+} as const;
+
 // next/image quality for photography (allow-listed in next.config.ts).
 export const PHOTO_QUALITY = 90;
 

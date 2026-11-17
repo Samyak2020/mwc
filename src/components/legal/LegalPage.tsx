@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FadeIn } from "@/components/motion/Stagger";
 import { duration, ease, heroSequence, scrollSpring } from "@/lib/motion";
-import { MountainFill } from "@/components/ui/Ridge";
+import { RidgeBands } from "@/components/ui/RidgeBands";
 
 // Legal pages (layout after wisprflow.ai/terms-of-service, in MWC's type and
 // colour): a navy hero with the title centred and the effective date; then a
@@ -116,8 +116,9 @@ export function LegalPage({
       {/* hero */}
       {/* hero: stays put while the document panel scrolls up over it */}
       <div className="sticky top-0 z-0 overflow-hidden">
-        {/* the logo mountain, tone-on-tone, rising from the bottom right */}
-        <MountainFill className="absolute -right-[10%] -bottom-[2%] w-[110%] max-w-none sm:w-[70%] lg:w-[50%]" />
+        {/* the footer pattern (Figma 781:6530): stacked logo ridge bands,
+            tone-on-tone, oversized and cropped, breathing very slowly */}
+        <RidgeBands drift className="absolute top-[18%] left-[-18.24%] w-[181.67%]" />
       <section data-nav-theme="dark" aria-labelledby="legal-title" className="shell pt-32 pb-24 text-center text-bg/90 lg:pt-u-176 lg:pb-u-144">
         <FadeIn delay={heroSequence.headlineDelay}>
           <nav aria-label="Legal" className="flex justify-center gap-1">
