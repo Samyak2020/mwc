@@ -69,3 +69,23 @@ export function Ridge({
     </motion.svg>
   );
 }
+
+/** The same logo mountain, filled (tone-on-tone background mark): the ridge
+ *  band and the body below it, each a slightly different shade of the
+ *  surface it sits on. Static. */
+export function MountainFill({
+  className = "",
+  ridge = "rgb(0 6 17 / 0.12)",
+  body = "rgb(0 6 17 / 0.22)",
+}: {
+  className?: string;
+  ridge?: string;
+  body?: string;
+}) {
+  return (
+    <svg aria-hidden viewBox="0 0 102.7 30" className={`pointer-events-none block aspect-[103/30] ${className}`}>
+      <path d={LINE} fill={ridge} fillRule="evenodd" />
+      <path d={BODY} fill={body} fillRule="evenodd" />
+    </svg>
+  );
+}

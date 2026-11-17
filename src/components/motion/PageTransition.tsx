@@ -10,6 +10,8 @@ import { Ridge } from "@/components/ui/Ridge";
 const pageNames: Record<string, string> = {
   "/comp-4": "Home",
   "/about": "About Us",
+  "/privacy": "Privacy Policy",
+  "/terms": "Terms of Use",
 };
 
 type Phase = "cover" | "hold" | "reveal";
@@ -37,7 +39,9 @@ export function PageTransition() {
       const label = pageNames[url.pathname];
       if (!label) return;
       e.preventDefault();
-      if (reduce) {
+      // between the two legal pages: switch straight across, no panel
+      const legal = (path: string) => path === "/privacy" || path === "/terms";
+      if (reduce || (legal(url.pathname) && legal(window.location.pathname))) {
         router.push(url.pathname + url.search + url.hash);
         return;
       }

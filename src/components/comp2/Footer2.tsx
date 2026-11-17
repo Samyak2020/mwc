@@ -1,5 +1,4 @@
 import { Rise } from "@/components/motion/Rise";
-import { Ridge } from "@/components/ui/Ridge";
 
 const columns = [
   {
@@ -41,12 +40,14 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
   const Col = logoV2 ? Rise : "div";
   return (
     <footer data-nav-theme="dark" className="relative overflow-hidden bg-[#062567] text-bg/90">
-      {/* comp 4 v2: the logo's mountain, very faint, behind the lower half */}
+      {/* comp 4 v2 (Figma 781:6530): the logo's ridge repeated as three stacked
+          bands, tone-on-tone, oversized and cropped (2616 wide on 1440, 263 left) */}
       {logoV2 && (
-        <Ridge
-          body="rgb(251 252 255 / 0.07)"
-          line="rgb(32 137 216 / 0.3)"
-          className="absolute -right-[6%] bottom-0 w-[75%] lg:w-[55%]"
+        <img
+          src="/comp4v2/footer-ridges.svg"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute top-0 left-[-18.24%] h-auto w-[181.67%] max-w-none"
         />
       )}
       <div className="shell relative pt-14 pb-10 lg:pt-u-54 lg:pb-[calc(var(--u)*40)]">
@@ -90,7 +91,7 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
             <a href="mailto:info@mwconsultllc.com">info@mwconsultllc.com</a> · <a href="#">LinkedIn</a>
           </p>
           <p className="lg:w-u-429">
-            <a href="#">Privacy</a> · <a href="#">Terms</a>
+            <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
           </p>
           <ul className="leading-[1.4] lg:whitespace-nowrap">
             <li>- Service-Disabled Veteran-Owned Small Business (SDVOSB)</li>
