@@ -121,7 +121,7 @@ function Card({
           aria-hidden={!flipped}
           tabIndex={flipped ? 0 : -1}
           onClick={onFlip}
-          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[4px] bg-navy p-6 text-left text-bg [backface-visibility:hidden] lg:p-u-40 ${reduce ? "" : "[transform:rotateY(180deg)]"} ${
+          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[4px] bg-navy p-6 text-left text-bg/90 [backface-visibility:hidden] lg:p-u-40 ${reduce ? "" : "[transform:rotateY(180deg)]"} ${
             reduce && !flipped ? "invisible" : ""
           }`}
         >

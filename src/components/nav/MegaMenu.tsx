@@ -490,7 +490,7 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
         <a
           href="#contact"
           onClick={onNavigate}
-          className="flex items-center justify-center bg-navy px-5 py-4 text-base leading-[1.1] font-semibold text-bg"
+          className="flex items-center justify-center bg-navy px-5 py-4 text-base leading-[1.1] font-semibold text-bg/90"
         >
           TALK TO A PROJECT LEAD
         </a>

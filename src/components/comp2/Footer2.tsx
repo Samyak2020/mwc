@@ -40,7 +40,7 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
   // comp 4 v2: the columns rise in one after another
   const Col = logoV2 ? Rise : "div";
   return (
-    <footer data-nav-theme="dark" className="relative overflow-hidden bg-[#062567] text-bg">
+    <footer data-nav-theme="dark" className="relative overflow-hidden bg-[#062567] text-bg/90">
       {/* comp 4 v2: the logo's mountain, very faint, behind the lower half */}
       {logoV2 && (
         <Ridge

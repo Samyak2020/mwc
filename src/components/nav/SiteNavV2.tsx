@@ -160,7 +160,7 @@ export function SiteNavV2() {
 
             <a
               href="#contact"
-              className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
+              className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg/90 lg:flex"
             >
               TALK TO A PROJECT LEAD
               <Arrow />

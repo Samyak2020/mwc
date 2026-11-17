@@ -70,7 +70,7 @@ export function PageTransition() {
         <motion.div
           key="page-transition"
           aria-hidden
-          className="fixed inset-0 z-[100] bg-navy text-bg"
+          className="fixed inset-0 z-[100] bg-navy text-bg/90"
           initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
           animate={{ clipPath: state.phase === "reveal" ? "inset(0% 0% 100% 0%)" : "inset(0% 0% 0% 0%)" }}
           transition={{ duration: state.phase === "reveal" ? t.reveal : t.cover, ease: t.ease }}

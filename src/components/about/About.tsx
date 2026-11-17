@@ -35,7 +35,7 @@ export function AboutHero() {
           id="about-title"
           trigger="load"
           delay={heroSequence.headlineDelay}
-          className="display text-[72px] leading-[0.85] sm:text-[120px] lg:fs-u-200"
+          className="display text-[72px] leading-[0.85] sm:text-[120px] lg:fs-u-160"
         >
           <Line className="block">About</Line>
           <Line className="block">MWC</Line>
@@ -74,7 +74,7 @@ export function AboutQuote({ quote, by, dark = false }: { quote: string; by: str
   return (
     <section
       data-nav-theme={dark ? "dark" : "light"}
-      className={dark ? "relative mt-24 overflow-hidden bg-navy py-24 text-bg lg:mt-u-160 lg:py-u-160" : "pt-24 lg:pt-u-160"}
+      className={dark ? "relative mt-24 overflow-hidden bg-navy py-24 text-bg/90 lg:mt-u-160 lg:py-u-160" : "pt-24 lg:pt-u-160"}
     >
       {/* the logo's mountain, drawn across the foot of the navy band */}
       {dark && (
@@ -237,7 +237,7 @@ export function AboutFramework() {
         {workstreams.map((w) => (
           <a key={w.name} href="/all-services" className="group flex flex-col gap-5">
             {/* the comp 1 card: photo with the jagged mountain band along the bottom (sky edge + navy) */}
-            <div className="relative h-[400px] overflow-hidden rounded-[4px] bg-navy text-bg lg:h-u-480">
+            <div className="relative h-[400px] overflow-hidden rounded-[4px] bg-navy text-bg/90 lg:h-u-480">
               <Image
                 src={w.image}
                 alt=""
