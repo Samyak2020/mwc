@@ -2,7 +2,6 @@
 
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { Cropped } from "@/components/ui/Cropped";
 import { Texture } from "@/components/ui/Texture";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
@@ -113,10 +112,9 @@ export function Hero2({
             </p>
             <a
               href="#contact"
-              className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+              className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
             >
               Talk to a Project Lead
-              <Arrow />
             </a>
           </FadeIn>
         </div>
@@ -162,10 +160,9 @@ export function Hero2({
           </p>
           <a
             href="#contact"
-            className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+            className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
           >
             Talk to a Project Lead
-            <Arrow />
           </a>
         </FadeIn>
       </div>

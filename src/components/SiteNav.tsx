@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useTransform } from "motion/react";
-import { Arrow } from "@/components/ui/Arrow";
 import { duration, ease, heroScroll, heroSequence } from "@/lib/motion";
 import { useHeroProgress } from "@/components/motion/useHeroProgress";
 import { SiteNavV2 } from "@/components/nav/SiteNavV2";
@@ -139,10 +138,9 @@ function SiteNavV1({ v2 = false }: { v2?: boolean } = {}) {
           {/* "Talk to a Project Lead": a permanent navy button (Figma "Workstreams CTA") */}
           <a
             href="#contact"
-            className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
+            className="cta btn btn-dark hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:flex"
           >
             TALK TO A PROJECT LEAD
-            <Arrow />
           </a>
 
           {/* Mobile menu (not in the desktop Figma frame) */}

@@ -22,7 +22,7 @@ import { heroSequence, PHOTO_QUALITY } from "@/lib/motion";
 
 const label = "text-sm leading-[1.3] font-medium tracking-[0.01em] text-fg/50";
 const ctaCls =
-  "cta inline-flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg";
+  "cta btn inline-flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg";
 
 /* --------------------------------------------------------------- hero */
 
@@ -236,9 +236,11 @@ export function AboutFramework() {
               <ArrowButton dir={-1} onClick={() => step(-1)} />
               <ArrowButton dir={1} onClick={() => step(1)} />
             </div>
-            <a href="/all-services" className="inline-flex items-center gap-2 text-base font-medium text-navy">
+            <a
+              href="/all-services"
+              className="text-base font-medium text-navy underline decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-base)] hover:decoration-current"
+            >
               View all services
-              <Arrow width={18} />
             </a>
           </div>
         </div>
@@ -318,7 +320,6 @@ export function AboutResults() {
             <Rise order={1}>
               <a href="/projects" className={ctaCls}>
                 Explore Projects
-                <Arrow />
               </a>
             </Rise>
           </div>
@@ -444,7 +445,6 @@ export function AboutCta() {
         <Rise delay={0.2}>
           <a href="mailto:info@mwconsultllc.com" className={ctaCls}>
             Scope Your Project
-            <Arrow />
           </a>
         </Rise>
       </div>

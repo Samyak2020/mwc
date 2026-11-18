@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { NavLogoV2, useNavTheme } from "@/components/SiteNav";
 import { MenuContent, MobileMenu, type MenuKey } from "./MegaMenu";
 import { duration, ease, heroSequence, navMenu } from "@/lib/motion";
@@ -160,10 +159,9 @@ export function SiteNavV2() {
 
             <a
               href="#contact"
-              className="cta hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg/90 lg:flex"
+              className="cta btn btn-dark hidden items-center justify-center gap-[9px] bg-navy px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg/90 lg:flex"
             >
               TALK TO A PROJECT LEAD
-              <Arrow />
             </a>
 
             <button

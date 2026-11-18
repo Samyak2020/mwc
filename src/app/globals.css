@@ -120,6 +120,69 @@ body {
 .cta:active {
   transform: scale(0.97);
 }
+
+/* Filled and outlined buttons (no arrows): on hover a fill wipes up from the
+   bottom edge and the label turns to the fill's ink; it leaves through the top.
+   Press: the button sinks a touch (.cta scale) and the fill deepens.
+   Light buttons fill navy; .btn-dark (navy buttons) fill sky. */
+.btn {
+  --btn-fill: var(--color-navy);
+  --btn-ink: var(--color-bg);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+.btn-dark {
+  --btn-fill: var(--color-sky);
+  --btn-ink: #fff;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-fill);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+}
+.btn:focus-visible {
+  color: var(--btn-ink);
+  border-color: var(--btn-fill);
+}
+.btn:focus-visible::before {
+  transform: scaleY(1);
+  transform-origin: bottom;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    color: var(--btn-ink);
+    border-color: var(--btn-fill);
+  }
+  .btn:hover::before {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+.btn:active {
+  color: var(--btn-ink);
+  border-color: var(--btn-fill);
+}
+.btn:active::before {
+  transform: scaleY(1);
+  filter: brightness(0.82);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn::before {
+    transition: none;
+  }
+}
 .cta .cta-arrow {
   transition: transform var(--duration-fast) var(--ease-out);
 }

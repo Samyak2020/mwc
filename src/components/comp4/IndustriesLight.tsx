@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { barSpring, duration, ease, PHOTO_QUALITY } from "@/lib/motion";
 
 type Industry = { name: string; image: string; description: string; cta: string };
@@ -137,7 +136,6 @@ export function IndustriesLight() {
                   className="cta absolute left-u-24 flex items-center gap-[9px] py-[calc(var(--u)*16)] pr-3 text-[length:max(13px,calc(var(--u)*18))] leading-[1.1] font-bold tracking-[-0.005em] whitespace-nowrap uppercase"
                 >
                   {current.cta}
-                  <Arrow />
                 </motion.a>
               </AnimatePresence>
             </div>
@@ -179,7 +177,6 @@ export function IndustriesLight() {
                           <p className="text-base leading-[1.3] font-medium">{industry.description}</p>
                           <a href="#contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
                             {industry.cta}
-                            <Arrow />
                           </a>
                         </div>
                       </motion.div>

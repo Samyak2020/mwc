@@ -1,4 +1,3 @@
-import { Arrow } from "@/components/ui/Arrow";
 import { Texture } from "@/components/ui/Texture";
 import { ImageReveal } from "@/components/motion/ImageReveal";
 import Image from "next/image";
@@ -54,10 +53,9 @@ export function Leadership() {
               </p>
               <a
                 href="#"
-                className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+                className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
               >
                 Download A Capability Statement
-                <Arrow />
               </a>
             </div>
           </Rise>

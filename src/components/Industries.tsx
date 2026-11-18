@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { AnimatePresence, motion, type MotionValue } from "motion/react";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { Texture } from "@/components/ui/Texture";
 import { barSpring, duration, ease, PHOTO_QUALITY } from "@/lib/motion";
 
@@ -140,7 +139,6 @@ export function Industries({ contentY }: { contentY: MotionValue<number> }) {
                   exit={{ opacity: 0, y: -10, transition: { duration: duration.fast, ease: ease.in } }}
                 >
                   {current.cta}
-                  <Arrow />
                 </motion.a>
               </AnimatePresence>
             </div>
@@ -188,7 +186,6 @@ export function Industries({ contentY }: { contentY: MotionValue<number> }) {
                           <p className="text-base leading-[1.3] font-medium">{industry.description}</p>
                           <a href="#contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
                             {industry.cta}
-                            <Arrow />
                           </a>
                         </div>
                       </motion.div>

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { Texture } from "@/components/ui/Texture";
 import { PHOTO_QUALITY, wavyAccordion } from "@/lib/motion";
 
@@ -269,10 +268,9 @@ export function WavyAccordion({ items }: { items: AccordionItem[] }) {
               </div>
               <a
                 href="#contact"
-                className="cta pointer-events-auto flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+                className="cta btn pointer-events-auto flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
               >
                 {it.cta}
-                <Arrow />
               </a>
             </div>
           </div>
@@ -291,10 +289,9 @@ export function WavyAccordion({ items }: { items: AccordionItem[] }) {
               <p className="text-base leading-[1.5]">{it.description}</p>
               <a
                 href="#contact"
-                className="cta flex items-center gap-[9px] border border-fg/40 bg-bg px-5 py-3 text-base leading-[1.1] font-semibold text-fg"
+                className="cta btn flex items-center gap-[9px] border border-fg/40 bg-bg px-5 py-3 text-base leading-[1.1] font-semibold text-fg"
               >
                 {it.cta}
-                <Arrow />
               </a>
             </div>
           </li>

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Arrow } from "@/components/ui/Arrow";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { GeneratorVector } from "@/components/comp4/GeneratorVector";
 import { Rise } from "@/components/motion/Rise";
@@ -37,10 +36,9 @@ export function Cta4() {
           onPointerLeave={off}
           onFocus={on}
           onBlur={off}
-          className="cta flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+          className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
         >
           Scope Your Project
-          <Arrow />
         </a>
         </Rise>
       </div>
