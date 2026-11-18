@@ -1,7 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { usePathname } from "next/navigation";
 import { NavLogoV2, useNavTheme } from "@/components/SiteNav";
 import { MenuContent, MobileMenu, type MenuKey } from "./MegaMenu";
 import { duration, ease, heroSequence, navMenu } from "@/lib/motion";
@@ -27,6 +34,7 @@ const items: Item[] = [
 // Moving between triggers swaps the contents in place; Esc, a click outside
 // or leaving the header closes it. Below 1280px the links fold into a menu.
 export function SiteNavV2() {
+  const onContact = usePathname() === "/contact";
   const [menu, setMenu] = useState<MenuKey | null>(null);
   const [mobile, setMobile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -37,12 +45,16 @@ export function SiteNavV2() {
   useEffect(() => {
     // solid once scrolled, except over sections marked data-nav-clear
     const update = () => {
-      const clear = [...document.querySelectorAll<HTMLElement>("[data-nav-clear]")].some((s) => {
+      const clear = [
+        ...document.querySelectorAll<HTMLElement>("[data-nav-clear]"),
+      ].some((s) => {
         const b = s.getBoundingClientRect();
         return b.top <= 36 && b.bottom > 36;
       });
       // … and always solid over sections marked data-nav-solid
-      const solid = [...document.querySelectorAll<HTMLElement>("[data-nav-solid]")].some((el) => {
+      const solid = [
+        ...document.querySelectorAll<HTMLElement>("[data-nav-solid]"),
+      ].some((el) => {
         const b = el.getBoundingClientRect();
         return b.top <= 36 && b.bottom > 36;
       });
@@ -98,7 +110,9 @@ export function SiteNavV2() {
     return () => ro.disconnect();
   }, [menu]);
   // … and it opens under its own trigger, kept inside the window
-  const triggers = useRef<Partial<Record<MenuKey, HTMLButtonElement | null>>>({});
+  const triggers = useRef<Partial<Record<MenuKey, HTMLButtonElement | null>>>(
+    {},
+  );
   const [, reflow] = useState(0);
   useEffect(() => {
     if (!menu) return;
@@ -107,7 +121,15 @@ export function SiteNavV2() {
     return () => window.removeEventListener("resize", onResize);
   }, [menu]);
   const btn = menu ? triggers.current[menu] : null;
-  const left = btn ? Math.max(12, Math.min(btn.getBoundingClientRect().left, window.innerWidth - size.w - 12)) : 0;
+  const left = btn
+    ? Math.max(
+        12,
+        Math.min(
+          btn.getBoundingClientRect().left,
+          window.innerWidth - size.w - 12,
+        ),
+      )
+    : 0;
 
   const raised = menu !== null || mobile;
   const solid = raised || scrolled;
@@ -123,8 +145,14 @@ export function SiteNavV2() {
             aria-hidden
             className="fixed inset-0 z-30 bg-[rgb(0_6_17/0.08)] backdrop-blur-[5px]"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: duration.base, ease: ease.out } }}
-            exit={{ opacity: 0, transition: { duration: duration.base, ease: ease.in } }}
+            animate={{
+              opacity: 1,
+              transition: { duration: duration.base, ease: ease.out },
+            }}
+            exit={{
+              opacity: 0,
+              transition: { duration: duration.base, ease: ease.in },
+            }}
             onClick={() => {
               close();
               setMobile(false);
@@ -137,17 +165,29 @@ export function SiteNavV2() {
         className={`nav-fg fixed inset-x-0 top-0 z-40 ${solid ? "nav-open" : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: duration.slow, ease: ease.out, delay: heroSequence.chromeDelay }}
+        transition={{
+          duration: duration.slow,
+          ease: ease.out,
+          delay: heroSequence.chromeDelay,
+        }}
         onPointerLeave={(e) => e.pointerType === "mouse" && menu && closeSoon()}
         onPointerEnter={(e) => e.pointerType === "mouse" && menu && clear()}
       >
         <div ref={barRef} className="relative">
-          <div aria-hidden className={`nav-bar absolute inset-0 ${solid ? "is-solid" : ""}`} />
+          <div
+            aria-hidden
+            className={`nav-bar absolute inset-0 ${solid ? "is-solid" : ""}`}
+          />
           <nav
             aria-label="Primary"
-            className="relative mx-auto grid h-16 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-6 px-4 xl:h-[72px] xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:px-[calc(var(--u)*32)]"
+            // full width at every size: logo and CTA hold the edges, links stay centred
+            className="relative grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-6 px-4 xl:h-[72px] xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:px-8 min-[1800px]:px-12"
           >
-            <a href="/comp-4" aria-label="MWC home" className="block shrink-0 justify-self-start">
+            <a
+              href="/comp-4"
+              aria-label="MWC home"
+              className="block shrink-0 justify-self-start"
+            >
               <NavLogoV2 />
             </a>
 
@@ -164,7 +204,9 @@ export function SiteNavV2() {
                       aria-expanded={menu === it.menu}
                       aria-controls="nav-panel"
                       className={`${pill} ${menu === it.menu ? "bg-current/10" : ""}`}
-                      onPointerEnter={(e) => e.pointerType === "mouse" && openSoon(it.menu!)}
+                      onPointerEnter={(e) =>
+                        e.pointerType === "mouse" && openSoon(it.menu!)
+                      }
                       onClick={() => {
                         clear();
                         setMenu((m) => (m === it.menu ? null : it.menu!));
@@ -178,14 +220,23 @@ export function SiteNavV2() {
                         viewBox="0 0 10 6"
                         className={`opacity-60 transition-transform duration-[var(--duration-base)] ${menu === it.menu ? "rotate-180" : ""}`}
                       >
-                        <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path
+                          d="M1 1l4 4 4-4"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </button>
                   ) : (
                     <a
                       href={it.href}
                       className={pill}
-                      onPointerEnter={(e) => e.pointerType === "mouse" && menu && closeSoon()}
+                      onPointerEnter={(e) =>
+                        e.pointerType === "mouse" && menu && closeSoon()
+                      }
                     >
                       {it.label}
                     </a>
@@ -194,14 +245,16 @@ export function SiteNavV2() {
               ))}
             </ul>
 
-            {/* right: the CTA */}
+            {/* right: the CTA (not on the contact page itself) */}
             <div className="hidden items-center gap-2 justify-self-end xl:flex">
-              <a
-                href="/contact"
-                className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
-              >
-                TALK TO A PROJECT LEAD
-              </a>
+              {!onContact && (
+                <a
+                  href="/contact"
+                  className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
+                >
+                  TALK TO A PROJECT LEAD
+                </a>
+              )}
             </div>
 
             {/* mobile / tablet: two lines that cross into an X */}
@@ -237,8 +290,16 @@ export function SiteNavV2() {
               id="nav-panel"
               className="absolute top-full hidden overflow-hidden border border-fg/10 bg-bg text-fg shadow-[0_24px_48px_-20px_rgb(0_6_17/0.3)] xl:block"
               initial={{ height: 0, left, width: size.w || "auto" }}
-              animate={{ height: size.h, left, width: size.w || "auto", transition: navMenu.panel }}
-              exit={{ height: 0, transition: { duration: duration.base, ease: ease.in } }}
+              animate={{
+                height: size.h,
+                left,
+                width: size.w || "auto",
+                transition: navMenu.panel,
+              }}
+              exit={{
+                height: 0,
+                transition: { duration: duration.base, ease: ease.in },
+              }}
             >
               <div ref={contentRef} className="w-max">
                 <MenuContent menu={menu} />
@@ -254,11 +315,22 @@ export function SiteNavV2() {
               id="mobile-menu"
               className="absolute inset-x-0 top-full max-h-[calc(100svh-64px)] overflow-y-auto bg-bg xl:hidden"
               initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.out } }}
-              exit={{ opacity: 0, y: -8, transition: { duration: duration.fast, ease: ease.in } }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: duration.base, ease: ease.out },
+              }}
+              exit={{
+                opacity: 0,
+                y: -8,
+                transition: { duration: duration.fast, ease: ease.in },
+              }}
             >
               <div className="mx-auto max-w-[720px]">
-                <MobileMenu onNavigate={() => setMobile(false)} />
+                <MobileMenu
+                  onNavigate={() => setMobile(false)}
+                  cta={!onContact}
+                />
               </div>
             </motion.div>
           )}

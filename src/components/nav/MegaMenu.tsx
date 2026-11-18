@@ -135,20 +135,22 @@ export const projectGroups: { label: string; href?: string; links: Link[] }[] =
     },
   ];
 
-export const companyGroups: { label: string; href?: string; links: Link[] }[] = [
-  {
-    label: "Company",
-    links: [
-      { label: "About MWC", href: "/about" },
-      { label: "Careers", href: "/careers" },
-    ],
-  },
-];
+export const companyGroups: { label: string; href?: string; links: Link[] }[] =
+  [
+    {
+      label: "Company",
+      links: [
+        { label: "About MWC", href: "/about" },
+        { label: "Careers", href: "/careers" },
+      ],
+    },
+  ];
 
 // Compact dropdowns (after mistral.ai): one panel per category, opening under
 // its own trigger. Small uppercase column labels, thin dividers between
 // columns, and the drawing or picture on the right.
-const labelCls = "text-[11px] leading-none font-medium tracking-[0.08em] text-fg/45 uppercase";
+const labelCls =
+  "text-[11px] leading-none font-medium tracking-[0.08em] text-fg/45 uppercase";
 const linkCls =
   "group/link flex items-center justify-between gap-4 text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
 
@@ -161,12 +163,25 @@ function Chev() {
       viewBox="0 0 6 10"
       className="shrink-0 opacity-40 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-0.5 group-hover/link:opacity-100 group-focus-visible/link:opacity-100"
     >
-      <path d="M1 1l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M1 1l4 4-4 4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-function ViewAll({ href, children }: { href: string; children: React.ReactNode }) {
+function ViewAll({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <a
       href={href}
@@ -177,11 +192,26 @@ function ViewAll({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-function Column({ label, href, className = "", children }: { label: string; href?: string; className?: string; children: React.ReactNode }) {
+function Column({
+  label,
+  href,
+  className = "",
+  children,
+}: {
+  label: string;
+  href?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className={`border-l border-fg/10 px-10 pt-7 pb-9 first:border-l-0 ${className}`}>
+    <div
+      className={`border-l border-fg/10 px-10 pt-7 pb-9 first:border-l-0 ${className}`}
+    >
       {href ? (
-        <a href={href} className={`${labelCls} block transition-colors hover:text-navy`}>
+        <a
+          href={href}
+          className={`${labelCls} block transition-colors hover:text-navy`}
+        >
           {label}
         </a>
       ) : (
@@ -232,15 +262,31 @@ function IndustriesPanel() {
 type Group = { label: string; href?: string; links: Link[] };
 
 /** Link columns plus a picture on the right (Services, Projects, Company). */
-function LinksPanel({ groups, viewAll, widths }: { groups: Group[]; viewAll?: [string, string]; widths: number[] }) {
+function LinksPanel({
+  groups,
+  viewAll,
+  widths,
+}: {
+  groups: Group[];
+  viewAll?: [string, string];
+  widths: number[];
+}) {
   return (
     <div className="flex">
       {groups.map((g, gi) => (
-        <Column key={g.label} label={g.label} href={g.href} className="shrink-0">
+        <Column
+          key={g.label}
+          label={g.label}
+          href={g.href}
+          className="shrink-0"
+        >
           <ul className="flex flex-col gap-3" style={{ width: widths[gi] }}>
             {g.links.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className={`${linkCls} text-[15px] leading-[1.3] tracking-[0.005em]`}>
+                <a
+                  href={l.href}
+                  className={`${linkCls} text-[15px] leading-[1.3] tracking-[0.005em]`}
+                >
                   {l.label}
                   <Chev />
                 </a>
@@ -255,7 +301,10 @@ function LinksPanel({ groups, viewAll, widths }: { groups: Group[]; viewAll?: [s
         </Column>
       ))}
       {/* image placeholder until imagery is chosen */}
-      <div aria-hidden className="relative m-2 ml-4 min-h-[240px] w-[300px] shrink-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]">
+      <div
+        aria-hidden
+        className="relative m-2 ml-4 min-h-[240px] w-[300px] shrink-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]"
+      >
         <Texture opacity={0.25} />
         <p className="absolute top-3 left-3 flex items-center gap-2 text-[11px] leading-none font-medium tracking-[0.06em] text-fg/40 uppercase">
           <span className="size-1.5 bg-fg/30" />
@@ -275,15 +324,33 @@ export function MenuContent({ menu }: { menu: MenuKey }) {
         key={menu}
         className="w-max"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: navMenu.content.duration, ease: navMenu.content.ease, delay: 0.05 } }}
-        exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.in } }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: navMenu.content.duration,
+            ease: navMenu.content.ease,
+            delay: 0.05,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          transition: { duration: duration.fast, ease: ease.in },
+        }}
       >
         {menu === "industries" ? (
           <IndustriesPanel />
         ) : menu === "services" ? (
-          <LinksPanel groups={serviceGroups} viewAll={["/all-services", "View all services"]} widths={[280, 280]} />
+          <LinksPanel
+            groups={serviceGroups}
+            viewAll={["/all-services", "View all services"]}
+            widths={[280, 280]}
+          />
         ) : menu === "projects" ? (
-          <LinksPanel groups={projectGroups} viewAll={["/projects", "View all projects"]} widths={[340]} />
+          <LinksPanel
+            groups={projectGroups}
+            viewAll={["/projects", "View all projects"]}
+            widths={[340]}
+          />
         ) : (
           <LinksPanel groups={companyGroups} widths={[200]} />
         )}
@@ -352,7 +419,13 @@ function Group({
   );
 }
 
-export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
+export function MobileMenu({
+  onNavigate,
+  cta = true,
+}: {
+  onNavigate: () => void;
+  cta?: boolean;
+}) {
   const sub = "block py-2 text-base leading-[1.3] text-fg/80";
   return (
     <ul className="flex flex-col px-5 pt-2 pb-6 text-fg">
@@ -401,9 +474,7 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
           View all projects
         </a>
       </Group>
-      {[
-        ["Client Resources", "#"],
-      ].map(([label, href]) => (
+      {[["Client Resources", "#"]].map(([label, href]) => (
         <li key={label} className="border-b border-fg/10">
           <a
             href={href}
@@ -421,15 +492,17 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
           </a>
         ))}
       </Group>
-      <li className="mt-6">
-        <a
-          href="/contact"
-          onClick={onNavigate}
-          className="flex items-center justify-center bg-navy px-5 py-4 text-base leading-[1.1] font-semibold text-bg/90"
-        >
-          TALK TO A PROJECT LEAD
-        </a>
-      </li>
+      {cta && (
+        <li className="mt-6">
+          <a
+            href="/contact"
+            onClick={onNavigate}
+            className="flex items-center justify-center bg-navy px-5 py-4 text-base leading-[1.1] font-semibold text-bg/90"
+          >
+            TALK TO A PROJECT LEAD
+          </a>
+        </li>
+      )}
     </ul>
   );
 }
