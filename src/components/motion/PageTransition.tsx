@@ -8,7 +8,7 @@ import { Ridge } from "@/components/ui/Ridge";
 
 // Names shown on the panel for each page that has the transition.
 const pageNames: Record<string, string> = {
-  "/comp-4": "Home",
+  "/": "Home",
   "/about": "About Us",
   "/careers": "Careers",
   "/contact": "Contact",

@@ -183,8 +183,10 @@ export function SiteNavV2() {
             // full width at every size: logo and CTA hold the edges, links stay centred
             className="relative grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-6 px-4 xl:h-[72px] xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:px-8 min-[1800px]:px-12"
           >
+            {/* plain <a> on purpose: PageTransition intercepts it for the panel */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
-              href="/comp-4"
+              href="/"
               aria-label="MWC home"
               className="block shrink-0 justify-self-start"
             >

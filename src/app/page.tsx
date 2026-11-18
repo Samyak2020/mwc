@@ -1,32 +1,43 @@
-import { Hero } from "@/components/Hero";
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/SiteNav";
-import { ProjectSupport } from "@/components/ProjectSupport";
-import { WorkstreamsSection } from "@/components/Workstreams";
-import { Experience } from "@/components/Experience";
+import { Hero2 } from "@/components/comp2/Hero2";
+import { IndustryPanels } from "@/components/comp4/IndustryPanels";
+import { FieldJourney } from "@/components/field/FieldJourney";
+import { Metrics4 } from "@/components/comp4/Metrics4";
 import { TrustedBy } from "@/components/TrustedBy";
-import { ClientResources } from "@/components/ClientResources";
+import { Rise } from "@/components/motion/Rise";
+import { ResourcesList } from "@/components/comp4/ResourcesList";
 import { Leadership } from "@/components/Leadership";
-import { TeamRow } from "@/components/TeamRow";
-import { Cta2 } from "@/components/comp2/Cta2";
+import { Cta4 } from "@/components/comp4/Cta4";
 import { Footer2 } from "@/components/comp2/Footer2";
 
-// Comp 1, revised (Figma "Revised homepage 1" 548:1071).
+export const metadata: Metadata = {
+  title: "Owner’s Representative & Project Management | MWC",
+  description:
+    "Owner’s representative and project management for power producers, utilities, government, industrial and oil and gas projects. Veteran-led.",
+};
+
+// Design comp 4, accepted; v2 per Figma "Homepage comp 4 - v2" (728:1109) with
+// the nav and logos from 733:1623. Hero is the full-height hero with a flat 45%
+// overlay; industries are expanding photo panels; project support is the field
+// journey (dark, as at /lab/field). The team row is gone in v2.
 export default function Home() {
   return (
     <>
-      <SiteNav />
+      <SiteNav v2 />
       <main>
-        <Hero />
-        <ProjectSupport />
-        <WorkstreamsSection />
-        <Experience />
-        <TrustedBy label={false} className="mt-10 lg:mt-u-38" />
-        <ClientResources />
+        <Hero2 fullHeight flatOverlay v2 description="The experience to run complex capital projects." />
+        <IndustryPanels />
+        <FieldJourney soft />
+        <Metrics4 />
+        <Rise>
+          <TrustedBy label={false} className="mt-16 lg:mt-u-108" />
+        </Rise>
+        <ResourcesList />
         <Leadership />
-        <TeamRow />
-        <Cta2 />
+        <Cta4 />
       </main>
-      <Footer2 />
+      <Footer2 logoV2 />
     </>
   );
 }
