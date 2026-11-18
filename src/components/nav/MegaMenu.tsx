@@ -268,8 +268,9 @@ function LinksPanel({ groups, viewAll, widths }: { groups: Group[]; viewAll?: [s
 
 /** Panel contents for the open menu, cross-fading when the menu changes. */
 export function MenuContent({ menu }: { menu: MenuKey }) {
+  // no initial={false} here: it passes down and would stop the drawings building up
   return (
-    <AnimatePresence mode="popLayout" initial={false}>
+    <AnimatePresence mode="popLayout">
       <motion.div
         key={menu}
         className="w-max"
