@@ -192,7 +192,7 @@ function Details() {
       <div className={card}>
         <div className={row}>
           <p className="text-[17px]">
-            Join us <sup className="text-[12px] font-medium text-bg/70">(open positions)</sup>
+            Join us <span className="ml-1 text-[13px] font-medium text-bg/60">(open positions)</span>
           </p>
           <a href="/careers" className={pill}>
             Careers
