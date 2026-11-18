@@ -41,7 +41,12 @@ export function SiteNavV2() {
         const b = s.getBoundingClientRect();
         return b.top <= 36 && b.bottom > 36;
       });
-      setScrolled(window.scrollY > 8 && !clear);
+      // … and always solid over sections marked data-nav-solid
+      const solid = [...document.querySelectorAll<HTMLElement>("[data-nav-solid]")].some((el) => {
+        const b = el.getBoundingClientRect();
+        return b.top <= 36 && b.bottom > 36;
+      });
+      setScrolled((window.scrollY > 8 || solid) && !clear);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -192,7 +197,7 @@ export function SiteNavV2() {
             {/* right: the CTA */}
             <div className="hidden items-center gap-2 justify-self-end xl:flex">
               <a
-                href="#contact"
+                href="/contact"
                 className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
               >
                 TALK TO A PROJECT LEAD

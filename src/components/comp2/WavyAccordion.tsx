@@ -267,7 +267,7 @@ export function WavyAccordion({ items }: { items: AccordionItem[] }) {
                 <p className="w-u-460 text-base leading-[1.5] tracking-[-0.005em]">{it.description}</p>
               </div>
               <a
-                href="#contact"
+                href="/contact"
                 className="cta btn pointer-events-auto flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
               >
                 {it.cta}
@@ -288,7 +288,7 @@ export function WavyAccordion({ items }: { items: AccordionItem[] }) {
               <h3 className="text-[28px] leading-none font-bold tracking-[-0.005em]">{it.name}</h3>
               <p className="text-base leading-[1.5]">{it.description}</p>
               <a
-                href="#contact"
+                href="/contact"
                 className="cta btn flex items-center gap-[9px] border border-fg/40 bg-bg px-5 py-3 text-base leading-[1.1] font-semibold text-fg"
               >
                 {it.cta}

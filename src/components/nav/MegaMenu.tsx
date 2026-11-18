@@ -423,7 +423,7 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
       </Group>
       <li className="mt-6">
         <a
-          href="#contact"
+          href="/contact"
           onClick={onNavigate}
           className="flex items-center justify-center bg-navy px-5 py-4 text-base leading-[1.1] font-semibold text-bg/90"
         >

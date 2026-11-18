@@ -101,7 +101,7 @@ export function IndustryCards() {
             <div className="relative flex max-w-[460px] flex-col items-start gap-6 lg:w-u-460">
               <p className="text-base leading-[1.5] tracking-[-0.005em]">{it.description}</p>
               <a
-                href="#contact"
+                href="/contact"
                 className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
               >
                 {it.cta}

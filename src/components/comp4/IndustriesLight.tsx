@@ -132,7 +132,7 @@ export function IndustriesLight() {
                 <motion.a
                   key={current.name}
                   {...swap}
-                  href="#contact"
+                  href="/contact"
                   className="cta absolute left-u-24 flex items-center gap-[9px] py-[calc(var(--u)*16)] pr-3 text-[length:max(13px,calc(var(--u)*18))] leading-[1.1] font-bold tracking-[-0.005em] whitespace-nowrap uppercase"
                 >
                   {current.cta}
@@ -175,7 +175,7 @@ export function IndustriesLight() {
                       >
                         <div className="flex flex-col gap-3 bg-sky p-5 text-bg">
                           <p className="text-base leading-[1.3] font-medium">{industry.description}</p>
-                          <a href="#contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
+                          <a href="/contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
                             {industry.cta}
                           </a>
                         </div>

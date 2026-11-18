@@ -111,7 +111,7 @@ export function Hero2({
               {description}
             </p>
             <a
-              href="#contact"
+              href="/contact"
               className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
             >
               Talk to a Project Lead
@@ -159,7 +159,7 @@ export function Hero2({
             {description}
           </p>
           <a
-            href="#contact"
+            href="/contact"
             className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
           >
             Talk to a Project Lead

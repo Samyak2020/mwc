@@ -132,7 +132,7 @@ export function Industries({ contentY }: { contentY: MotionValue<number> }) {
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.a
                   key={current.name}
-                  href="#contact"
+                  href="/contact"
                   className="cta absolute left-u-26 flex items-center gap-[9px] py-[calc(var(--u)*16)] pr-3 text-[length:max(13px,calc(var(--u)*18))] leading-[1.1] font-bold tracking-[-0.005em] whitespace-nowrap"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.out, delay: 0.08 } }}
@@ -184,7 +184,7 @@ export function Industries({ contentY }: { contentY: MotionValue<number> }) {
                       >
                         <div className="flex flex-col gap-3 bg-sky p-5">
                           <p className="text-base leading-[1.3] font-medium">{industry.description}</p>
-                          <a href="#contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
+                          <a href="/contact" className="cta flex items-center gap-[9px] py-2 text-base leading-[1.1] font-bold">
                             {industry.cta}
                           </a>
                         </div>
