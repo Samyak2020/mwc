@@ -12,6 +12,7 @@ const pageNames: Record<string, string> = {
   "/about": "About Us",
   "/careers": "Careers",
   "/contact": "Contact",
+  "/client-resources": "Client Resources",
   "/privacy": "Privacy Policy",
   "/terms": "Terms of Use",
 };

@@ -18,7 +18,7 @@ const items: Item[] = [
   { label: "Industries", href: "#", menu: "industries" },
   { label: "Services", href: "/all-services", menu: "services" },
   { label: "Projects", href: "/projects", menu: "projects" },
-  { label: "Client Resources", href: "#" },
+  { label: "Client Resources", href: "/client-resources" },
   { label: "Company", href: "/about", menu: "company" },
 ];
 

@@ -474,7 +474,7 @@ export function MobileMenu({
           View all projects
         </a>
       </Group>
-      {[["Client Resources", "#"]].map(([label, href]) => (
+      {[["Client Resources", "/client-resources"]].map(([label, href]) => (
         <li key={label} className="border-b border-fg/10">
           <a
             href={href}
