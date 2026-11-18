@@ -223,7 +223,7 @@ export function ContactPage() {
         </Rise>
         <Rise delay={0.1}>
           <p className="mt-6 max-w-[460px] text-lg leading-[1.5] text-fg/70">
-            Tell us about your project and we’ll connect you with the right people at MWC.
+            Tell us about your project and we’ll get back to you with what we can do for you.
           </p>
         </Rise>
         <ContactForm />
