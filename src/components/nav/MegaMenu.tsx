@@ -145,9 +145,12 @@ export const companyGroups: { label: string; href?: string; links: Link[] }[] = 
   },
 ];
 
-const labelCls ="text-base leading-[1.2] tracking-[0.01em] text-fg/50";
+// Compact dropdowns (after mistral.ai): one panel per category, opening under
+// its own trigger. Small uppercase column labels, thin dividers between
+// columns, and the drawing or picture on the right.
+const labelCls = "text-[11px] leading-none font-medium tracking-[0.08em] text-fg/45 uppercase";
 const linkCls =
-  "group/link inline-flex items-start gap-2 text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
+  "group/link flex items-center justify-between gap-4 text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
 
 function Chev() {
   return (
@@ -156,50 +159,36 @@ function Chev() {
       width="6"
       height="10"
       viewBox="0 0 6 10"
-      className="mt-[0.45em] shrink-0 opacity-0 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-0.5 group-hover/link:opacity-100 group-focus-visible/link:opacity-100"
+      className="shrink-0 opacity-40 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-0.5 group-hover/link:opacity-100 group-focus-visible/link:opacity-100"
     >
-      <path
-        d="M1 1l4 4-4 4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M1 1l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-function ViewAll({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
+function ViewAll({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
-      className="group/link mt-2 inline-flex items-center gap-1.5 text-base leading-none font-medium text-navy"
+      className="inline-block text-sm leading-none font-medium text-navy underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-base)] hover:decoration-current"
     >
       {children}
-      <svg
-        aria-hidden
-        width="6"
-        height="10"
-        viewBox="0 0 6 10"
-        className="transition-transform duration-[var(--duration-base)] group-hover/link:translate-x-0.5"
-      >
-        <path
-          d="M1 1l4 4-4 4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
     </a>
+  );
+}
+
+function Column({ label, href, className = "", children }: { label: string; href?: string; className?: string; children: React.ReactNode }) {
+  return (
+    <div className={`border-l border-fg/10 px-10 pt-7 pb-9 first:border-l-0 ${className}`}>
+      {href ? (
+        <a href={href} className={`${labelCls} block transition-colors hover:text-navy`}>
+          {label}
+        </a>
+      ) : (
+        <p className={labelCls}>{label}</p>
+      )}
+      <div className="mt-5">{children}</div>
+    </div>
   );
 }
 
@@ -207,36 +196,32 @@ function IndustriesPanel() {
   const [hover, setHover] = useState(0);
   const current = industries[hover];
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_calc(var(--u)*500)] gap-u-48">
-      {/* the list sits centred in the space left of the drawing, text left-aligned */}
-      <div className="flex justify-center pt-12 pb-14">
-        <div>
-          <p className={labelCls}>Industries</p>
-          <ul className="mt-10 flex flex-col gap-5">
-            {industries.map((ind, i) => (
-              <li key={ind.key}>
-                <a
-                  href={ind.href}
-                  className={`${linkCls} text-xl leading-[1.15] tracking-[0.01em] ${hover === i ? "text-navy" : ""}`}
-                  onPointerEnter={() => setHover(i)}
-                  onFocus={() => setHover(i)}
-                >
-                  {ind.label}
-                  <Chev />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+    <div className="flex">
+      <Column label="Industries" className="w-[320px]">
+        <ul className="flex flex-col">
+          {industries.map((ind, i) => (
+            <li key={ind.key} className="border-b border-fg/10 last:border-b-0">
+              <a
+                href={ind.href}
+                className={`${linkCls} py-3 text-[17px] leading-[1.2] tracking-[0.005em] ${hover === i ? "text-navy" : ""}`}
+                onPointerEnter={() => setHover(i)}
+                onFocus={() => setHover(i)}
+              >
+                {ind.label}
+                <Chev />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Column>
 
       {/* the hovered industry, drawn: rebuilt from scratch on every change */}
-      <div className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-[#f2f3f8]">
-        <p className="absolute top-4 left-4 z-10 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-fg/60 uppercase">
+      <div className="relative m-2 ml-4 w-[460px] overflow-hidden rounded-[2px] bg-[#f2f3f8]">
+        <p className="absolute top-3 left-3 z-10 flex items-center gap-2 text-[11px] leading-none font-medium tracking-[0.06em] text-fg/60 uppercase">
           <span aria-hidden className="size-1.5 bg-sky" />
           {current.label}
         </p>
-        <div className="flex h-full items-center px-4 pt-8 pb-2">
+        <div className="flex h-full items-center px-2 pt-6">
           <IndustryGraphic key={current.key} industry={current.key} />
         </div>
       </div>
@@ -246,42 +231,16 @@ function IndustriesPanel() {
 
 type Group = { label: string; href?: string; links: Link[] };
 
-/** Link columns plus an image placeholder on the right (Services, Projects). */
-function LinksPanel({
-  groups,
-  viewAll,
-  cols,
-  image,
-}: {
-  groups: Group[];
-  viewAll?: [string, string];
-  cols: string;
-  image: string;
-}) {
+/** Link columns plus a picture on the right (Services, Projects, Company). */
+function LinksPanel({ groups, viewAll, widths }: { groups: Group[]; viewAll?: [string, string]; widths: number[] }) {
   return (
-    <div
-      className="grid gap-u-40"
-      style={{ gridTemplateColumns: `${cols} calc(var(--u) * ${image})` }}
-    >
+    <div className="flex">
       {groups.map((g, gi) => (
-        <div key={g.label} className={`pt-12 pb-14 ${gi === 0 ? "pl-8" : ""}`}>
-          {g.href ? (
-            <a
-              href={g.href}
-              className={`${labelCls} block transition-colors hover:text-navy`}
-            >
-              {g.label}
-            </a>
-          ) : (
-            <p className={labelCls}>{g.label}</p>
-          )}
-          <ul className="mt-10 flex flex-col gap-3.5">
+        <Column key={g.label} label={g.label} href={g.href} className="shrink-0">
+          <ul className="flex flex-col gap-3" style={{ width: widths[gi] }}>
             {g.links.map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  className={`${linkCls} text-[17px] leading-[1.3] tracking-[0.005em]`}
-                >
+                <a href={l.href} className={`${linkCls} text-[15px] leading-[1.3] tracking-[0.005em]`}>
                   {l.label}
                   <Chev />
                 </a>
@@ -289,21 +248,16 @@ function LinksPanel({
             ))}
           </ul>
           {viewAll && gi === groups.length - 1 && (
-            <div className="mt-10">
+            <div className="mt-6">
               <ViewAll href={viewAll[0]}>{viewAll[1]}</ViewAll>
             </div>
           )}
-        </div>
+        </Column>
       ))}
-      {/* fills any spare columns before the image */}
-      {cols.split(" ").length > groups.length && <div aria-hidden />}
       {/* image placeholder until imagery is chosen */}
-      <div
-        aria-hidden
-        className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]"
-      >
+      <div aria-hidden className="relative m-2 ml-4 min-h-[240px] w-[300px] shrink-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]">
         <Texture opacity={0.25} />
-        <p className="absolute top-4 left-4 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-fg/40 uppercase">
+        <p className="absolute top-3 left-3 flex items-center gap-2 text-[11px] leading-none font-medium tracking-[0.06em] text-fg/40 uppercase">
           <span className="size-1.5 bg-fg/30" />
           Image
         </p>
@@ -315,41 +269,22 @@ function LinksPanel({
 /** Panel contents for the open menu, cross-fading when the menu changes. */
 export function MenuContent({ menu }: { menu: MenuKey }) {
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={menu}
+        className="w-max"
         initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: {
-            duration: navMenu.content.duration,
-            ease: navMenu.content.ease,
-            delay: 0.05,
-          },
-        }}
-        exit={{
-          opacity: 0,
-          transition: { duration: duration.fast, ease: ease.in },
-        }}
+        animate={{ opacity: 1, transition: { duration: navMenu.content.duration, ease: navMenu.content.ease, delay: 0.05 } }}
+        exit={{ opacity: 0, transition: { duration: duration.fast, ease: ease.in } }}
       >
         {menu === "industries" ? (
           <IndustriesPanel />
         ) : menu === "services" ? (
-          <LinksPanel
-            groups={serviceGroups}
-            viewAll={["/all-services", "View all services"]}
-            cols="minmax(0,1.4fr) minmax(0,1.4fr) minmax(0,0.2fr)"
-            image="420"
-          />
+          <LinksPanel groups={serviceGroups} viewAll={["/all-services", "View all services"]} widths={[280, 280]} />
         ) : menu === "projects" ? (
-          <LinksPanel
-            groups={projectGroups}
-            viewAll={["/projects", "View all projects"]}
-            cols="minmax(0,1fr) minmax(0,1fr)"
-            image="500"
-          />
+          <LinksPanel groups={projectGroups} viewAll={["/projects", "View all projects"]} widths={[340]} />
         ) : (
-          <LinksPanel groups={companyGroups} cols="minmax(0,1fr) minmax(0,1fr)" image="500" />
+          <LinksPanel groups={companyGroups} widths={[200]} />
         )}
       </motion.div>
     </AnimatePresence>

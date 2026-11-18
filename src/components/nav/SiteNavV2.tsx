@@ -21,8 +21,9 @@ const items: Item[] = [
 // from the section beneath (white on dark heroes, ink on light ones); once the
 // page scrolls it turns solid paper with ink text and a hairline underneath.
 //
-// Industries, Services, Projects and Company open dropdowns (after maisa.ai):
-// hovering or clicking drops a panel from the bar and blurs the page behind.
+// Industries, Services, Projects and Company open compact dropdowns (after
+// mistral.ai): hovering or clicking drops that category's panel from under its
+// trigger and blurs the page behind.
 // Moving between triggers swaps the contents in place; Esc, a click outside
 // or leaving the header closes it. Below 1280px the links fold into a menu.
 export function SiteNavV2() {
@@ -79,17 +80,29 @@ export function SiteNavV2() {
   }, [menu, mobile]);
   useEffect(() => clear, []);
 
-  // the panel's height follows its contents (each menu differs)
+  // the panel's size follows its contents (each menu differs) …
   const contentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
+  const [size, setSize] = useState({ w: 0, h: 0 });
   useLayoutEffect(() => {
     const el = contentRef.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setHeight(el.offsetHeight));
+    const read = () => setSize({ w: el.offsetWidth, h: el.offsetHeight });
+    const ro = new ResizeObserver(read);
     ro.observe(el);
-    setHeight(el.offsetHeight);
+    read();
     return () => ro.disconnect();
   }, [menu]);
+  // … and it opens under its own trigger, kept inside the window
+  const triggers = useRef<Partial<Record<MenuKey, HTMLButtonElement | null>>>({});
+  const [, reflow] = useState(0);
+  useEffect(() => {
+    if (!menu) return;
+    const onResize = () => reflow((n) => n + 1);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [menu]);
+  const btn = menu ? triggers.current[menu] : null;
+  const left = btn ? Math.max(12, Math.min(btn.getBoundingClientRect().left, window.innerWidth - size.w - 12)) : 0;
 
   const raised = menu !== null || mobile;
   const solid = raised || scrolled;
@@ -139,6 +152,9 @@ export function SiteNavV2() {
                 <li key={it.label}>
                   {it.menu ? (
                     <button
+                      ref={(el) => {
+                        triggers.current[it.menu!] = el;
+                      }}
                       type="button"
                       aria-expanded={menu === it.menu}
                       aria-controls="nav-panel"
@@ -208,17 +224,18 @@ export function SiteNavV2() {
           </nav>
         </div>
 
-        {/* desktop dropdown panel, full width under the bar */}
+        {/* desktop dropdown: one compact panel under the open category; moving
+            to another trigger slides it across and resizes it to fit */}
         <AnimatePresence>
           {menu && (
             <motion.div
               id="nav-panel"
-              className="absolute inset-x-0 top-full hidden overflow-hidden bg-bg text-fg shadow-[0_24px_48px_-24px_rgb(0_6_17/0.25)] xl:block"
-              initial={{ height: 0 }}
-              animate={{ height, transition: navMenu.panel }}
+              className="absolute top-full hidden overflow-hidden border border-fg/10 bg-bg text-fg shadow-[0_24px_48px_-20px_rgb(0_6_17/0.3)] xl:block"
+              initial={{ height: 0, left, width: size.w || "auto" }}
+              animate={{ height: size.h, left, width: size.w || "auto", transition: navMenu.panel }}
               exit={{ height: 0, transition: { duration: duration.base, ease: ease.in } }}
             >
-              <div ref={contentRef} className="mx-auto max-w-[1440px] px-[calc(var(--u)*32)]">
+              <div ref={contentRef} className="w-max">
                 <MenuContent menu={menu} />
               </div>
             </motion.div>
