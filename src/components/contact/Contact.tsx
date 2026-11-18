@@ -61,9 +61,14 @@ function ContactForm() {
         </Field>
       </div>
 
-      <Field id={`${uid}-email`} text="What’s your email address?">
-        <input id={`${uid}-email`} name="email" type="email" required autoComplete="email" placeholder="Email address" className={field} />
-      </Field>
+      <div className="grid gap-10 sm:grid-cols-2 sm:gap-6">
+        <Field id={`${uid}-email`} text="What’s your email address?">
+          <input id={`${uid}-email`} name="email" type="email" required autoComplete="email" placeholder="Email address" className={field} />
+        </Field>
+        <Field id={`${uid}-phone`} text="What’s your phone number?">
+          <input id={`${uid}-phone`} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" className={field} />
+        </Field>
+      </div>
 
       <fieldset className="flex flex-col gap-3">
         <legend className={`${label} mb-3`}>Which industry? (select all that apply)</legend>
