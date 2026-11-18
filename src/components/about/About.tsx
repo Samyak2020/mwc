@@ -297,12 +297,12 @@ export function AboutResults() {
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[4px] bg-navy">
         <ImageReveal>
           <Image
-            src="/about-v2/results.png"
+            src="/about-v2/results-v2.png"
             alt=""
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"
             quality={PHOTO_QUALITY}
-            className="object-cover"
+            className="object-cover object-[92%_50%]"
           />
           <Texture opacity={0.12} />
         </ImageReveal>
