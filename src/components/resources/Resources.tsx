@@ -204,7 +204,7 @@ export function ResourcesPage() {
       <section data-nav-theme="light" data-nav-solid="" className="bg-bg text-fg">
         <div className="shell pt-32 pb-14 lg:pt-[calc(var(--u)*200)] lg:pb-u-80">
           <Rise>
-            <h1 className="display text-[56px] leading-[0.9] sm:text-[88px] lg:fs-u-128">Insights & Downloads</h1>
+            <h1 className="display text-[56px] leading-[0.9] sm:text-[88px] lg:fs-u-128">Client Resources</h1>
           </Rise>
         </div>
       </section>
