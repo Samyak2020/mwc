@@ -134,7 +134,7 @@ export function SiteNavV2() {
   const raised = menu !== null || mobile;
   const solid = raised || scrolled;
   const pill =
-    "flex h-[30px] items-center gap-1.5 px-3 text-sm leading-none font-medium tracking-[0.005em] whitespace-nowrap transition-colors duration-[var(--duration-fast)] hover:bg-current/10 focus-visible:bg-current/10";
+    "flex h-[30px] items-center gap-1.5 px-3 text-base leading-none font-medium tracking-[0.005em] whitespace-nowrap transition-colors duration-[var(--duration-fast)] hover:bg-current/10 focus-visible:bg-current/10";
 
   return (
     <>
