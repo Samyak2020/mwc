@@ -110,10 +110,10 @@ export const navMenu = {
 
 // Page transition: a navy panel wipes up over the page with the MWC mark
 // (150px from the top) and the destination's name, then wipes away upward
-// off the new page. Cover + reveal = 0.8s.
+// off the new page. Cover + reveal = 1.2s.
 export const pageTransition = {
-  cover: 0.4,
-  reveal: 0.4,
+  cover: 0.6,
+  reveal: 0.6,
   ease: [0.76, 0, 0.24, 1] as const,
 } as const;
 

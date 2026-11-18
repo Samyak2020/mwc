@@ -18,10 +18,10 @@ const pageNames: Record<string, string> = {
 type Phase = "cover" | "hold" | "reveal";
 
 // Site-wide page transition. Any same-site link to a page listed above is
-// intercepted: a navy panel wipes up from the bottom (0.4s) carrying the MWC
+// intercepted: a navy panel wipes up from the bottom (0.6s) carrying the MWC
 // mark 150px from the top and the destination's name in the middle; the logo's
 // mountain then draws in (body, then ridge) while the next page loads, and
-// once both are done the panel wipes off the top (0.4s).
+// once both are done the panel wipes off the top (0.6s).
 export function PageTransition() {
   const router = useRouter();
   const pathname = usePathname();

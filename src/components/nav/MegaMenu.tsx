@@ -39,8 +39,8 @@ export const industries: Industry[] = [
   },
   {
     key: "commercial",
-    label: "Commercial, Industrial and General Contractors",
-    href: "/industries/commercial-industrial",
+    label: "Construction",
+    href: "/industries/construction",
     description:
       "Owner-side project oversight and project delivery personnel are available for commercial, industrial and on-site energy projects, with added support for contractor teams.",
   },
@@ -63,11 +63,11 @@ export const serviceGroups: { label: string; href?: string; links: Link[] }[] =
           href: "/services/owners-representative",
         },
         {
-          label: "Project and Program Management",
+          label: "Project Management",
           href: "/services/project-program-management",
         },
         {
-          label: "Project Controls and Scheduling",
+          label: "Controls and Scheduling",
           href: "/services/project-controls-scheduling",
         },
         {
@@ -75,11 +75,11 @@ export const serviceGroups: { label: string; href?: string; links: Link[] }[] =
           href: "/services/construction-management",
         },
         {
-          label: "Construction Safety Management",
+          label: "Safety Management",
           href: "/services/construction-safety-management",
         },
         {
-          label: "Project Coordination and Document Control",
+          label: "Coordination and Document Control",
           href: "/services/project-coordination",
         },
         {
@@ -96,11 +96,11 @@ export const serviceGroups: { label: string; href?: string; links: Link[] }[] =
       label: "Specialized Services",
       links: [
         {
-          label: "Plant Outage Planning and Management",
+          label: "Plant Outage Management",
           href: "/services/plant-outage-planning",
         },
         {
-          label: "Utility and Interconnection Coordination",
+          label: "Utility Interconnection Coordination",
           href: "/services/utility-interconnection-coordination",
         },
         {
@@ -119,7 +119,7 @@ export const projectGroups: { label: string; href?: string; links: Link[] }[] =
       links: [
         { label: "Power Generation", href: "/projects/power-generation" },
         {
-          label: "Solar and Battery Energy Storage",
+          label: "Solar and BESS",
           href: "/projects/solar-battery-storage",
         },
         {
@@ -127,7 +127,7 @@ export const projectGroups: { label: string; href?: string; links: Link[] }[] =
           href: "/projects/transmission-distribution",
         },
         {
-          label: "Electric Vehicle Charging and Demand-Side Management",
+          label: "EV and Demand-Side Management",
           href: "/projects/electric-vehicle-charging",
         },
         { label: "Microgrids", href: "/projects/microgrids" },
@@ -231,8 +231,8 @@ function IndustriesPanel() {
       </div>
 
       {/* the hovered industry, drawn: rebuilt from scratch on every change */}
-      <div className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-[#eef2f8]">
-        <p className="absolute top-4 left-4 z-10 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-fg/60 uppercase">
+      <div className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-night">
+        <p className="absolute top-4 left-4 z-10 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-bg/70 uppercase">
           <span aria-hidden className="size-1.5 bg-sky" />
           {current.label}
         </p>
@@ -467,7 +467,6 @@ export function MobileMenu({ onNavigate }: { onNavigate: () => void }) {
       </Group>
       {[
         ["Client Resources", "#"],
-        ["Blogs", "#"],
       ].map(([label, href]) => (
         <li key={label} className="border-b border-fg/10">
           <a

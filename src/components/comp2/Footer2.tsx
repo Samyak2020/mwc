@@ -84,7 +84,7 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
           ))}
         </nav>
 
-        <div className="mt-16 flex flex-col gap-6 text-sm lg:mt-u-80 lg:flex-row lg:items-end lg:gap-0">
+        <div className="mt-16 flex flex-col gap-6 text-sm opacity-50 lg:mt-u-80 lg:flex-row lg:items-end lg:gap-0">
           <p className="leading-[1.4] lg:w-u-552">
             [Address] · <a href="tel:+16237386988">(623) 738-6988</a>
             <br />

@@ -10,8 +10,8 @@ const S = 0.5;
 const K = C * Math.SQRT2; // screen half-width of a ground circle of radius 1
 const KY = S * Math.SQRT2; // screen half-height of the same circle
 
-export type Tone = "top" | "left" | "right" | "inner" | "accent" | "none";
-export type Shape = { d: string; tone: Tone; at: number; stroke?: "ink" | "faint" | "accent" };
+export type Tone = "top" | "left" | "right" | "inner" | "accent" | "warm" | "tree" | "water" | "none";
+export type Shape = { d: string; tone: Tone; at: number; stroke?: "ink" | "faint" | "accent" | "warm" | "soft" };
 type V3 = [number, number, number];
 
 const f = (n: number) => Math.round(n * 10) / 10;
@@ -156,6 +156,48 @@ export class Scene {
       this.line([corner(1, 1, k0), corner(1, -1, k1)]);
       this.line([corner(-1, 1, k0), corner(1, 1, k1)]);
       this.line([corner(1, 1, k0), corner(-1, 1, k1)]);
+    }
+    return this;
+  }
+
+  /** small conifer standing at (x, y, z): trunk and two stacked triangles,
+   *  drawn upright in screen space like the field journey's trees */
+  tree(x: number, y: number, z: number, s = 1) {
+    const [sx, sy] = this.p([x, y, z]);
+    const tri = (half: number, base: number, top: number) =>
+      `M${f(sx - half * s)} ${f(sy - base * s)} L${f(sx)} ${f(sy - top * s)} L${f(sx + half * s)} ${f(sy - base * s)} Z`;
+    this.add(`M${f(sx)} ${f(sy)} L${f(sx)} ${f(sy - 2.5 * s)}`, "none", "soft");
+    this.add(tri(4.6, 2, 10), "tree", "soft");
+    this.add(tri(3.4, 6, 14.5), "tree", "soft");
+    return this;
+  }
+
+  /** low rounded bush at (x, y, z) */
+  bush(x: number, y: number, z: number, s = 1) {
+    const [sx, sy] = this.p([x, y, z]);
+    const r = 4 * s;
+    return this.add(
+      `M${f(sx - r)} ${f(sy)} C${f(sx - r)} ${f(sy - r * 1.1)} ${f(sx - r * 0.1)} ${f(sy - r * 1.3)} ${f(sx + r * 0.15)} ${f(sy - r * 0.9)}` +
+        ` C${f(sx + r * 0.5)} ${f(sy - r * 1.2)} ${f(sx + r)} ${f(sy - r * 0.8)} ${f(sx + r)} ${f(sy)} Z`,
+      "tree",
+      "soft",
+    );
+  }
+
+  /** a loose clump of trees and bushes around (cx, cy), back to front;
+   *  seeded so the same scene always grows the same way */
+  grove(cx: number, cy: number, n: number, spread: number, seed: number, z = 5) {
+    let st = seed;
+    const rnd = () => (st = (st * 16807) % 2147483647) / 2147483647;
+    const spots = Array.from({ length: n }, () => ({
+      x: cx + (rnd() - 0.5) * spread,
+      y: cy + (rnd() - 0.5) * spread,
+      s: 0.95 + rnd() * 0.55,
+      bush: rnd() < 0.3,
+    })).sort((a, b) => a.x + a.y - (b.x + b.y));
+    for (const t of spots) {
+      if (t.bush) this.bush(t.x, t.y, z, t.s);
+      else this.tree(t.x, t.y, z, t.s);
     }
     return this;
   }

@@ -102,9 +102,12 @@ const fills: Record<Tone, string> = {
   right: "#d5deeb",
   inner: "#c3cfe0",
   accent: "#cfe5f7",
+  warm: "#f6c27a",
+  tree: "#e3eaf3",
+  water: "#d8eaf8",
   none: "none",
 };
-const strokes = { ink: "rgb(0 6 17 / 0.82)", faint: "rgb(0 6 17 / 0.14)", accent: "#2089d8" } as const;
+const strokes = { ink: "rgb(0 6 17 / 0.82)", faint: "rgb(0 6 17 / 0.14)", accent: "#2089d8", warm: "#d9822b", soft: "rgb(0 6 17 / 0.4)" } as const;
 
 export function DisciplineIcon({ kind }: { kind: DisciplineKey }) {
   const reduce = useReducedMotion();

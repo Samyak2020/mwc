@@ -315,6 +315,33 @@ body {
   backdrop-filter: blur(var(--nav-blur)) saturate(140%);
   transition: background-color var(--duration-base) var(--ease-out);
 }
+/* Site header (after bayshore.ai): transparent over the top of the page,
+   solid paper with a hairline once the page scrolls or a menu opens. */
+.nav-bar {
+  background-color: rgb(251 252 255 / 0);
+  border-bottom: 1px solid rgb(0 6 17 / 0);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+/* the CTA: paper on a dark hero, navy on paper */
+.nav-cta {
+  background-color: var(--nav-cta-bg, var(--color-bg));
+  color: var(--nav-cta-ink, var(--color-fg));
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+:root[data-nav-theme="light"] .nav-cta,
+.nav-open .nav-cta {
+  --nav-cta-bg: var(--color-navy);
+  --nav-cta-ink: var(--color-bg);
+}
+.nav-bar.is-solid {
+  background-color: var(--color-bg);
+  border-bottom-color: rgb(0 6 17 / 0.1);
+}
 .nav-fg svg path {
   transition: fill var(--duration-base) var(--ease-out);
 }

@@ -6,20 +6,24 @@ import { navMenu } from "@/lib/motion";
 
 // Isometric line drawings for the Industries menu, one per industry, built
 // from the ground up when shown: the plate first, then each structure, its
-// edges drawing in before its faces fill. Cropped to a 400×290 view.
+// edges drawing in before its faces fill. Cropped to a 400×290 view. Drawn in
+// the homepage field journey's night palette (navy faces, pale blue lines)
+// with colour picked out: sky-blue power lines, parts and water, an amber
+// flame, and trees and bushes around the edges as on the homepage.
 
 export type IndustryKey = "power" | "utilities" | "government" | "commercial" | "oil";
 
 function power() {
   const s = new Scene();
   s.plate(-110, -110, 110, 110, 5).next();
+  s.grove(94, -92, 6, 22, 11).next();
   // chimney, back left, with two bands
   s.cyl(-80, -80, 5, 6, 82).band(-80, -80, 72, 6).band(-80, -80, 78, 6, "accent").next();
   // cooling towers
   s.coolingTower(10, -80, 5, 28, 19, 22, 80).next();
   // turbine hall with a raised boiler block
   s.box(-95, -40, 5, 78, 54, 44).next();
-  s.box(-95, -40, 49, 34, 26, 20).next();
+  s.box(-95, -40, 49, 34, 26, 20, true).next();
   s.coolingTower(62, -30, 5, 28, 19, 22, 80).next();
   // pipe rack from the hall to the towers
   s.line([[-17, -6, 28], [36, -6, 28], [36, -30, 28]]).line([[-17, 0, 24], [42, 0, 24], [42, -30, 24]]).next();
@@ -29,13 +33,15 @@ function power() {
   s.box(20, 38, 5, 16, 12, 14).box(44, 38, 5, 16, 12, 14).next();
   s.line([[16, 66, 5], [16, 66, 40]]).line([[72, 66, 5], [72, 66, 40]]).line([[12, 66, 40], [76, 66, 40]]).next();
   s.lattice(60, 98, 5, 5, 2, 42, 2).line([[44, 98, 47], [76, 98, 47]]).next();
-  s.wire([28, 66, 40], [48, 98, 47], 2).wire([44, 66, 40], [60, 98, 47], 2).wire([60, 66, 40], [72, 98, 47], 2);
+  s.wire([28, 66, 40], [48, 98, 47], 2).wire([44, 66, 40], [60, 98, 47], 2).wire([60, 66, 40], [72, 98, 47], 2).next();
+  s.grove(98, 22, 5, 18, 5).grove(-78, 98, 6, 26, 17).grove(-18, 98, 4, 20, 29);
   return s.shapes;
 }
 
 function utilities() {
   const s = new Scene();
   s.plate(-110, -110, 110, 110, 5).next();
+  s.grove(-20, -98, 5, 22, 3).grove(94, -80, 6, 26, 41).next();
   // water tower, back left: legs, tank, cap
   for (const [dx, dy] of [
     [-10, -10],
@@ -52,7 +58,7 @@ function utilities() {
   for (const x of [-92, -69, -45, -22]) s.line([[x, 70, 5], [x, 70, 14]]);
   for (const y of [0, 23, 47, 70]) s.line([[-22, y, 5], [-22, y, 14]]);
   s.line([[-92, 70, 14], [-22, 70, 14], [-22, 0, 14]]).next();
-  s.box(-82, 12, 5, 20, 16, 18).box(-54, 12, 5, 20, 16, 18).next();
+  s.box(-82, 12, 5, 20, 16, 18, true).box(-54, 12, 5, 20, 16, 18, true).next();
   s.line([[-86, 46, 5], [-86, 46, 34]]).line([[-30, 46, 5], [-30, 46, 34]]).line([[-90, 46, 34], [-26, 46, 34]]).next();
   s.lattice(40, 46, 5, 9, 3, 92, 4).next();
   s.line([[12, 46, 76], [68, 46, 76]]).line([[16, 46, 88], [64, 46, 88]]).next();
@@ -62,35 +68,57 @@ function utilities() {
   s.wire([-26, 46, 34], [12, 46, 76], 3).next();
   // houses served by the network, front right
   s.box(70, 74, 5, 24, 18, 12).gable(70, 74, 17, 24, 18, 8).next();
-  s.box(70, 26, 5, 24, 18, 12).gable(70, 26, 17, 24, 18, 8);
+  s.box(70, 26, 5, 24, 18, 12).gable(70, 26, 17, 24, 18, 8).next();
+  s.grove(100, 60, 3, 10, 13).grove(-72, 96, 6, 34, 23).grove(6, 96, 5, 26, 37);
   return s.shapes;
 }
 
+// Government: a federal hydro dam. The reservoir is drawn as a cut block of
+// water behind a concrete gravity dam; the spillway runs down the middle,
+// the powerhouse sits at the toe and a line carries the power away.
 function government() {
   const s = new Scene();
   s.plate(-110, -110, 110, 110, 5).next();
-  // stepped base
-  s.box(-88, -70, 5, 150, 128, 6).box(-81, -63, 11, 136, 114, 6).box(-74, -56, 17, 122, 100, 6).next();
-  // hall behind the portico
-  s.box(-66, -48, 23, 106, 62, 46).next();
-  // drum, dome, lantern
-  s.cyl(-13, -17, 69, 22, 13).next().dome(-13, -17, 82, 22, 24).next();
-  s.cyl(-13, -17, 104, 4, 8).line([[-13, -17, 112], [-13, -17, 122]], "accent").next();
-  // portico columns
-  for (const x of [-60, -38, -16, 6, 28]) s.cyl(x, 36, 23, 4, 38);
+  // reservoir: cut section on the right, water surface on top with ripples
+  const w = 60;
+  s.poly([[110, -110, 5], [110, -30, 5], [110, -30, w], [110, -110, w]], "inner");
+  s.poly([[-110, -110, w], [110, -110, w], [110, -30, w], [-110, -30, w]], "water", "accent");
+  for (const [x0, x1, y] of [[-80, -30, -92], [10, 70, -96], [-50, 20, -72], [40, 90, -60], [-95, -45, -50]] as const)
+    s.line([[x0, y, w], [x1, y, w]], "faint");
   s.next();
-  // entablature and pediment
-  s.box(-68, 26, 61, 106, 18, 7).next();
-  s.gable(-68, 26, 68, 106, 18, 16).next();
-  // flagpole and flag
-  s.line([[90, 72, 5], [90, 72, 98]]).next();
-  s.poly([[90, 72, 97], [66, 72, 94], [66, 72, 80], [90, 72, 83]], "accent", "accent");
+  // gravity dam: crest, sloped downstream face, cut end
+  const c = 68;
+  s.poly([[-110, -20, c], [110, -20, c], [110, 10, 5], [-110, 10, 5]], "left");
+  s.poly([[110, -30, 5], [110, -30, c], [110, -20, c], [110, 10, 5]], "right");
+  s.poly([[-110, -30, c], [110, -30, c], [110, -20, c], [-110, -20, c]], "top");
+  // block joints down the face
+  for (const x of [-80, -50, 50, 80]) s.line([[x, -20, c], [x, 10, 5]], "faint");
+  s.next();
+  // spillway: gate piers on the crest, white water down the chute
+  for (const x of [-18, -4, 10, 24]) s.box(x, -31, c, 4, 12, 9);
+  s.next();
+  for (const x of [-12, -6, 0, 6, 12, 18]) s.line([[x, -20, c - 1], [x, 10, 6], [x + 1, 24, 6]], "accent");
+  // control house on the crest, left
+  s.box(-84, -30, c, 18, 10, 12).next();
+  // river below the dam, out the front of the plate
+  s.poly([[-22, 10, 5.5], [30, 10, 5.5], [36, 60, 5.5], [24, 110, 5.5], [-20, 110, 5.5], [-28, 60, 5.5]], "water", "accent");
+  for (const [x0, x1, y] of [[-14, 6, 40], [4, 22, 66], [-10, 12, 92]] as const) s.line([[x0, y, 5.5], [x1, y, 5.5]], "faint");
+  s.next();
+  // penstocks down the face to the powerhouse at the toe
+  for (const x of [56, 70]) s.line([[x, -20, c - 6], [x, 12, 14]], "accent");
+  s.box(46, 12, 5, 42, 26, 20).box(52, 16, 25, 16, 14, 6, true).next();
+  // the line out: pylon on the right bank
+  s.lattice(78, 84, 5, 6, 2, 56, 3).line([[66, 84, 58], [90, 84, 58]]).next();
+  s.wire([60, 38, 25], [70, 84, 58], 3).wire([76, 38, 25], [86, 84, 58], 3).next();
+  // banks: trees on both sides of the river
+  s.grove(-74, 46, 9, 46, 19).grove(-62, 94, 5, 34, 7).grove(100, 54, 4, 14, 31).grove(46, 100, 4, 22, 43);
   return s.shapes;
 }
 
 function commercial() {
   const s = new Scene();
   s.plate(-110, -110, 110, 110, 5).next();
+  s.grove(-74, -82, 8, 44, 9).next();
   // factory with a row of gables, back right
   s.box(-4, -100, 5, 104, 56, 30).next();
   for (let i = 0; i < 4; i++) s.gable(-4 + i * 26, -100, 35, 26, 56, 11);
@@ -111,20 +139,22 @@ function commercial() {
   s.line([[-8, -24, 124], [-66, 34, 124]]).line([[-8, -24, 124], [16, -48, 124]]).next();
   s.line([[-66, 34, 124], [-8, -24, 138], [16, -48, 124]]).box(10, -54, 116, 10, 10, 8).next();
   s.line([[-56, 24, 124], [-56, 24, 102]], "accent").next();
-  s.box(-64, 18, 94, 16, 12, 6, true);
+  s.box(-64, 18, 94, 16, 12, 6, true).next();
+  s.grove(64, 30, 7, 40, 27).grove(80, 90, 6, 34, 53).grove(-70, 96, 4, 30, 61);
   return s.shapes;
 }
 
 function oil() {
   const s = new Scene();
   s.plate(-110, -110, 110, 110, 5).next();
+  s.grove(44, -92, 6, 30, 15).grove(-98, -6, 5, 16, 47).next();
   // storage tanks with a stair rail
   s.cyl(-70, -72, 5, 26, 34).dome(-70, -72, 39, 26, 5).band(-70, -72, 22, 26, "faint").next();
   s.cyl(-8, -88, 5, 20, 26).dome(-8, -88, 31, 20, 4).next();
   s.line([[-50, -54, 5], [-57, -47, 39]], "accent").next();
   // flare stack with its flame
   s.cyl(84, -68, 5, 4, 84).line([[78, -74, 5], [84, -68, 56], [90, -62, 5]]).next();
-  s.poly([[84, -68, 89], [82, -68, 96], [84, -68, 104], [87, -68, 95]], "accent", "accent").next();
+  s.poly([[84, -68, 89], [82, -68, 96], [84, -68, 104], [87, -68, 95]], "warm", "warm").next();
   // pipeline on supports from the tanks to the wellhead
   for (const x of [-30, 0, 30]) s.line([[x, -18, 5], [x, -18, 14]]);
   s.line([[-44, -18, 16], [62, -18, 16], [62, 52, 16]]).line([[-44, -12, 12], [56, -12, 12], [56, 52, 12]]).next();
@@ -143,7 +173,8 @@ function oil() {
   s.poly([L([-44, -2, 54]), L([44, -2, 48]), L([44, 4, 48]), L([-44, 4, 54])], "top").next();
   s.poly([L([42, 4, 56]), L([54, 4, 48]), L([52, 4, 30]), L([46, 4, 24]), L([44, 4, 30]), L([48, 4, 44]), L([40, 4, 50])], "right").next();
   s.line([L([47, 0, 26]), L([47, 0, 8])], "accent");
-  bx(41, -6, 0, 12, 12, 8);
+  bx(41, -6, 0, 12, 12, 8).next();
+  s.grove(98, 30, 4, 16, 33).grove(-40, 100, 5, 40, 57).grove(64, 100, 4, 26, 71);
   return s.shapes;
 }
 
@@ -154,15 +185,19 @@ const get = (k: IndustryKey) => {
   return cache.get(k)!;
 };
 
+// night palette, as .field in globals.css
 const fills: Record<Tone, string> = {
-  top: "#fbfcff",
-  left: "#e8edf5",
-  right: "#d5deeb",
-  inner: "#c3cfe0",
-  accent: "#cfe5f7",
+  top: "#16223d",
+  left: "#0d172d",
+  right: "#070d1d",
+  inner: "#0b1428",
+  accent: "#145a9c",
+  warm: "#f2a23c",
+  tree: "#0a1326",
+  water: "#0c2c52",
   none: "none",
 };
-const strokes = { ink: "rgb(0 6 17 / 0.82)", faint: "rgb(0 6 17 / 0.14)", accent: "#2089d8" } as const;
+const strokes = { ink: "#a5b4d2", faint: "rgb(165 180 210 / 0.22)", accent: "#3aa2f2", warm: "#ffc978", soft: "rgb(165 180 210 / 0.45)" } as const;
 
 export function IndustryGraphic({ industry, className = "" }: { industry: IndustryKey; className?: string }) {
   const reduce = useReducedMotion();
