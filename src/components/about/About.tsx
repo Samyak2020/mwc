@@ -10,7 +10,7 @@ import { FadeIn } from "@/components/motion/Stagger";
 import { Rise, RiseEach, RiseWords } from "@/components/motion/Rise";
 import { Band } from "./Band";
 import { Ridge } from "@/components/ui/Ridge";
-import { DisciplineIcon, type DisciplineKey } from "./DisciplineIcons";
+import { SoftIcon, type SoftKey } from "./SoftIcons";
 import { TeamCarousel } from "./TeamCarousel";
 import { heroSequence, PHOTO_QUALITY } from "@/lib/motion";
 
@@ -30,7 +30,7 @@ export function AboutHero({
   id = "about-title",
   lines = ["About", "MWC"],
   intro = "Learn what sets MWC apart: experienced leadership, proven project workstreams and a commitment to representing your interests.",
-  image = "/comp2/hero-v2.jpg",
+  image = "/about-v2/hero.png",
   alt = "MWC field leads walking a power generation site",
   titleClassName = "text-[72px] leading-[0.85] sm:text-[120px] lg:fs-u-160",
   band,
@@ -151,12 +151,12 @@ export function AboutStory() {
       <div className="relative aspect-[4/5] w-full self-start overflow-hidden rounded-[4px] bg-navy lg:mt-u-56">
         <ImageReveal>
           <Image
-            src="/comp2/ind-utilities-hd.jpg"
+            src="/about-v2/story.png"
             alt=""
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"
             quality={PHOTO_QUALITY}
-            className="object-cover"
+            className="object-cover object-[80%_50%]"
           />
           <Texture opacity={0.12} />
         </ImageReveal>
@@ -171,22 +171,22 @@ export function AboutStory() {
 const workstreams = [
   {
     name: "Plan and Develop",
-    image: "/figma/ws-plan-hd.jpg",
+    image: "/about-v2/ws-plan.png",
     text: "Scope, schedule, budget and delivery responsibilities set before construction begins.",
   },
   {
     name: "Build and Commission",
-    image: "/figma/ws-build-hd.jpg",
+    image: "/about-v2/ws-build-b.png",
     text: "Field activities coordinated around your contract requirements, schedule and budget through turnover.",
   },
   {
     name: "Operate and Maintain",
-    image: "/figma/ws-operate-hd.jpg",
+    image: "/about-v2/ws-operate.png",
     text: "Outages, overhauls and technology implementations planned around your operating requirements.",
   },
   {
     name: "Decommission",
-    image: "/figma/ws-decom-hd.jpg",
+    image: "/about-v2/ws-decom.png",
     text: "Decommissioning within the agreed scope, with costs, progress and closeout documentation tracked.",
   },
 ];
@@ -291,7 +291,7 @@ export function AboutResults() {
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[4px] bg-navy">
         <ImageReveal>
           <Image
-            src="/figma/ws-build-detail-hd.jpg"
+            src="/about-v2/results.png"
             alt=""
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"
@@ -331,7 +331,7 @@ export function AboutResults() {
 
 /* --------------------------------------------------------- experience */
 
-const disciplines: { name: string; icon: DisciplineKey }[] = [
+const disciplines: { name: string; icon: SoftKey }[] = [
   { name: "Project management", icon: "pm" },
   { name: "Engineering", icon: "engineering" },
   { name: "Construction", icon: "construction" },
@@ -368,8 +368,8 @@ export function AboutExperience() {
       >
         {disciplines.map((d) => (
           <figure key={d.name} className="flex flex-col">
-            <div className="aspect-[6/5] overflow-hidden rounded-[4px] bg-[#eef2f8]">
-              <DisciplineIcon kind={d.icon} />
+            <div className="aspect-[6/5] overflow-hidden rounded-[4px]">
+              <SoftIcon kind={d.icon} />
             </div>
             <figcaption className="display mt-4 text-[18px] leading-[1] lg:fs-u-20">{d.name}</figcaption>
           </figure>
@@ -396,7 +396,7 @@ export function AboutTeam() {
           <ImageReveal>
             <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,#3a3936_0%,#45433f_45%,#2c3038_70%,#1a2230_100%)]" />
             <Image
-              src="/figma/leadership.png"
+              src="/about-v2/andrew.png"
               alt="Andrew Schaaf"
               fill
               sizes="(min-width: 1024px) 38vw, 100vw"
@@ -433,7 +433,7 @@ export function AboutCta() {
       aria-labelledby="about-cta-heading"
       className="relative overflow-hidden bg-night text-bg"
     >
-      <Image src="/comp2/cta-photo.jpg" alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
+      <Image src="/about-v2/cta.png" alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
       <div aria-hidden className="absolute inset-0 bg-black/55" />
       <Texture opacity={0.15} />
       <div className="shell relative flex min-h-[560px] flex-col justify-between gap-12 py-16 lg:min-h-[calc(var(--u)*720)] lg:flex-row lg:items-end lg:py-[calc(var(--u)*80)]">

@@ -20,7 +20,7 @@ export default function CareersPage() {
           id="careers-title"
           lines={["Build Your", "Career", "with MWC"]}
           intro="Explore career opportunities at MWC and join an experienced team delivering complex, mission-critical projects."
-          image="/figma/industry-public-hd.jpg"
+          image="/careers-v2/hero.png"
           alt="MWC project team on site"
           titleClassName="text-[56px] leading-[0.85] sm:text-[96px] lg:fs-u-128"
           band={["Careers at MWC", "Veteran-led", "Experience", "Strategy", "Modern mindset"]}

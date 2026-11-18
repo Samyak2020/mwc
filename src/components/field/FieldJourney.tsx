@@ -127,8 +127,9 @@ const Drawing = memo(function Drawing({ scene }: { scene: Scene }) {
 
 const stages = workstreams.map((w, i) => ({ n: i + 1, title: w.title, description: w.description, services: w.services }));
 
-/** `light`: the white version (comp 4): light faces, ink/navy lines, white scrims. */
-export function FieldJourney({ light = false }: { light?: boolean } = {}) {
+/** `light`: the white version (comp 4): light faces, ink/navy lines, white scrims.
+ *  `soft`: soft style on blueprint blue: pale gradient faces, white lines. */
+export function FieldJourney({ light = false, soft = false }: { light?: boolean; soft?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -238,8 +239,10 @@ export function FieldJourney({ light = false }: { light?: boolean } = {}) {
     <section
       ref={sectionRef}
       data-nav-theme={light ? "light" : "dark"}
+      // soft: full-bleed; the nav stays transparent over it, as on the hero
+      data-nav-clear={soft ? "" : undefined}
       aria-labelledby="field-heading"
-      className={`relative ${light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
+      className={`relative ${light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : soft ? "bg-[#0a48a6] text-bg [--fj-scrim:10_72_166]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
       style={{ height: `calc(100svh * ${1 + fieldJourney.length})` }}
     >
       <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden">
@@ -247,9 +250,31 @@ export function FieldJourney({ light = false }: { light?: boolean } = {}) {
         <svg
           ref={svgRef}
           aria-hidden
-          className={`field ${light ? "field-light " : ""}absolute inset-0 h-full w-full transition-opacity duration-[var(--duration-base)]`}
+          className={`field ${light ? "field-light " : soft ? "field-soft " : ""}absolute inset-0 h-full w-full transition-opacity duration-[var(--duration-base)]`}
           style={{ opacity: ready ? 1 : 0 }}
         >
+          {soft && (
+            // soft faces: pale gradients lit from the top left (see .field-soft)
+            <defs>
+              <linearGradient id="fs-top" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#ffffff" />
+                <stop offset="1" stopColor="#dce6f4" />
+              </linearGradient>
+              <linearGradient id="fs-left" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#cbd8ec" />
+                <stop offset="1" stopColor="#b2c4df" />
+              </linearGradient>
+              <linearGradient id="fs-right" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#95acd0" />
+                <stop offset="1" stopColor="#7f98c2" />
+              </linearGradient>
+              <linearGradient id="fs-round" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stopColor="#f2f6fc" />
+                <stop offset="0.55" stopColor="#c3d2e8" />
+                <stop offset="1" stopColor="#8ea6cc" />
+              </linearGradient>
+            </defs>
+          )}
           <g ref={camRef}>
             <Drawing scene={scene} />
           </g>
@@ -296,7 +321,7 @@ export function FieldJourney({ light = false }: { light?: boolean } = {}) {
               key={`body-${stage}`}
               {...swap}
               className={`pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 p-5 backdrop-blur-md lg:inset-x-auto lg:top-[calc(41.6%+40px)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
-                light ? "bg-white/50" : "bg-night/50"
+                light ? "bg-white/50" : soft ? "bg-[#073d8f]/50" : "bg-night/50"
               }`}
             >
               <p className="text-[15px] leading-[1.5] font-medium tracking-[-0.005em] lg:text-base">{s.description}</p>

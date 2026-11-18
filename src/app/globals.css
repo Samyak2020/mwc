@@ -421,6 +421,36 @@ body {
 .field .fp { stroke: rgb(32 137 216 / 0.9); stroke-dasharray: 3 4; opacity: var(--d, 0); }
 .field .dc { opacity: var(--d, 0); }
 
+/* Field journey, soft version (homepage): blueprint-blue ground, pale gradient
+   faces with no dark outlines, white linework, cyan accents. */
+.field-soft .ft { fill: url(#fs-top); stroke: rgb(255 255 255 / 0.55); }
+.field-soft .fl { fill: url(#fs-left); stroke: rgb(255 255 255 / 0.35); }
+.field-soft .fr { fill: url(#fs-right); stroke: rgb(255 255 255 / 0.25); }
+.field-soft .fc { fill: url(#fs-round); stroke: rgb(255 255 255 / 0.35); }
+.field-soft .ln { stroke: rgb(255 255 255 / 0.85); }
+.field-soft .lf { stroke: rgb(255 255 255 / 0.4); }
+.field-soft .wr { stroke: rgb(255 255 255 / 0.35); }
+.field-soft .ld { stroke: rgb(255 255 255 / 0.5); }
+.field-soft .gg { stroke: rgb(255 255 255 / 0.09); }
+.field-soft .gf { stroke: rgb(255 255 255 / 0.12); }
+.field-soft .rd { stroke: rgb(255 255 255 / 0.28); }
+.field-soft .rdc { stroke: rgb(255 255 255 / 0.2); }
+.field-soft .pl { stroke: rgb(255 255 255 / 0.6); }
+.field-soft .tr { fill: #b9cbe6; stroke: rgb(255 255 255 / 0.3); }
+.field-soft .gt { fill: rgb(255 255 255 / 0.14); stroke: rgb(255 255 255 / 0.8); }
+.field-soft .gl { fill: rgb(255 255 255 / 0.09); stroke: rgb(255 255 255 / 0.8); }
+.field-soft .gr { fill: rgb(255 255 255 / 0.05); stroke: rgb(255 255 255 / 0.8); }
+.field-soft .gd { stroke: rgb(255 255 255 / 0.4); }
+.field-soft .ac { stroke: #9fe0ff; }
+.field-soft .acd { stroke: rgb(159 224 255 / 0.8); }
+.field-soft .mk { fill: #9fe0ff; }
+.field-soft .lt { fill: #ffffff; }
+.field-soft .dt { fill: #cdeeff; }
+.field-soft .pw { stroke: #b6e8ff; }
+.field-soft .pwg { stroke: rgb(182 232 255 / 0.25); }
+.field-soft .pwn { fill: #0a48a6; stroke: #b6e8ff; }
+.field-soft .fp { stroke: rgb(182 232 255 / 0.9); }
+
 /* Field journey, white version (comp 4): pale faces, navy lines. */
 .field-light .ft { fill: #ffffff; stroke: #072871; }
 .field-light .fl { fill: #eef2f9; stroke: #072871; }

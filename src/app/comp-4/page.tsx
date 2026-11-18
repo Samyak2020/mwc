@@ -28,7 +28,7 @@ export default function Comp4() {
       <main>
         <Hero2 fullHeight flatOverlay v2 description="The experience to run complex capital projects." />
         <IndustryPanels />
-        <FieldJourney />
+        <FieldJourney soft />
         <Metrics4 />
         <Rise>
           <TrustedBy label={false} className="mt-16 lg:mt-u-108" />

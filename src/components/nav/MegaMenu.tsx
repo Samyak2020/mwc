@@ -231,8 +231,8 @@ function IndustriesPanel() {
       </div>
 
       {/* the hovered industry, drawn: rebuilt from scratch on every change */}
-      <div className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-night">
-        <p className="absolute top-4 left-4 z-10 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-bg/70 uppercase">
+      <div className="relative m-2 ml-0 overflow-hidden rounded-[2px] bg-[#f2f3f8]">
+        <p className="absolute top-4 left-4 z-10 flex items-center gap-2 text-xs leading-none font-medium tracking-[0.04em] text-fg/60 uppercase">
           <span aria-hidden className="size-1.5 bg-sky" />
           {current.label}
         </p>

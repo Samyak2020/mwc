@@ -19,15 +19,16 @@ const grid = "grid gap-6 lg:grid-cols-[calc(var(--u)*400)_minmax(0,1fr)] lg:gap-
 
 /* ------------------------------------------------------- photo strip */
 
+// Figma 819:876 "Life at MWC", in order; pos = the Figma crop
 const photos = [
-  { src: "/figma/industry-utilities-hd.jpg", wide: false },
-  { src: "/figma/ws-build-detail-hd.jpg", wide: true },
-  { src: "/comp2/ind-power-hd.jpg", wide: false },
-  { src: "/figma/metric-bg-2-hd.jpg", wide: true },
-  { src: "/figma/ws-plan-detail-hd.jpg", wide: false },
-  { src: "/comp2/ind-government-hd.jpg", wide: false },
-  { src: "/figma/metric-bg-3-hd.jpg", wide: true },
-  { src: "/figma/ws-operate-detail-hd.jpg", wide: true },
+  { src: "/careers-v2/strip-1.png", wide: false, pos: "50% 50%" },
+  { src: "/careers-v2/strip-2.png", wide: true, pos: "50% 50%" },
+  { src: "/careers-v2/strip-3.png", wide: true, pos: "50% 50%" },
+  { src: "/careers-v2/strip-4.png", wide: false, pos: "24% 12%" },
+  { src: "/careers-v2/strip-5.png", wide: true, pos: "50% 50%" },
+  { src: "/careers-v2/strip-6.png", wide: false, pos: "22% 50%" },
+  { src: "/careers-v2/strip-7.png", wide: true, pos: "50% 50%" },
+  { src: "/careers-v2/strip-8.png", wide: false, pos: "50% 50%" },
 ];
 
 /**
@@ -90,7 +91,7 @@ export function CareersPhotos() {
               }`}
             >
               {/* eager: off-screen to the right, they'd otherwise pop in mid-slide */}
-              <Image src={p.src} alt="" fill loading="eager" sizes="(min-width: 1024px) 40vw, 80vw" quality={PHOTO_QUALITY} className="object-cover" />
+              <Image src={p.src} alt="" fill loading="eager" sizes="(min-width: 1024px) 40vw, 80vw" quality={PHOTO_QUALITY} className="object-cover" style={{ objectPosition: p.pos }} />
             </div>
           ))}
         </motion.div>
@@ -177,7 +178,7 @@ export function CareersPositions() {
             Open positions
           </Rise>
           <div>
-            <RevealHeading id="positions-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
+            <RevealHeading id="positions-heading" className="display text-[40px] [word-spacing:0.14em] sm:text-[56px] lg:fs-u-64">
               <Line className="block">Be a part of MWC</Line>
             </RevealHeading>
             <RiseEach className="mt-10 border-t border-bg/15 lg:mt-u-64">

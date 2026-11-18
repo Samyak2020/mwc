@@ -17,10 +17,10 @@ import { PHOTO_QUALITY, teamCarousel } from "@/lib/motion";
 type Member = { name: string; role: string; years: string; image: string; portrait?: boolean };
 
 const team: Member[] = [
-  { name: "John B. Doe", role: "Project Manager", years: "8+ yrs of exp", image: "/comp1r/team-1.png" },
-  { name: "Samantha Campbell", role: "Project Manager", years: "8+ yrs of exp", image: "/comp1r/team-2.png" },
-  { name: "Jason Todd", role: "Project Manager", years: "8+ yrs of exp", image: "/comp1r/team-3.png" },
-  { name: "Frank Schaffer", role: "Project Manager", years: "8+ yrs of exp", image: "/comp1r/team-4.png" },
+  { name: "John B. Doe", role: "Project Manager", years: "8+ yrs of exp", image: "/about-v2/team-1.png" },
+  { name: "Samantha Campbell", role: "Project Manager", years: "8+ yrs of exp", image: "/about-v2/team-2.png" },
+  { name: "Jason Todd", role: "Project Manager", years: "8+ yrs of exp", image: "/about-v2/team-3.png" },
+  { name: "Frank Schaffer", role: "Project Manager", years: "8+ yrs of exp", image: "/about-v2/team-4.png" },
 ];
 
 const BIO =

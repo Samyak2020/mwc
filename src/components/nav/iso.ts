@@ -186,13 +186,13 @@ export class Scene {
 
   /** a loose clump of trees and bushes around (cx, cy), back to front;
    *  seeded so the same scene always grows the same way */
-  grove(cx: number, cy: number, n: number, spread: number, seed: number, z = 5) {
+  grove(cx: number, cy: number, n: number, spread: number, seed: number, z = 5, scale = 1) {
     let st = seed;
     const rnd = () => (st = (st * 16807) % 2147483647) / 2147483647;
     const spots = Array.from({ length: n }, () => ({
       x: cx + (rnd() - 0.5) * spread,
       y: cy + (rnd() - 0.5) * spread,
-      s: 0.95 + rnd() * 0.55,
+      s: (0.95 + rnd() * 0.55) * scale,
       bush: rnd() < 0.3,
     })).sort((a, b) => a.x + a.y - (b.x + b.y));
     for (const t of spots) {

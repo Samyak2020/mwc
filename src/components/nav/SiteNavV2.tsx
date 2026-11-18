@@ -34,7 +34,14 @@ export function SiteNavV2() {
   useNavTheme(barRef);
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 8);
+    // solid once scrolled, except over sections marked data-nav-clear
+    const update = () => {
+      const clear = [...document.querySelectorAll<HTMLElement>("[data-nav-clear]")].some((s) => {
+        const b = s.getBoundingClientRect();
+        return b.top <= 36 && b.bottom > 36;
+      });
+      setScrolled(window.scrollY > 8 && !clear);
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);

@@ -2,14 +2,13 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { Scene, type Shape, type Tone } from "./iso";
-import { navMenu } from "@/lib/motion";
+import { Blueprint } from "./Blueprint";
+import { duration, ease, navMenu } from "@/lib/motion";
 
-// Isometric line drawings for the Industries menu, one per industry, built
-// from the ground up when shown: the plate first, then each structure, its
-// edges drawing in before its faces fill. Cropped to a 400×290 view. Drawn in
-// the homepage field journey's night palette (navy faces, pale blue lines)
-// with colour picked out: sky-blue power lines, parts and water, an amber
-// flame, and trees and bushes around the edges as on the homepage.
+// Isometric drawings for the Industries menu, one per industry, in the soft
+// light style shared with the About page: pale gradient solids on a light
+// blueprint sheet, sky-blue and amber accents, trees around the edges. Each
+// builds up from the plate, step by step, when shown. Cropped to 400×290.
 
 export type IndustryKey = "power" | "utilities" | "government" | "commercial" | "oil";
 
@@ -185,43 +184,107 @@ const get = (k: IndustryKey) => {
   return cache.get(k)!;
 };
 
-// night palette, as .field in globals.css
+// Soft light palette (as the About drawings): pale gradient faces, edges only
+// hinted, colour picked out with grainy gradients.
 const fills: Record<Tone, string> = {
-  top: "#16223d",
-  left: "#0d172d",
-  right: "#070d1d",
-  inner: "#0b1428",
-  accent: "#145a9c",
-  warm: "#f2a23c",
-  tree: "#0a1326",
-  water: "#0c2c52",
+  top: "url(#ig-top)",
+  left: "url(#ig-left)",
+  right: "#b3b9c7",
+  inner: "#a5acbb",
+  accent: "url(#ig-sky)",
+  warm: "url(#ig-warm)",
+  tree: "#d3d7e0",
+  water: "url(#ig-water)",
   none: "none",
 };
-const strokes = { ink: "#a5b4d2", faint: "rgb(165 180 210 / 0.22)", accent: "#3aa2f2", warm: "#ffc978", soft: "rgb(165 180 210 / 0.45)" } as const;
+const strokes: Record<NonNullable<Shape["stroke"]>, string> = {
+  ink: "rgb(42 46 58)",
+  faint: "rgb(42 46 58 / 0.1)",
+  accent: "#1f78d1",
+  warm: "#e08a1e",
+  soft: "rgb(42 46 58 / 0.2)",
+};
+
+const C = Math.cos(Math.PI / 6);
+const pt = (x: number, y: number) => `${(240 + (x - y) * C).toFixed(1)} ${(190 + (x + y) * 0.5).toFixed(1)}`;
+// the plate's footprint, nudged down-right and blurred: its shadow on the sheet
+const plateShadow = `M${pt(-100, -100)} L${pt(122, -100)} L${pt(122, 122)} L${pt(-100, 122)} Z`;
 
 export function IndustryGraphic({ industry, className = "" }: { industry: IndustryKey; className?: string }) {
   const reduce = useReducedMotion();
   const shapes = get(industry);
-  const { stepDelay, draw, fill } = navMenu.build;
+  const { stepDelay } = navMenu.build;
+  const keys: IndustryKey[] = ["power", "utilities", "government", "commercial", "oil"];
   return (
     <svg viewBox="40 15 400 290" className={`block h-auto w-full ${className}`} aria-hidden>
+      <defs>
+        <linearGradient id="ig-top" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="1" stopColor="#e3e7ef" />
+        </linearGradient>
+        <linearGradient id="ig-left" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#d9dee8" />
+          <stop offset="1" stopColor="#c5cbd8" />
+        </linearGradient>
+        <linearGradient id="ig-sky" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#8fd8ff" />
+          <stop offset="0.55" stopColor="#3a9ff0" />
+          <stop offset="1" stopColor="#2070d8" />
+        </linearGradient>
+        <linearGradient id="ig-warm" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffd690" />
+          <stop offset="1" stopColor="#f2952a" />
+        </linearGradient>
+        <linearGradient id="ig-water" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#c6e8ff" />
+          <stop offset="1" stopColor="#6fb4ef" />
+        </linearGradient>
+        <filter id="ig-grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="4" result="n" />
+          <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.6 0 0 0 -0.75" result="speck" />
+          <feComposite in="speck" in2="SourceAlpha" operator="in" result="g" />
+          <feComponentTransfer in="g" result="gs">
+            <feFuncA type="linear" slope="0.22" />
+          </feComponentTransfer>
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode in="gs" />
+          </feMerge>
+        </filter>
+        <filter id="ig-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="8" />
+        </filter>
+        <radialGradient id="ig-fade" cx="50%" cy="58%" r="62%">
+          <stop offset="0.45" stopColor="#fff" stopOpacity="1" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </radialGradient>
+        <mask id="ig-mask" maskUnits="userSpaceOnUse" x="40" y="15" width="400" height="290">
+          <rect x="40" y="15" width="400" height="290" fill="url(#ig-fade)" />
+        </mask>
+      </defs>
+      {/* the plans underneath, then the plate's soft shadow */}
+      <g mask="url(#ig-mask)">
+        <Blueprint ox={240} oy={190} scale={1.3} variant={keys.indexOf(industry)} sheet={{ x0: -185, y0: -185, x1: 185, y1: 185 }} ink="#3f6db3" paper="#2089d8" paperOpacity={0.05} />
+      </g>
+      <path d={plateShadow} fill="#1b2140" opacity={0.12} filter="url(#ig-blur)" />
       {shapes.map((sh, i) => {
-        const delay = sh.at * stepDelay;
+        const line = sh.tone === "none";
+        const colour = sh.tone === "accent" || sh.tone === "warm" || sh.tone === "water";
         return (
           <motion.path
             key={i}
             d={sh.d}
             fill={fills[sh.tone]}
             stroke={strokes[sh.stroke ?? "ink"]}
-            strokeWidth={sh.stroke === "accent" ? 1.3 : 1}
+            // faces carry only a hint of an edge; lines (rails, masts, wires) stay legible
+            strokeOpacity={(sh.stroke ?? "ink") === "ink" ? (line ? 0.6 : 0.16) : 1}
+            strokeWidth={sh.stroke === "accent" ? 1.2 : line ? 0.9 : 0.8}
             strokeLinejoin="round"
             strokeLinecap="round"
-            initial={reduce ? false : { pathLength: 0, fillOpacity: 0 }}
-            animate={{ pathLength: 1, fillOpacity: 1 }}
-            transition={{
-              pathLength: { duration: draw, ease: [0.65, 0, 0.35, 1], delay },
-              fillOpacity: { duration: fill, ease: "easeOut", delay: delay + draw * 0.6 },
-            }}
+            filter={colour ? "url(#ig-grain)" : undefined}
+            initial={reduce ? false : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: duration.slow, ease: ease.out, delay: sh.at * stepDelay }}
           />
         );
       })}
