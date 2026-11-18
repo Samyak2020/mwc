@@ -282,6 +282,12 @@ export function AboutFramework() {
 
 /* ------------------------------------------------------------ results */
 
+const results = [
+  { value: "250+", label: "Projects delivered" },
+  { value: "$4B+", label: "Capital managed" },
+  { value: "98%", label: "Delivered on schedule" },
+];
+
 export function AboutResults() {
   return (
     <section
@@ -308,6 +314,16 @@ export function AboutResults() {
           <Line className="block">Documented</Line>
           <Line className="block">Results</Line>
         </RevealHeading>
+        {/* placeholder figures until MWC confirms the real ones */}
+        <dl className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-u-32">
+          {results.map((m, i) => (
+            <Rise key={m.label} order={i} className="border-t border-fg/15 pt-5">
+              <dt className="sr-only">{m.label}</dt>
+              <dd className="display text-[36px] leading-none sm:text-[48px] lg:fs-u-56">{m.value}</dd>
+              <dd className="mt-3 text-sm leading-[1.35] text-fg/60">{m.label}</dd>
+            </Rise>
+          ))}
+        </dl>
         <div className="grid gap-8 sm:grid-cols-2 lg:gap-u-48">
           <Rise as="p" className={label}>
             Project history
