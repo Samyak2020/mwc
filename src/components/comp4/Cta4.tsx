@@ -32,7 +32,7 @@ export function Cta4() {
         </RevealHeading>
         <Rise delay={0.2}>
         <a
-          href="mailto:info@mwconsultllc.com"
+          href="/contact"
           onPointerEnter={on}
           onPointerLeave={off}
           onFocus={on}

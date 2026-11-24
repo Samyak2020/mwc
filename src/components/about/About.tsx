@@ -20,7 +20,6 @@ import { heroSequence, PHOTO_QUALITY } from "@/lib/motion";
 // with a portrait, a row of workstream cards, results, experience, the team
 // and a full-bleed call to action.
 
-const label = "text-sm leading-[1.3] font-medium tracking-[0.01em] text-fg/50";
 const ctaCls =
   "cta btn inline-flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg";
 
@@ -122,10 +121,7 @@ export function AboutStory() {
       className="shell grid gap-12 pt-24 lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*560)] lg:gap-u-96 lg:pt-u-160"
     >
       <div className="flex flex-col">
-        <Rise as="p" className={label}>
-          Our story
-        </Rise>
-        <RevealHeading id="story-heading" className="display mt-6 text-[40px] sm:text-[56px] lg:fs-u-64">
+        <RevealHeading id="story-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
           <Line className="block">Driven by Your</Line>
           <Line className="block">Project’s Success</Line>
         </RevealHeading>
@@ -216,10 +212,7 @@ export function AboutFramework() {
     <section aria-labelledby="framework-heading" className="pt-24 lg:pt-u-200">
       <div className="shell flex flex-col gap-8 lg:gap-u-40">
         <div>
-          <Rise as="p" className={label}>
-            How we work
-          </Rise>
-          <RevealHeading id="framework-heading" className="display mt-6 text-[40px] sm:text-[56px] lg:fs-u-64">
+          <RevealHeading id="framework-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
             <Line className="block">A Consistent Framework</Line>
             <Line className="block">for Project Execution</Line>
           </RevealHeading>
@@ -324,11 +317,8 @@ export function AboutResults() {
             </Rise>
           ))}
         </dl>
-        <div className="grid gap-8 sm:grid-cols-2 lg:gap-u-48">
-          <Rise as="p" className={label}>
-            Project history
-          </Rise>
-          <div className="flex flex-col items-start gap-8">
+        <div className="flex flex-col items-start gap-8">
+          <div className="flex max-w-[520px] flex-col items-start gap-8">
             <Rise as="p" className="text-lg leading-[1.45] tracking-[-0.005em]">
               The best measure of MWC’s experience is the work itself. Explore its project history to see how the company
               applies its people and processes.
@@ -424,8 +414,8 @@ export function AboutTeam() {
         </div>
         <div className="flex flex-col gap-8 lg:justify-end lg:pb-u-8">
           <Rise>
-            <p className={label}>Owner and President</p>
-            <p className="display mt-4 text-[36px] leading-[0.9] sm:text-[48px] lg:fs-u-48">Andrew Schaaf</p>
+            <p className="display text-[36px] leading-[0.9] sm:text-[48px] lg:fs-u-48">Andrew Schaaf</p>
+            <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/60">Owner and President</p>
           </Rise>
           <Rise as="p" order={1} className="max-w-[640px] text-lg leading-[1.55] tracking-[-0.005em] text-fg/85 lg:fs-u-22">
             MWC is an SBA-certified service-disabled veteran-owned small business led by Andrew Schaaf. His nearly 30 years
@@ -436,36 +426,6 @@ export function AboutTeam() {
       </div>
 
       <TeamCarousel />
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- cta */
-
-export function AboutCta() {
-  return (
-    <section
-      id="contact"
-      data-nav-theme="dark"
-      aria-labelledby="about-cta-heading"
-      className="relative overflow-hidden bg-night text-bg"
-    >
-      <Image src="/about-v2/cta.png" alt="" fill sizes="100vw" quality={PHOTO_QUALITY} className="object-cover" />
-      <div aria-hidden className="absolute inset-0 bg-black/55" />
-      <Texture opacity={0.15} />
-      <div className="shell relative flex min-h-[560px] flex-col justify-between gap-12 py-16 lg:min-h-[calc(var(--u)*720)] lg:flex-row lg:items-end lg:py-[calc(var(--u)*80)]">
-        <RevealHeading id="about-cta-heading" className="display text-[48px] leading-[0.9] sm:text-[72px] lg:w-u-900 lg:fs-u-104">
-          <Line className="block">Ready for More</Line>
-          <Line className="block">Predictable</Line>
-          <Line className="block">Outcomes?</Line>
-        </RevealHeading>
-        <Rise delay={0.2}>
-          <a href="mailto:info@mwconsultllc.com" className="cta btn btn-dark btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg">
-            Scope Your Project
-            <Arrow />
-          </a>
-        </Rise>
-      </div>
     </section>
   );
 }

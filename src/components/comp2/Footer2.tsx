@@ -1,37 +1,19 @@
 import { Rise } from "@/components/motion/Rise";
+import { companyGroups, industries, projectGroups, serviceGroups, type Link } from "@/components/nav/navData";
 
-const columns = [
+// The footer mirrors the header menus: same groups, same names, same links.
+const columns: { label: string; links: Link[] }[] = [
+  { label: "Industries", links: industries },
+  ...serviceGroups,
+  ...projectGroups,
   {
-    label: "Organizations",
-    links: ["Power Producers", "Utilities", "Government", "Commercial, Industrial and General Contractors", "Oil and Gas"],
-  },
-  { label: "Services", links: ["Plan and Develop", "Build and Commission", "Operate and Maintain", "Decommission"] },
-  {
-    label: "Workstreams",
+    label: "Company",
     links: [
-      "Engineering Services",
-      "Construction Management",
-      "Project and Program Management",
-      "Project Controls and Scheduling",
-      "Safety Management",
-      "Technology Modernization",
-      "Project Coordination",
+      ...companyGroups.flatMap((g) => g.links),
+      { label: "Client Resources", href: "/client-resources" },
+      { label: "Contact", href: "/contact" },
     ],
   },
-  {
-    label: "Projects",
-    links: [
-      "Power Generation",
-      "Solar and Battery Energy Storage",
-      "Transmission",
-      "Distribution and Substations",
-      "Electric Vehicle Charging",
-      "Microgrids",
-      "Commercial and Industrial",
-      "Oil and Gas",
-    ],
-  },
-  { label: "Company", links: ["Veteran-Led", "The People on Your Site", "Careers", "Client Resources"] },
 ];
 
 // Figma "Footer" (594:3205): navy, 1440×737.
@@ -73,9 +55,12 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
               <p className="text-sm leading-[1.3] font-semibold tracking-[0.06em] text-bg/60 uppercase">{col.label}</p>
               <ul className="flex flex-col gap-1">
                 {col.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="block py-1 text-base leading-[1.3] font-medium tracking-[-0.005em] hover:text-sky">
-                      {l}
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="block py-1 text-base leading-[1.3] font-medium tracking-[-0.005em] underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-base)] hover:decoration-current"
+                    >
+                      {l.label}
                     </a>
                   </li>
                 ))}
@@ -94,9 +79,9 @@ export function Footer2({ logoV2 = false }: { logoV2?: boolean } = {}) {
             <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
           </p>
           <ul className="leading-[1.4] lg:whitespace-nowrap">
-            <li>- Service-Disabled Veteran-Owned Small Business (SDVOSB)</li>
-            <li>- Unique Entity Identifier U9WJDCH3V369</li>
-            <li>- Commercial and Government Entity code 96A46</li>
+            <li>Service-Disabled Veteran-Owned Small Business (SDVOSB)</li>
+            <li>Unique Entity Identifier U9WJDCH3V369</li>
+            <li>Commercial and Government Entity code 96A46</li>
           </ul>
         </div>
       </div>

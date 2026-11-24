@@ -13,9 +13,9 @@ import { PHOTO_QUALITY } from "@/lib/motion";
 // sideways as you scroll, a profile of who we hire, the open positions and a
 // closing customer quote.
 
-const label = "text-sm leading-[1.3] font-medium tracking-[0.01em]";
 // eyebrow on the left (3 of 12 columns), content on the right
-const grid = "grid gap-6 lg:grid-cols-[calc(var(--u)*400)_minmax(0,1fr)] lg:gap-0";
+// content sits in the right-hand column, indented past the page's left third
+const grid = "lg:pl-[calc(var(--u)*400)]";
 
 /* ------------------------------------------------------- photo strip */
 
@@ -107,9 +107,6 @@ export function CareersProfile() {
     <section aria-labelledby="profile-heading" className="shell pt-24 lg:pt-u-160">
       <hr className="border-fg/15" />
       <div className={`${grid} pt-6 lg:pt-u-24`}>
-        <Rise as="p" className={`${label} text-fg/50`}>
-          Who we look for
-        </Rise>
         <div>
           <h2 id="profile-heading" className="sr-only">
             Who we look for
@@ -174,9 +171,6 @@ export function CareersPositions() {
       {/* open positions */}
       <section aria-labelledby="positions-heading" className="shell pt-16 lg:pt-u-88">
         <div className={grid}>
-          <Rise as="p" className={`${label} text-bg/50`}>
-            Open positions
-          </Rise>
           <div>
             <RevealHeading id="positions-heading" className="display text-[40px] [word-spacing:0.14em] sm:text-[56px] lg:fs-u-64">
               <Line className="block">Be a part of MWC</Line>
@@ -194,9 +188,6 @@ export function CareersPositions() {
       <section id="apply" aria-labelledby="apply-heading" className="shell pt-24 lg:pt-u-160">
         <hr className="border-bg/15" />
         <div className={`${grid} pt-6 lg:pt-u-24`}>
-          <Rise as="p" className={`${label} text-bg/50`}>
-            Customer
-          </Rise>
           <div>
             <h2 id="apply-heading" className="sr-only">
               Apply

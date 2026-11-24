@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer2 } from "@/components/comp2/Footer2";
+import { Cta4 } from "@/components/comp4/Cta4";
 import {
-  AboutCta,
   AboutExperience,
   AboutFramework,
   AboutHero,
@@ -39,7 +39,7 @@ export default function AboutPage() {
           quote="MWC has become a trusted extension of our organization. They don’t just manage projects, they bring clarity, discipline, and calm to complex, high-risk environments. Whether navigating outages, regulatory constraints, or staffing transitions, their team consistently delivers predictable outcomes and strong financial control. We have full confidence in MWC and value them as a long-term partner."
           by="Utility Executive, Capital & Generation Leadership"
         />
-        <AboutCta />
+        <Cta4 />
       </main>
       <Footer2 logoV2 />
     </>

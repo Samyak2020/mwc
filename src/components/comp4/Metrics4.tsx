@@ -1,5 +1,5 @@
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { Rise, RiseEach } from "@/components/motion/Rise";
+import { RiseEach } from "@/components/motion/Rise";
 
 const metrics = [
   { value: "$220M", label: "Capital project value supported" },
@@ -9,22 +9,14 @@ const metrics = [
 ];
 
 // Comp 4 "Project Experience and Performance" (Figma 639:4387–4406): white,
-// "Impact over the years" eyebrow on the left, heading + a 2×2 metric grid
+// heading + a 2×2 metric grid
 // with ruled rows on the right (x 500, 908 wide).
 export function Metrics4() {
   return (
-    <section aria-labelledby="experience-heading" className="shell pt-24 text-fg lg:grid lg:grid-cols-[calc(var(--u)*468)_1fr] lg:pt-u-110">
-      <Rise as="p" className="flex items-center gap-2.5 self-start text-sm leading-[1.5] font-bold tracking-[0.05em] uppercase">
-        <span aria-hidden className="flex gap-0.5">
-          <span className="size-2 bg-sky" />
-          <span className="size-2 bg-[#033192]" />
-          <span className="size-2 bg-[#001b56]" />
-        </span>
-        Impact over the years
-      </Rise>
-
-      <div className="mt-6 lg:mt-0">
-        <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:ml-[calc(var(--u)*20)] lg:w-u-911 lg:fs-u-56">
+    <section aria-labelledby="experience-heading" className="shell pt-24 text-fg lg:pt-u-110">
+      {/* heading and metrics share the page's right-hand column */}
+      <div className="lg:ml-[calc(var(--u)*468)]">
+        <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:w-u-911 lg:fs-u-56">
           <Line className="block">Project Experience and</Line>
           <Line className="block">Performance</Line>
         </RevealHeading>

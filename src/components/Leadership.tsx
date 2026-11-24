@@ -20,8 +20,7 @@ export function Leadership() {
         {/* left: about at the top, certification block at the bottom */}
         <div className="flex flex-col justify-between gap-12">
           <Rise className="flex flex-col">
-            <p className="text-sm leading-[1.5] font-bold tracking-[0.095em] text-fg/50">ABOUT</p>
-            <p className="mt-4 font-display text-[32px] leading-[0.9] font-black tracking-[-0.015em] text-fg uppercase lg:fs-u-40">
+            <p className="font-display text-[32px] leading-[0.9] font-black tracking-[-0.015em] text-fg uppercase lg:fs-u-40">
               Andrew Schaaf
             </p>
             <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/50">Owner and President of MWC</p>
@@ -40,7 +39,7 @@ export function Leadership() {
                   Service-Disabled Veteran-Owned Small Business
                 </p>
                 <p className="w-[228px] text-sm leading-[1.3] tracking-[-0.015em]">
-                  <span className="block text-fg/40">certified by the</span>
+                  <span className="block text-fg/60">certified by the</span>
                   <span className="block text-fg/70">U.S. Small Business Administration</span>
                 </p>
               </div>
@@ -56,7 +55,7 @@ export function Leadership() {
                 href="#"
                 className="cta btn btn-dark btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
               >
-                Download A Capability Statement
+                Download a Capability Statement
                 <Arrow />
               </a>
             </div>

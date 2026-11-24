@@ -2,19 +2,21 @@
 
 import Image from "next/image";
 import { useId, useState } from "react";
-import { industries } from "@/components/nav/MegaMenu";
+import { industries } from "@/components/nav/navData";
 import { Rise } from "@/components/motion/Rise";
-import { PHOTO_QUALITY } from "@/lib/motion";
 import { Arrow } from "@/components/ui/Arrow";
+import { RegMarks } from "@/components/ui/RegMarks";
+import { PHOTO_QUALITY } from "@/lib/motion";
 
-// Contact (layout after gigaenergy.com/contact): the form on a white
-// column on the left, a full-height photo held on the right while the form
-// scrolls, and MWC's contact details on frosted cards in the photo's
-// bottom-right corner. Addresses, emails and links are placeholders.
+// Contact (layout after gigaenergy.com/contact), drafting-sheet style: the site's paper ground, the form drawn as
+// ruled boxes (outlined, no fill, square corners) with square chips and the
+// navy raised submit. The photo keeps its colour; the contact details sit on
+// it as blueprint-blue panels with registration marks. Addresses and links
+// are placeholders.
 
-const label = "font-medium text-[15px] leading-[1.3] text-fg/80";
+const label = "text-[15px] leading-[1.3] font-medium text-fg/80";
 const field =
-  "w-full rounded-[6px] bg-[#eef1f6] px-5 py-3.5 text-[17px] text-fg placeholder:text-fg/40 outline-none transition-[box-shadow] duration-[var(--duration-fast)] focus-visible:ring-2 focus-visible:ring-sky";
+  "w-full border border-fg/30 bg-transparent px-5 py-3.5 text-[17px] text-fg placeholder:text-fg/60 outline-none transition-colors duration-[var(--duration-fast)] hover:border-fg/60 focus-visible:border-navy focus-visible:ring-1 focus-visible:ring-navy";
 
 const budgets = ["Under $1M", "$1M – $10M", "$10M – $50M", "$50M+", "Not yet defined"];
 
@@ -29,7 +31,7 @@ function Field({ id, text, children }: { id: string; text: string; children: Rea
   );
 }
 
-function ContactForm() {
+function Form() {
   const uid = useId();
   const [picked, setPicked] = useState<string[]>([]);
   const [file, setFile] = useState<string | null>(null);
@@ -38,7 +40,8 @@ function ContactForm() {
 
   if (sent)
     return (
-      <div className="mt-16 rounded-[6px] bg-[#eef1f6] p-8" role="status">
+      <div className="relative mt-16 border border-fg/20 p-8" role="status">
+        <RegMarks className="text-fg/70" />
         <p className="display text-[28px] leading-none">Thank you</p>
         <p className="mt-4 max-w-[420px] text-fg/70">A project lead will be in touch within one business day.</p>
       </div>
@@ -82,8 +85,8 @@ function ContactForm() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => toggle(ind.key)}
-                className={`rounded-full px-4 py-2 text-sm leading-none font-medium transition-colors duration-[var(--duration-fast)] ${
-                  on ? "bg-navy text-bg" : "bg-[#eef1f6] text-fg/60 hover:text-fg"
+                className={`min-h-10 border px-4 text-sm leading-none font-medium transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy ${
+                  on ? "border-navy bg-navy text-bg" : "border-fg/30 text-fg/75 hover:border-fg/60 hover:text-fg"
                 }`}
               >
                 {ind.label}
@@ -96,7 +99,12 @@ function ContactForm() {
 
       <Field id={`${uid}-budget`} text="Is there a defined budget for this project?">
         <div className="relative">
-          <select id={`${uid}-budget`} name="budget" defaultValue="" className={`${field} appearance-none pr-12`}>
+          <select
+            id={`${uid}-budget`}
+            name="budget"
+            defaultValue=""
+            className={`${field} appearance-none pr-12`}
+          >
             <option value="" disabled>
               Please select
             </option>
@@ -123,7 +131,7 @@ function ContactForm() {
       <Field id={`${uid}-file`} text="Attach a project brief (optional) – up to 5MB">
         <label
           htmlFor={`${uid}-file`}
-          className="flex min-h-[110px] cursor-pointer items-center justify-center rounded-[6px] border border-dashed border-fg/20 bg-[#eef1f6] px-5 text-center text-fg/55 transition-colors hover:border-fg/40"
+          className="relative flex min-h-[110px] cursor-pointer items-center justify-center border border-dashed border-fg/30 px-5 text-center text-fg/70 transition-colors hover:border-fg/60"
         >
           {file ?? (
             <span>
@@ -146,7 +154,7 @@ function ContactForm() {
       <div>
         <button
           type="submit"
-          className="cta btn btn-dark flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
+          className="cta btn btn-dark btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
         >
           Send Message
           <Arrow />
@@ -159,21 +167,22 @@ function ContactForm() {
 /* ----------------------------------------------- details on the photo */
 
 const pill =
-  "inline-flex items-center rounded-full bg-bg/15 px-3.5 py-1.5 text-[13px] leading-none font-medium text-bg transition-colors duration-[var(--duration-fast)] hover:bg-bg/25";
-const card = "overflow-hidden rounded-[10px] bg-[rgb(0_6_17/0.55)] text-bg backdrop-blur-md";
+  "inline-flex min-h-8 items-center border border-bg/40 px-3 text-[13px] leading-none font-medium text-bg transition-colors duration-[var(--duration-fast)] hover:border-bg hover:bg-bg hover:text-[#0a48a6]";
+const panel = "relative bg-[#0a48a6]/90 text-bg backdrop-blur-md outline outline-1 outline-bg/25";
 const row = "flex items-center justify-between gap-4 px-6 py-5";
 
 function Details() {
   return (
     <div className="flex flex-col gap-3">
-      <div className={card}>
+      <div className={panel}>
+        <RegMarks />
         <div className={row}>
           <p className="text-[17px]">Project enquiries</p>
           <a href="mailto:projects@mwconsultllc.com" className={pill}>
             projects@mwconsultllc.com
           </a>
         </div>
-        <div className={`${row} border-t border-bg/10`}>
+        <div className={`${row} border-t border-bg/20`}>
           <p className="text-[17px]">General enquiries</p>
           <a href="mailto:info@mwconsultllc.com" className={pill}>
             info@mwconsultllc.com
@@ -181,12 +190,15 @@ function Details() {
         </div>
       </div>
 
-      <div className={`${card} grid grid-cols-[minmax(0,1fr)_auto]`}>
+      <div className={`${panel} grid grid-cols-[minmax(0,1fr)_auto]`}>
+        <RegMarks />
         <div className="px-6 py-5">
           <p className="text-[17px]">Address</p>
-          <p className="mt-3 max-w-[240px] text-sm leading-[1.5] text-bg/60">Veteran-led, supporting projects across the US from our Arizona office.</p>
+          <p className="mt-3 max-w-[240px] text-sm leading-[1.5] text-pretty text-bg/75">
+            Veteran-led, supporting projects across the US from our Arizona office.
+          </p>
         </div>
-        <address className="border-l border-bg/10 px-6 py-5 text-[15px] leading-[1.45] text-bg/85 not-italic">
+        <address className="border-l border-bg/20 px-6 py-5 text-[15px] leading-[1.45] text-bg/90 not-italic">
           [Street address],
           <br />
           [City], AZ [ZIP]
@@ -196,16 +208,17 @@ function Details() {
         </address>
       </div>
 
-      <div className={card}>
+      <div className={panel}>
+        <RegMarks />
         <div className={row}>
           <p className="text-[17px]">
-            Join us <span className="ml-1 text-[13px] font-medium text-bg/60">(open positions)</span>
+            Join us <span className="ml-1 text-[13px] font-medium text-bg/70">(open positions)</span>
           </p>
           <a href="/careers" className={pill}>
             Careers
           </a>
         </div>
-        <div className={`${row} border-t border-bg/10`}>
+        <div className={`${row} border-t border-bg/20`}>
           <p className="text-[17px]">Socials</p>
           <a href="#" className={pill}>
             LinkedIn
@@ -220,7 +233,7 @@ export function ContactPage() {
   return (
     <section data-nav-theme="light" data-nav-solid="" aria-labelledby="contact-title" className="grid bg-bg text-fg lg:grid-cols-2">
       {/* left: the form */}
-      <div className="px-4 pt-28 pb-20 sm:px-8 lg:px-[calc(var(--u)*64)] lg:pt-[calc(var(--u)*160)] lg:pb-u-120">
+      <div className="shell pt-28 pb-20 lg:pt-[calc(var(--u)*160)] lg:pb-u-120">
         <Rise>
           <h1 id="contact-title" className="display text-[48px] leading-[0.9] sm:text-[64px] lg:fs-u-80">
             Talk to a
@@ -233,20 +246,20 @@ export function ContactPage() {
             Tell us about your project and we’ll get back to you with what we can do for you.
           </p>
         </Rise>
-        <ContactForm />
+        <Form />
       </div>
 
       {/* right: the photo, held while the form scrolls, with the details on it */}
       <div className="relative bg-night">
         <div className="relative h-[70svh] overflow-hidden lg:sticky lg:top-0 lg:h-svh">
           <Image src="/about-v2/cta.png" alt="" fill priority sizes="(min-width: 1024px) 50vw, 100vw" quality={PHOTO_QUALITY} className="object-cover" />
-          <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_6_17/0.25),rgb(0_6_17/0.05)_40%,rgb(0_6_17/0.45))]" />
+          <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(0_6_17/0.2),rgb(0_6_17/0)_40%,rgb(0_6_17/0.35))]" />
           <div className="absolute right-4 bottom-4 left-4 hidden lg:right-6 lg:bottom-6 lg:left-auto lg:block lg:w-[min(520px,calc(100%-48px))]">
             <Details />
           </div>
         </div>
         {/* small screens: the details sit under the photo */}
-        <div className="p-4 lg:hidden">
+        <div className="bg-bg p-4 lg:hidden">
           <Details />
         </div>
       </div>

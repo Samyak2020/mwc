@@ -14,13 +14,13 @@ import { MenuContent, MobileMenu, type MenuKey } from "./MegaMenu";
 import { duration, ease, heroSequence, navMenu } from "@/lib/motion";
 import { Arrow } from "@/components/ui/Arrow";
 
-type Item = { label: string; href: string; menu?: MenuKey };
+type Item = { label: string; href: string; menu?: MenuKey; section?: string[] };
 const items: Item[] = [
-  { label: "Industries", href: "#", menu: "industries" },
-  { label: "Services", href: "/all-services", menu: "services" },
-  { label: "Projects", href: "/projects", menu: "projects" },
-  { label: "Client Resources", href: "/client-resources" },
-  { label: "Company", href: "/about", menu: "company" },
+  { label: "Industries", href: "#", menu: "industries", section: ["/industries"] },
+  { label: "Services", href: "/all-services", menu: "services", section: ["/all-services", "/services"] },
+  { label: "Projects", href: "/projects", menu: "projects", section: ["/projects"] },
+  { label: "Client Resources", href: "/client-resources", section: ["/client-resources"] },
+  { label: "Company", href: "/about", menu: "company", section: ["/about", "/careers"] },
 ];
 
 // Site header, after bayshore.ai: a full-width bar fixed to the top of the
@@ -35,7 +35,11 @@ const items: Item[] = [
 // Moving between triggers swaps the contents in place; Esc, a click outside
 // or leaving the header closes it. Below 1280px the links fold into a menu.
 export function SiteNavV2() {
-  const onContact = usePathname() === "/contact";
+  const pathname = usePathname();
+  const onContact = pathname === "/contact";
+  // the item whose section holds the current page gets a short rule under it
+  const isCurrent = (it: Item) =>
+    !!it.section?.some((p) => pathname === p || pathname.startsWith(p + "/"));
   const [menu, setMenu] = useState<MenuKey | null>(null);
   const [mobile, setMobile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -134,6 +138,9 @@ export function SiteNavV2() {
 
   const raised = menu !== null || mobile;
   const solid = raised || scrolled;
+  // current section: a 2px rule under the label, in the text colour
+  const current =
+    "relative after:absolute after:inset-x-3 after:-bottom-[7px] after:h-[2px] after:bg-current";
   const pill =
     "flex h-[30px] items-center gap-1.5 px-3 text-base leading-none font-medium tracking-[0.005em] whitespace-nowrap transition-colors duration-[var(--duration-fast)] hover:bg-current/10 focus-visible:bg-current/10";
 
@@ -206,7 +213,7 @@ export function SiteNavV2() {
                       type="button"
                       aria-expanded={menu === it.menu}
                       aria-controls="nav-panel"
-                      className={`${pill} ${menu === it.menu ? "bg-current/10" : ""}`}
+                      className={`${pill} ${menu === it.menu ? "bg-current/10" : ""} ${isCurrent(it) ? current : ""}`}
                       onPointerEnter={(e) =>
                         e.pointerType === "mouse" && openSoon(it.menu!)
                       }
@@ -236,7 +243,8 @@ export function SiteNavV2() {
                   ) : (
                     <a
                       href={it.href}
-                      className={pill}
+                      aria-current={isCurrent(it) ? "page" : undefined}
+                      className={`${pill} ${isCurrent(it) ? current : ""}`}
                       onPointerEnter={(e) =>
                         e.pointerType === "mouse" && menu && closeSoon()
                       }
@@ -253,9 +261,9 @@ export function SiteNavV2() {
               {!onContact && (
                 <a
                   href="/contact"
-                  className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center gap-2 px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
+                  className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center gap-2 px-4 text-sm leading-none font-semibold tracking-[-0.005em] whitespace-nowrap"
                 >
-                  TALK TO A PROJECT LEAD
+                  Talk to a Project Lead
                   <Arrow width={16} />
                 </a>
               )}
