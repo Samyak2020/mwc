@@ -39,7 +39,7 @@ export default function AboutPage() {
           quote="MWC has become a trusted extension of our organization. They don’t just manage projects, they bring clarity, discipline, and calm to complex, high-risk environments. Whether navigating outages, regulatory constraints, or staffing transitions, their team consistently delivers predictable outcomes and strong financial control. We have full confidence in MWC and value them as a long-term partner."
           by="Utility Executive, Capital & Generation Leadership"
         />
-        <Cta4 />
+        <Cta4 flush />
       </main>
       <Footer2 logoV2 />
     </>

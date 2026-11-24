@@ -12,7 +12,7 @@ import { Arrow } from "@/components/ui/Arrow";
 // "Bring us your project" + button, and the generator: line-art on the left,
 // photo on the right, meeting in the middle. Hovering the generator or the
 // button (or focusing the button) opens the line-art door.
-export function Cta4() {
+export function Cta4({ flush = false }: { flush?: boolean } = {}) {
   const [open, setOpen] = useState(false);
   const on = () => setOpen(true);
   const off = () => setOpen(false);
@@ -22,7 +22,8 @@ export function Cta4() {
       id="contact"
       data-nav-theme="dark"
       aria-labelledby="cta-heading"
-      className="relative mt-24 h-[560px] overflow-hidden bg-sky text-bg sm:h-[640px] lg:mt-u-174 lg:h-u-730"
+      // flush: sits straight under a full-bleed section (About), no gap above
+      className={`relative h-[560px] overflow-hidden bg-sky text-bg sm:h-[640px] lg:h-u-730 ${flush ? "" : "mt-24 lg:mt-u-174"}`}
     >
       <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-109">
         {/* v2 (Figma 728:1206): 56px, 918 wide, 32 above the button */}
