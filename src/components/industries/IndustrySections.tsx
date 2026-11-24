@@ -123,7 +123,7 @@ export function IndustryHeroMinimal({
           </p>
           <a
             href="/contact"
-            className="cta btn flex items-center justify-center gap-[9px] bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+            className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
           >
             Talk to a Project Lead
             <Arrow />
@@ -393,7 +393,7 @@ export function CaseStudy({
       </div>
 
       <div>
-        <div className="flex flex-col gap-5 text-lg leading-[1.5] font-medium tracking-[-0.005em] text-fg/85">
+        <div className="flex flex-col gap-5 text-lg leading-[1.5] tracking-[-0.005em] text-fg/85">
           {body.map((p) => (
             <Rise as="p" key={p}>
               {p}
@@ -403,10 +403,10 @@ export function CaseStudy({
         <Rise className="mt-8">
           <a
             href={link.href}
-            className="cta btn inline-flex items-center gap-[9px] border border-fg/30 px-5 py-3 text-sm leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+            className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
           >
             {link.label}
-            <Arrow width={16} />
+            <Arrow />
           </a>
         </Rise>
         <div className="mt-24 lg:mt-u-160">

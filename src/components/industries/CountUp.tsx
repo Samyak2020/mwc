@@ -25,8 +25,9 @@ export function CountUpMetric({ value, text }: { value: string; text: string }) 
 
   return (
     <div ref={ref} className="border-t border-fg/15 pt-6 pb-16 last:pb-0 lg:pb-u-96 lg:last:pb-0">
+      <p className="sr-only">{value}</p>
       <motion.p
-        aria-label={value}
+        aria-hidden
         className="display text-[64px] leading-none tabular-nums sm:text-[88px] lg:fs-u-120"
         initial={reduce ? false : { color: "rgb(0 6 17 / 0.18)" }}
         animate={on ? { color: "rgb(0 6 17 / 1)" } : undefined}
@@ -34,7 +35,7 @@ export function CountUpMetric({ value, text }: { value: string; text: string }) 
       >
         {shown}
       </motion.p>
-      <p className="mt-4 max-w-[420px] text-base leading-[1.45] text-fg/65">{text}</p>
+      <p className="mt-4 max-w-[420px] text-base leading-[1.45] text-fg/70">{text}</p>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export function ServiceTabs({
                   <span className="text-xl leading-[1.25] font-semibold tracking-[-0.01em] transition-colors duration-[var(--duration-base)] group-hover:text-navy">
                     {it.lead}
                   </span>
-                  <span className="max-w-[520px] text-base leading-[1.55] text-fg/65">
+                  <span className="max-w-[520px] text-base leading-[1.55] text-fg/70">
                     {it.text}
                   </span>
                   <span className="hidden text-fg/60 transition-colors duration-[var(--duration-base)] group-hover:text-navy lg:block">
