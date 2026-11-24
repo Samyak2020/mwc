@@ -108,13 +108,19 @@ export const navMenu = {
   build: { stepDelay: 0.07, draw: 0.45, fill: 0.3 },
 } as const;
 
-// Page transition: a navy panel wipes up over the page with the MWC mark
-// (150px from the top) and the destination's name, then wipes away upward
-// off the new page. Cover + reveal = 1.2s.
+// Page transition (after podiumautomation.com): sky then navy layers slide
+// up over the page, 0.15s apart; the navy layer lifts off the new page.
 export const pageTransition = {
-  cover: 0.6,
-  reveal: 0.6,
-  ease: [0.76, 0, 0.24, 1] as const,
+  // podiumautomation.com: layers slide up one after another (ease in) to
+  // cover; the top layer slides off the top (ease out) as the page rises
+  cover: 1.05,
+  stagger: 0.15,
+  coverEase: [0.32, 0, 0.67, 0] as const,
+  reveal: 1.05,
+  revealDelay: 0.16,
+  revealEase: [0.33, 1, 0.68, 1] as const,
+  /** how far the new page rises into place, px */
+  rise: 100,
 } as const;
 
 // About page team carousel: the row slides to the chosen card; a card turns

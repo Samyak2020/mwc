@@ -487,3 +487,15 @@ body {
 .field-light .lt { fill: #fbfcff; }
 .field-light .dt { fill: #1d7ec6; }
 .field-light .pwn { fill: #fbfcff; }
+
+/* Page transition: the navy layer carries a faint drafting grid (heavier
+   lines every 80px, fine ones every 16px), like the blueprint elsewhere. */
+.transition-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+  background-position: -1px -1px;
+}
