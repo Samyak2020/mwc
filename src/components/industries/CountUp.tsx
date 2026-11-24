@@ -24,7 +24,7 @@ export function CountUpMetric({ value, text }: { value: string; text: string }) 
   }, [on, reduce, mv, target]);
 
   return (
-    <div ref={ref} className="border-t border-fg/15 pt-6 pb-16 lg:pb-u-96">
+    <div ref={ref} className="border-t border-fg/15 pt-6 pb-16 last:pb-0 lg:pb-u-96 lg:last:pb-0">
       <motion.p
         aria-label={value}
         className="display text-[64px] leading-none tabular-nums sm:text-[88px] lg:fs-u-120"

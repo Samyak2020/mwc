@@ -174,7 +174,7 @@ export function ProblemSection({
   stack?: boolean;
 }) {
   const intro = (withId: boolean) => (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*640)] lg:gap-u-96">
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*640)] lg:items-end lg:gap-u-96">
       <RevealHeading
         id={withId ? id : undefined}
         className="display text-[40px] sm:text-[56px] lg:fs-u-64"
@@ -267,7 +267,7 @@ export function RowsSection({
   const total = String(items.length).padStart(2, "0");
   return (
     <section aria-labelledby={id} className="shell pt-24 lg:pt-u-160">
-      <ExpandPanel className="px-5 py-16 sm:px-10 lg:px-u-96 lg:py-u-120">
+      <ExpandPanel className="px-5 pt-24 pb-24 sm:px-10 lg:px-u-96 lg:pt-u-200 lg:pb-u-200">
         <div className="flex flex-col items-center text-center">
           <RevealHeading
             id={id}
@@ -438,7 +438,7 @@ export function ServicesSection({
   more: { label: string; href: string };
 }) {
   return (
-    <section aria-labelledby={id} className="shell pt-32 lg:pt-u-240">
+    <section aria-labelledby={id} className="shell pt-40 lg:pt-u-320">
       <RevealHeading
         id={id}
         className="display text-[40px] sm:text-[56px] lg:fs-u-64"
