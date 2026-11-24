@@ -108,7 +108,7 @@ export function IndustryHeroMinimal({
           trigger="load"
           className="display text-[34px] leading-[0.95] sm:text-[52px] lg:fs-u-64"
         >
-          {splitTitle(title, 27).map((l) => (
+          {splitTitle(title, 22).map((l) => (
             <Line key={l} className="block">
               {l}
             </Line>
