@@ -113,7 +113,7 @@ export function ResourcesPage() {
       <div className="z-20 border-y border-fg/10 bg-bg md:sticky md:top-16 xl:top-[72px]">
         <div className="shell flex flex-col gap-5 py-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
-            <div className="flex items-baseline gap-3 whitespace-nowrap">
+            <div className="flex flex-col gap-1 whitespace-nowrap">
               <p className="text-[15px] font-semibold">Filter by category</p>
               <p className="text-[15px] text-fg/60" aria-live="polite">
                 {shown.length} {shown.length === 1 ? "result" : "results"}
