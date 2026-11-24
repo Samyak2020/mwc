@@ -499,3 +499,33 @@ body {
   background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
   background-position: -1px -1px;
 }
+
+/* Industry hero: wind turbine rotors turn slowly and continuously. */
+.ps-rotor {
+  animation: ps-spin 9s linear infinite;
+}
+@keyframes ps-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-rotor {
+    animation: none;
+  }
+}
+
+/* Industry line drawings: one piece floats gently up and down. */
+.iso-float {
+  animation: iso-float 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes iso-float {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .iso-float {
+    animation: none;
+  }
+}

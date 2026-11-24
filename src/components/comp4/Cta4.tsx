@@ -12,7 +12,10 @@ import { Arrow } from "@/components/ui/Arrow";
 // "Bring us your project" + button, and the generator: line-art on the left,
 // photo on the right, meeting in the middle. Hovering the generator or the
 // button (or focusing the button) opens the line-art door.
-export function Cta4({ flush = false }: { flush?: boolean } = {}) {
+export function Cta4({
+  flush = false,
+  heading = ["Ready for More Predictable", "Project Outcomes?"],
+}: { flush?: boolean; heading?: string[] } = {}) {
   const [open, setOpen] = useState(false);
   const on = () => setOpen(true);
   const off = () => setOpen(false);
@@ -28,8 +31,11 @@ export function Cta4({ flush = false }: { flush?: boolean } = {}) {
       <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-109">
         {/* v2 (Figma 728:1206): 56px, 918 wide, 32 above the button */}
         <RevealHeading id="cta-heading" className="display text-[40px] sm:text-[56px] lg:w-u-918 lg:fs-u-56">
-          <Line className="block">Ready for More Predictable</Line>
-          <Line className="block">Project Outcomes?</Line>
+          {heading.map((l) => (
+            <Line key={l} className="block">
+              {l}
+            </Line>
+          ))}
         </RevealHeading>
         <Rise delay={0.2}>
         <a

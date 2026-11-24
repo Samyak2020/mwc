@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { pageTransition as t } from "@/lib/motion";
 
 // Pages that use the transition; other links navigate normally.
-const pages = new Set(["/", "/about", "/careers", "/contact", "/client-resources", "/privacy", "/terms"]);
+const pages = new Set(["/", "/about", "/careers", "/contact", "/client-resources", "/industries/power-producers", "/privacy", "/terms"]);
 
 type Phase = "cover" | "hold" | "reveal";
 

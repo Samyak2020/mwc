@@ -235,3 +235,18 @@ export const generatorDoor = {
 
 // CSS mirrors of these tokens (--duration-*, --ease-*) live in globals.css
 // for hover/press states that are pure CSS.
+
+// Industry page hero: the site builds up from the ground, step by step, once
+// the title is in; turbine rotors turn slowly (see .ps-rotor); the camera
+// eases in as the hero scrolls away.
+export const industryHero = {
+  startDelay: 0.35,
+  stepDelay: 0.045,
+  /** camera scale reached as the hero scrolls out (homepage-style drift in) */
+  zoom: 1.18,
+} as const;
+
+// Industry page layer stack: clicking a rail stop glides to that step (s).
+export const layerStack = {
+  jump: 1.1,
+} as const;

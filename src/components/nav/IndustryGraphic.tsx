@@ -14,6 +14,13 @@ export type IndustryKey = "power" | "utilities" | "government" | "commercial" | 
 
 function power() {
   const s = new Scene();
+  drawPowerPlant(s);
+  return s.shapes;
+}
+
+/** The power plant on its plate, centred on the origin. Shared with the
+ *  Power Producers hero, which builds a wider landscape around it. */
+export function drawPowerPlant(s: Scene) {
   s.plate(-110, -110, 110, 110, 5).next();
   s.grove(94, -92, 6, 22, 11).next();
   // chimney, back left, with two bands
@@ -34,7 +41,7 @@ function power() {
   s.lattice(60, 98, 5, 5, 2, 42, 2).line([[44, 98, 47], [76, 98, 47]]).next();
   s.wire([28, 66, 40], [48, 98, 47], 2).wire([44, 66, 40], [60, 98, 47], 2).wire([60, 66, 40], [72, 98, 47], 2).next();
   s.grove(98, 22, 5, 18, 5).grove(-78, 98, 6, 26, 17).grove(-18, 98, 4, 20, 29);
-  return s.shapes;
+  return s;
 }
 
 function utilities() {
