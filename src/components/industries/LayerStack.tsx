@@ -38,7 +38,7 @@ function drawObject(s: Scene, i: number, z: number) {
     s.poly([[26, -26, z], [26, 26, z], [26, 26, t], [26, -26, t]], "right");
     s.poly([[-26, -26, t], [26, -26, t], [26, 26, t], [-26, 26, t]], "inner");
     s.box(-17, -13, t + 8, 34, 26, 2);
-    s.line([[-12, 8, t + 10], [-8, 12, t + 10], [-1, 5, t + 10]], "accent");
+    s.line([[-7, 4, t + 10], [0, 4, t + 10], [0, -11, t + 10]], "accent");
     s.poly([[-26, 26, t], [26, 26, t], [26, 40, t + 7], [-26, 40, t + 7]], "top");
     s.poly([[26, -26, t], [26, 26, t], [40, 26, t + 7], [40, -26, t + 7]], "top");
   } else {
@@ -101,7 +101,7 @@ const ink = "rgb(42 46 58)";
 /** face edges stay faint; lines (rails, ticks) stay legible */
 const edge = (sh: Shape) =>
   sh.stroke === "accent"
-    ? { stroke: "#1f78d1", strokeOpacity: 1, strokeWidth: 1.2 }
+    ? { stroke: "#1f78d1", strokeOpacity: 1, strokeWidth: sh.tone === "none" ? 2.4 : 1.2 }
     : { stroke: ink, strokeOpacity: sh.tone === "none" ? 0.6 : 0.16, strokeWidth: sh.tone === "none" ? 0.9 : 0.8 };
 const grainy = (sh: Shape) => sh.tone === "accent" || sh.tone === "warm" || sh.tone === "water";
 const dotTone = ["#2089d8", "#5cb3ef", "#072871"];
