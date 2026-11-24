@@ -6,6 +6,7 @@ import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { GeneratorVector } from "@/components/comp4/GeneratorVector";
 import { Rise } from "@/components/motion/Rise";
 import { PHOTO_QUALITY } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 // Comp 4 footer CTA (Figma "Project Lead Image" 639:4271, 1440×730, sky):
 // "Bring us your project" + button, and the generator: line-art on the left,
@@ -36,9 +37,10 @@ export function Cta4() {
           onPointerLeave={off}
           onFocus={on}
           onBlur={off}
-          className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+          className="cta btn btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg [--btn-fill:var(--color-night)] [--btn-ink:var(--color-bg)]"
         >
           Scope Your Project
+          <Arrow />
         </a>
         </Rise>
       </div>

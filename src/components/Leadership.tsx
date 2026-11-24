@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PHOTO_QUALITY } from "@/lib/motion";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise } from "@/components/motion/Rise";
+import { Arrow } from "@/components/ui/Arrow";
 
 // Revised Figma y=5497–6636: heading; left column (about, then the
 // certification block at the bottom), right column (overview + portrait).
@@ -53,9 +54,10 @@ export function Leadership() {
               </p>
               <a
                 href="#"
-                className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+                className="cta btn btn-dark btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
               >
                 Download A Capability Statement
+                <Arrow />
               </a>
             </div>
           </Rise>

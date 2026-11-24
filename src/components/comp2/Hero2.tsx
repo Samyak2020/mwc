@@ -7,6 +7,7 @@ import { Texture } from "@/components/ui/Texture";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FadeIn } from "@/components/motion/Stagger";
 import { comp2Hero, heroSequence, scrollSpring } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 // Comp 2 hero (updated Figma "Hero Image" 573:451, 1440×1014): full-bleed
 // photo fading to ink at the bottom, 10% grain, centred headline + intro + CTA.
@@ -23,7 +24,7 @@ export function Hero2({
   /** Comp 3: the hero fills the viewport at any size, content centred in it
    *  (Figma 583:2220) instead of the fixed 1440×1014 frame. */
   fullHeight?: boolean;
-  /** Comp 4: a flat 45% black layer and 15% grain instead of the fade to ink */
+  /** Comp 4: the photo plain (no layer or grain), type lifted by a text shadow */
   flatOverlay?: boolean;
 } = {}) {
   const ref = useRef<HTMLElement>(null);
@@ -54,10 +55,12 @@ export function Hero2({
           <motion.div className="absolute inset-x-0 -top-[4%] -bottom-[4%]" style={{ y: photoY }}>
             <Cropped src="/comp2/hero-v2.jpg" left="-30.75%" top="-16.38%" width="152.98%" height="144.86%" sizes="153vw" priority />
           </motion.div>
+          {/* comp 4: the photo in full colour under a light 10% layer, no grain, and
+              a soft edgeless shade behind the centred type so it stays readable */}
           {flatOverlay ? (
             <>
-              <div className="absolute inset-0 bg-black/45" />
-              <Texture opacity={0.15} top="-72.34%" height="331.19%" />
+              <div className="absolute inset-0 bg-black/10" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_42%_at_50%_50%,rgb(0_6_17/0.42)_0%,rgb(0_6_17/0.22)_45%,rgb(0_6_17/0)_100%)]" />
             </>
           ) : (
             <>
@@ -68,7 +71,12 @@ export function Hero2({
         </div>
 
         {/* headline, intro and CTA centred in the viewport, clear of the nav */}
-        <div className="relative flex flex-1 flex-col items-center justify-center px-4 pt-20 pb-10 text-center">
+        <div
+          className={`relative flex flex-1 flex-col items-center justify-center px-4 pt-20 pb-10 text-center ${
+            // a tight shadow crisps the letter edges; the shade behind does the rest
+            flatOverlay ? "[text-shadow:0_1px_2px_rgb(0_6_17/0.45)]" : ""
+          }`}
+        >
           {v2 ? (
             <RevealHeading
               as="h1"
@@ -112,9 +120,10 @@ export function Hero2({
             </p>
             <a
               href="/contact"
-              className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+              className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg [text-shadow:none]"
             >
               Talk to a Project Lead
+              <Arrow />
             </a>
           </FadeIn>
         </div>
@@ -163,6 +172,7 @@ export function Hero2({
             className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
           >
             Talk to a Project Lead
+            <Arrow />
           </a>
         </FadeIn>
       </div>

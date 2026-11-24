@@ -140,6 +140,13 @@ body {
   --btn-fill: var(--color-sky);
   --btn-ink: #fff;
 }
+/* Primary CTAs that must read as clickable on any background: a soft drop
+   shadow lifts the navy button off the page. */
+.btn-raised {
+  box-shadow:
+    0 1px 2px rgb(0 6 17 / 0.25),
+    0 10px 24px -8px rgb(0 6 17 / 0.45);
+}
 .btn::before {
   content: "";
   position: absolute;
@@ -294,8 +301,13 @@ body {
   --logo-peak: #fffdf9;
   --logo-shade: #acacac;
   --logo-text: #fffdf9;
+  /* the nav mark: all white over dark sections, full colour on light ones */
+  --logo-ridge: #fffdf9;
+  --logo-body: #fffdf9;
 }
 :root[data-nav-theme="light"] {
+  --logo-ridge: url(#mwc-nav-ridge);
+  --logo-body: url(#mwc-nav-body);
   --nav-fill-v2: rgb(255 253 249 / 0.1);
   --logo-peak: #656565;
   --logo-shade: #000611;
@@ -303,6 +315,8 @@ body {
 }
 /* menu open: the bar turns solid paper with ink text, whatever is beneath */
 .nav-open {
+  --logo-ridge: url(#mwc-nav-ridge);
+  --logo-body: url(#mwc-nav-body);
   --nav-fg: #000611;
   --nav-fill-v2: #fbfcff;
   --logo-peak: #656565;

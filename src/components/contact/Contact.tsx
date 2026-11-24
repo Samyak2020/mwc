@@ -5,6 +5,7 @@ import { useId, useState } from "react";
 import { industries } from "@/components/nav/MegaMenu";
 import { Rise } from "@/components/motion/Rise";
 import { PHOTO_QUALITY } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 // Contact (layout after gigaenergy.com/contact): the form on a white
 // column on the left, a full-height photo held on the right while the form
@@ -145,9 +146,10 @@ function ContactForm() {
       <div>
         <button
           type="submit"
-          className="cta btn btn-dark flex items-center justify-center bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
+          className="cta btn btn-dark flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
         >
           Send Message
+          <Arrow />
         </button>
       </div>
     </form>

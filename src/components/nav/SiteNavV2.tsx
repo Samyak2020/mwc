@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { NavLogoV2, useNavTheme } from "@/components/SiteNav";
 import { MenuContent, MobileMenu, type MenuKey } from "./MegaMenu";
 import { duration, ease, heroSequence, navMenu } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 type Item = { label: string; href: string; menu?: MenuKey };
 const items: Item[] = [
@@ -252,9 +253,10 @@ export function SiteNavV2() {
               {!onContact && (
                 <a
                   href="/contact"
-                  className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
+                  className="nav-cta cta btn btn-dark flex h-[38px] items-center justify-center gap-2 px-4 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap"
                 >
                   TALK TO A PROJECT LEAD
+                  <Arrow width={16} />
                 </a>
               )}
             </div>

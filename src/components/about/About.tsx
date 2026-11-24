@@ -336,6 +336,7 @@ export function AboutResults() {
             <Rise order={1}>
               <a href="/projects" className={ctaCls}>
                 Explore Projects
+                <Arrow />
               </a>
             </Rise>
           </div>
@@ -459,8 +460,9 @@ export function AboutCta() {
           <Line className="block">Outcomes?</Line>
         </RevealHeading>
         <Rise delay={0.2}>
-          <a href="mailto:info@mwconsultllc.com" className={ctaCls}>
+          <a href="mailto:info@mwconsultllc.com" className="cta btn btn-dark btn-raised flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg">
             Scope Your Project
+            <Arrow />
           </a>
         </Rise>
       </div>

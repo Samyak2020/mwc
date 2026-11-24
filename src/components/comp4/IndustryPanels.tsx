@@ -7,6 +7,7 @@ import { Texture } from "@/components/ui/Texture";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise } from "@/components/motion/Rise";
 import { duration, ease, industryCards, PHOTO_QUALITY } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 type Industry = {
   name: string;
@@ -185,6 +186,7 @@ export function IndustryPanels() {
                           className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg lg:whitespace-nowrap"
                         >
                           {industry.cta}
+                          <Arrow />
                         </a>
                       </motion.div>
                     )}

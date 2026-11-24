@@ -3,6 +3,7 @@ import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise, RiseEach } from "@/components/motion/Rise";
 import { Texture } from "@/components/ui/Texture";
 import { PHOTO_QUALITY } from "@/lib/motion";
+import { Arrow } from "@/components/ui/Arrow";
 
 const articles = [
   {
@@ -74,9 +75,10 @@ export function ResourcesList() {
         <Rise className="mt-7">
         <a
           href="/client-resources"
-          className="cta btn inline-flex items-center border border-fg/50 bg-white px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+          className="cta btn inline-flex items-center gap-[9px] border border-fg/50 bg-white px-5 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
         >
           See all resources
+          <Arrow />
         </a>
         </Rise>
       </div>
