@@ -113,10 +113,10 @@ export const navMenu = {
 export const pageTransition = {
   // podiumautomation.com: layers slide up one after another (ease in) to
   // cover; the top layer slides off the top (ease out) as the page rises
-  cover: 1.05,
+  cover: 0.95,
   stagger: 0.15,
   coverEase: [0.32, 0, 0.67, 0] as const,
-  reveal: 1.05,
+  reveal: 0.95,
   revealDelay: 0.16,
   revealEase: [0.33, 1, 0.68, 1] as const,
   /** how far the new page rises into place, px */
