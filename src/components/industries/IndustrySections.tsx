@@ -66,7 +66,7 @@ export function IndustryHero({
         <RevealHeading
           as="h1"
           trigger="load"
-          className="display text-[36px] leading-[0.95] sm:text-[52px] lg:fs-u-64"
+          className="display text-[36px] sm:text-[52px] lg:fs-u-64"
         >
           {splitTitle(title).map((l) => (
             <Line key={l} className="block">
@@ -106,7 +106,7 @@ export function IndustryHeroMinimal({
         <RevealHeading
           as="h1"
           trigger="load"
-          className="display text-[34px] leading-[0.95] sm:text-[52px] lg:fs-u-64"
+          className="display text-[34px] sm:text-[52px] lg:fs-u-64"
         >
           {splitTitle(title, 22).map((l) => (
             <Line key={l} className="block">
@@ -267,7 +267,7 @@ export function RowsSection({
   const total = String(items.length).padStart(2, "0");
   return (
     <section aria-labelledby={id} className="shell pt-24 lg:pt-u-160">
-      <ExpandPanel className="px-5 pt-24 pb-24 sm:px-10 lg:px-u-96 lg:pt-u-200 lg:pb-u-200">
+      <ExpandPanel className="px-5 pt-14 pb-16 sm:px-10 lg:px-u-96 lg:pt-u-160 lg:pb-u-120">
         <div className="flex flex-col items-center text-center">
           <RevealHeading
             id={id}
@@ -283,7 +283,7 @@ export function RowsSection({
         <RiseEach
           as="ul"
           itemAs="li"
-          className="mt-14 flex flex-col gap-8 lg:mt-u-96 lg:gap-u-24"
+          className="mt-14 flex flex-col gap-5 lg:mt-u-96"
         >
           {items.map((it, i) => (
             <div
@@ -322,7 +322,7 @@ export function RowsSection({
 function Frame({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative mx-auto flex aspect-square w-full max-w-[240px] items-center justify-center p-6">
-      <div className="h-full w-full [&_svg]:mx-auto [&_svg]:h-full">
+      <div className="h-full w-full [&_svg]:mx-auto [&_svg]:h-full [&_svg]:max-w-full">
         {children}
       </div>
     </div>
@@ -376,7 +376,7 @@ export function CaseStudy({
           </Rise>
           <RevealHeading
             id={id}
-            className="display text-[40px] leading-[0.95] sm:text-[56px] lg:fs-u-64"
+            className="display text-[40px] sm:text-[56px] lg:fs-u-64"
           >
             {heading.map((l, i) => (
               <Line

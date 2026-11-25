@@ -82,7 +82,7 @@ export function Hero2({
               as="h1"
               trigger="load"
               delay={heroSequence.headlineDelay}
-              className="display max-w-[1159px] text-[40px] sm:text-[56px] lg:w-u-1159 lg:fs-u-80 lg:tracking-[-0.015em]"
+              className="display max-w-[1240px] text-[40px] sm:text-[56px] lg:w-u-1240 lg:fs-u-80"
             >
               <Line className="block">Predictable Outcomes for</Line>
               <Line className="block">High-Risk Capital</Line>
@@ -93,7 +93,7 @@ export function Hero2({
               as="h1"
               trigger="load"
               delay={heroSequence.headlineDelay}
-              className="display max-w-[878px] text-[40px] sm:text-[56px] lg:w-u-878 lg:fs-u-80 lg:tracking-[-0.015em]"
+              className="display max-w-[878px] text-[40px] sm:text-[56px] lg:w-u-878 lg:fs-u-80"
             >
               <Line className="block">Predictable</Line>
               <Line className="block">Outcomes for</Line>
@@ -152,7 +152,7 @@ export function Hero2({
           as="h1"
           trigger="load"
           delay={heroSequence.headlineDelay}
-          className="display text-[40px] sm:text-[56px] lg:absolute lg:top-u-265 lg:left-[calc(50%+var(--u)*28)] lg:w-u-980 lg:-translate-x-1/2 lg:fs-u-80 lg:tracking-[-0.015em]"
+          className="display text-[40px] sm:text-[56px] lg:absolute lg:top-u-265 lg:left-[calc(50%+var(--u)*28)] lg:w-u-980 lg:-translate-x-1/2 lg:fs-u-80"
         >
           <Line className="block">Predictable</Line>
           <Line className="block">Outcomes for High-</Line>

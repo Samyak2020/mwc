@@ -30,7 +30,7 @@ export function Cta4({
     >
       <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-109">
         {/* v2 (Figma 728:1206): 56px, 918 wide, 32 above the button */}
-        <RevealHeading id="cta-heading" className="display text-[40px] sm:text-[56px] lg:w-u-918 lg:fs-u-56">
+        <RevealHeading id="cta-heading" className="display text-[40px] sm:text-[56px] lg:w-u-1000 lg:fs-u-56">
           {heading.map((l) => (
             <Line key={l} className="block">
               {l}

@@ -72,12 +72,21 @@ body {
   overflow-x: clip;
 }
 
+/* Display headings: Switzer in capitals. Capitals lose word shapes, so words
+   must separate clearly: Switzer's space is only 0.18em, which next to open
+   capital sidebearings reads like a letter gap, so word spacing opens it to
+   0.25em while letters keep their drawn spacing. Extrabold rather
+   than black keeps counters open; leading just under 1 keeps stacked lines a
+   block without touching; balanced breaks so no line dangles. */
 .display {
   font-family: var(--font-display);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
+  word-spacing: 0.07em;
   text-transform: uppercase;
+  text-wrap: balance;
+  font-kerning: normal;
 }
 
 :focus-visible {

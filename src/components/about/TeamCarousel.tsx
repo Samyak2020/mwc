@@ -125,7 +125,7 @@ function Card({
           {/* the logo's mountain draws in along the foot each time the bio opens */}
           {flipped && <Ridge trigger="mount" duration={0.9} className="absolute right-0 bottom-0 w-[85%]" />}
           <span className="relative flex flex-col gap-1">
-            <span className="display text-[28px] leading-[0.95] lg:fs-u-40">{m.name}</span>
+            <span className="display text-[28px] lg:fs-u-40">{m.name}</span>
             <span className="mt-2 text-base text-bg/75">{m.role}</span>
             <span className="text-sm text-bg/55">{m.years}</span>
           </span>

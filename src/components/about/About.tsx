@@ -271,7 +271,7 @@ export function AboutFramework() {
               />
               <Texture opacity={0.12} />
               <img src="/about/ws-band.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[31%] w-full" />
-              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.9] font-black tracking-[-0.01em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
+              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.01em] [word-spacing:0.07em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
                 {w.name}
               </h3>
             </div>
@@ -425,7 +425,7 @@ export function AboutTeam() {
         </div>
         <div className="flex flex-col gap-8 lg:justify-end lg:pb-u-8">
           <Rise>
-            <p className="display text-[36px] leading-[0.9] sm:text-[48px] lg:fs-u-48">Andrew Schaaf</p>
+            <p className="display text-[36px] sm:text-[48px] lg:fs-u-48">Andrew Schaaf</p>
             <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/60">Owner and President</p>
           </Rise>
           <Rise as="p" order={1} className="max-w-[640px] text-lg leading-[1.55] tracking-[-0.005em] text-fg/85 lg:fs-u-22">

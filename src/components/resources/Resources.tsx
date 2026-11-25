@@ -103,7 +103,7 @@ export function ResourcesPage() {
       {/* title */}
       <div className="shell pt-32 pb-12 lg:pt-[calc(var(--u)*200)] lg:pb-u-64">
         <Rise>
-          <h1 id="resources-title" className="display text-[56px] leading-[0.9] sm:text-[88px] lg:fs-u-128">
+          <h1 id="resources-title" className="display text-[56px] sm:text-[88px] lg:fs-u-128">
             Client Resources
           </h1>
         </Rise>

@@ -141,7 +141,7 @@ export function LegalPage({
           id="legal-title"
           trigger="load"
           delay={heroSequence.headlineDelay}
-          className="display mt-8 text-[48px] leading-[0.9] sm:text-[72px] lg:mt-u-40 lg:fs-u-96"
+          className="display mt-8 text-[48px] sm:text-[72px] lg:mt-u-40 lg:fs-u-96"
         >
           <Line className="block">{title}</Line>
         </RevealHeading>

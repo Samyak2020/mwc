@@ -54,7 +54,7 @@ export function Hero() {
             as="h1"
             trigger="load"
             delay={heroSequence.headlineDelay}
-            className="display text-[40px] [text-shadow:0_2px_20px_rgb(0_0_0/0.1)] sm:text-[56px] lg:absolute lg:top-u-307 lg:left-1/2 lg:w-u-1028 lg:-translate-x-1/2 lg:fs-u-80 lg:tracking-[-0.015em]"
+            className="display text-[40px] [text-shadow:0_2px_20px_rgb(0_0_0/0.1)] sm:text-[56px] lg:absolute lg:top-u-307 lg:left-1/2 lg:w-u-1028 lg:-translate-x-1/2 lg:fs-u-80"
           >
             <Line className="block">Predictable Outcomes</Line>
             <Line className="block">for High-Risk Capital</Line>

@@ -106,7 +106,7 @@ const edge = (sh: Shape) =>
 const grainy = (sh: Shape) => sh.tone === "accent" || sh.tone === "warm" || sh.tone === "water";
 const dotTone = ["#2089d8", "#5cb3ef", "#072871"];
 
-const RAIL_X = 520;
+const RAIL_X = 495;
 // screen x of the wireframe box's right edge (Scene origin 240, cos 30°)
 const BOX_RIGHT = 240 + 2 * (HALF + 24) * Math.cos(Math.PI / 6);
 
@@ -134,7 +134,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
   };
 
   const t = { duration: reduce ? 0 : duration.base, ease: ease.out };
-  const vb = { x: 10, y: -210, w: 600, h: 560 };
+  const vb = { x: 10, y: -210, w: 575, h: 560 };
   const pctY = (y: number) => `${((y - vb.y) / vb.h) * 100}%`;
   const railTop = layers[0].cy - 70;
   const railBot = layers[n - 1].cy + 70;
@@ -147,7 +147,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
         {header}
         <div className="mt-6 grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] items-center gap-12 lg:mt-u-64 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-u-72">
           {/* the stack and its rail, sized by the height left on screen */}
-          <div className="relative aspect-[600/560] h-full max-h-full max-w-full justify-self-start">
+          <div className="relative aspect-[575/560] h-full max-h-full max-w-full justify-self-start">
             <svg viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`} className="block h-full w-full" aria-hidden>
               <defs>
                 <linearGradient id={u("top")} x1="0" y1="0" x2="1" y2="1">

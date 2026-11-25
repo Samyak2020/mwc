@@ -235,7 +235,7 @@ export function ContactPage() {
       {/* left: the form */}
       <div className="shell pt-28 pb-20 lg:pt-[calc(var(--u)*160)] lg:pb-u-120">
         <Rise>
-          <h1 id="contact-title" className="display text-[48px] leading-[0.9] sm:text-[64px] lg:fs-u-80">
+          <h1 id="contact-title" className="display text-[48px] sm:text-[64px] lg:fs-u-80">
             Talk to a
             <br />
             Project Lead
