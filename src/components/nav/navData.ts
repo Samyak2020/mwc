@@ -33,7 +33,7 @@ export const industries: Industry[] = [
   {
     key: "commercial",
     label: "Construction",
-    href: "/industries/construction",
+    href: "/industries/commercial-industrial",
     description:
       "Owner-side project oversight and project delivery personnel are available for commercial, industrial and on-site energy projects, with added support for contractor teams.",
   },

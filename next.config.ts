@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/comp-4", destination: "/", permanent: false },
       { source: "/comp-:n(1|2|3)", destination: "/drafts/comp-:n", permanent: false },
+      // the nav used to link the commercial page here
+      { source: "/industries/construction", destination: "/industries/commercial-industrial", permanent: false },
     ];
   },
 };

@@ -18,7 +18,10 @@ export type IconKey =
   | "coins"
   | "pylon"
   | "batteries"
-  | "thermal";
+  | "thermal"
+  | "ashpond"
+  | "service"
+  | "water";
 
 type Built = { base: Shape[]; float: Shape[]; vb: string; foot?: [number, number, number, number] };
 
@@ -176,6 +179,42 @@ function build(key: IconKey): Built {
       b.grove(30, 32, 4, 14, 53, 4).grove(-38, 36, 3, 10, 59, 4);
       return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-46, -46, 46, 46] };
     }
+    case "ashpond": {
+      // coal ash closure: a capped pond stepping down in lifts, monitoring and
+      // extraction wells along its edge
+      b.box(-46, -46, 0, 92, 92, 4);
+      b.grove(36, -38, 3, 12, 61, 4);
+      b.box(-36, -30, 4, 56, 56, 6).box(-30, -24, 10, 44, 44, 6).box(-24, -18, 16, 32, 32, 4);
+      b.poly([[-20, -14, 20.2], [4, -14, 20.2], [4, 10, 20.2], [-20, 10, 20.2]], "accent", "accent");
+      for (const [x, y] of [[30, -24], [30, -4], [30, 16]] as const) b.cyl(x, y, 4, 2.2, 20, "left", "top").band(x, y, 18, 2.2, "accent");
+      b.grove(-36, 36, 3, 12, 67, 4).grove(34, 36, 2, 8, 71, 4);
+      return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-46, -46, 46, 46] };
+    }
+    case "service": {
+      // service coordination: a pole-mounted transformer feeding a new house
+      b.box(-46, -46, 0, 92, 92, 4);
+      b.grove(36, -38, 3, 12, 73, 4);
+      b.box(-24, -20, 4, 4, 4, 60);
+      b.line([[-36, -18, 60], [-10, -18, 60]]).line([[-32, -18, 54], [-14, -18, 54]], "faint");
+      b.box(-19, -24, 36, 8, 8, 12, true);
+      b.box(4, 2, 4, 30, 24, 16).gable(4, 2, 20, 30, 24, 10);
+      b.line([[34, 10, 9], [34, 10, 15]], "faint").line([[34, 18, 9], [34, 18, 15]], "faint");
+      b.wire([-11, -20, 44], [4, 10, 22], 3);
+      b.grove(-36, 34, 3, 12, 79, 4).grove(38, 38, 2, 8, 83, 4);
+      return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-46, -46, 46, 46] };
+    }
+    case "water": {
+      // water and storage: a ground storage tank on the plate, a reservoir cut
+      // into it and a pipeline between them
+      b.box(-46, -46, 0, 92, 92, 4);
+      b.grove(36, -38, 3, 12, 89, 4);
+      b.poly([[-40, 10, 4.2], [-6, 10, 4.2], [-6, 40, 4.2], [-40, 40, 4.2]], "water", "accent");
+      b.line([[-34, 20, 4.4], [-16, 20, 4.4]], "faint").line([[-30, 30, 4.4], [-12, 30, 4.4]], "faint");
+      b.box(-4, 20, 4, 30, 4, 4, true);
+      b.cyl(10, -12, 4, 22, 22, "left", "top").band(10, -12, 16, 22, "accent").dome(10, -12, 26, 22, 5);
+      b.grove(-36, -34, 3, 12, 97, 4).grove(38, 36, 2, 8, 101, 4);
+      return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-46, -46, 46, 46] };
+    }
   }
 }
 
@@ -229,7 +268,7 @@ function Paths({ shapes, uid }: { shapes: Shape[]; uid: string }) {
   );
 }
 
-const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal"];
+const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal", "ashpond", "service", "water"];
 const C30 = Math.cos(Math.PI / 6);
 const pt = (x: number, y: number) => `${(240 + (x - y) * C30).toFixed(1)} ${(190 + (x + y) * 0.5).toFixed(1)}`;
 

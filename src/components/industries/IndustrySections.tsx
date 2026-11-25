@@ -2,7 +2,7 @@ import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise, RiseEach } from "@/components/motion/Rise";
 import { Arrow } from "@/components/ui/Arrow";
 import { LineIcon, type IconKey } from "./LineIcons";
-import { LayerStack } from "./LayerStack";
+import { LayerStack, type StackKey } from "./LayerStack";
 import { CountUpMetric } from "./CountUp";
 import { StickyBottom } from "./StickyBottom";
 import { ServiceTabs } from "./ServiceTabs";
@@ -18,6 +18,8 @@ export type Item = {
   text: string;
   link?: { label: string; href: string };
   icon?: IconKey;
+  /** the object on this point's plate in the pinned stack */
+  stack?: StackKey;
 };
 
 const textLink =
@@ -168,7 +170,7 @@ export function ProblemSection({
   id: string;
   heading: string[];
   body: string[];
-  lead: string;
+  lead?: string;
   items: Item[];
   /** desktop: show the points as the scroll-driven layer stack */
   stack?: boolean;
@@ -191,9 +193,11 @@ export function ProblemSection({
             {p}
           </Rise>
         ))}
-        <Rise as="p" className="font-semibold text-fg">
-          {lead}
-        </Rise>
+        {lead && (
+          <Rise as="p" className="font-semibold text-fg">
+            {lead}
+          </Rise>
+        )}
       </div>
     </div>
   );
@@ -203,7 +207,7 @@ export function ProblemSection({
     <RiseEach
       as="ul"
       itemAs="li"
-      className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-u-72"
+      className={`mt-12 grid gap-10 md:gap-8 lg:mt-u-72 ${items.length === 4 ? "md:grid-cols-2" : items.length === 5 ? "md:grid-cols-2 lg:grid-cols-5" : "md:grid-cols-3"}`}
     >
       {items.map((it, i) => (
         <div
@@ -259,10 +263,13 @@ export function RowsSection({
   id,
   heading,
   items,
+  related,
 }: {
   id: string;
   heading: string[];
   items: Item[];
+  /** a closing line of related links under the rows, e.g. related projects */
+  related?: { label: string; links: { label: string; href: string }[] };
 }) {
   const total = String(items.length).padStart(2, "0");
   return (
@@ -313,6 +320,20 @@ export function RowsSection({
             </div>
           ))}
         </RiseEach>
+        {related && (
+          <Rise className="mt-14 flex flex-col gap-4 border-t border-fg/15 pt-6 md:flex-row md:items-baseline md:gap-10 lg:mt-u-80">
+            <p className="shrink-0 text-sm leading-none text-fg/50">{related.label}</p>
+            <ul className="flex flex-wrap gap-x-8 gap-y-3">
+              {related.links.map((l) => (
+                <li key={l.href}>
+                  <TextLink href={l.href} className="text-navy">
+                    {l.label}
+                  </TextLink>
+                </li>
+              ))}
+            </ul>
+          </Rise>
+        )}
       </ExpandPanel>
     </section>
   );
@@ -350,7 +371,7 @@ export function CaseStudy({
   heading: string[];
   body: string[];
   metrics: Metric[];
-  link: { label: string; href: string };
+  link: { label: string; href: string } | { label: string; href: string }[];
   photo?: string;
   /** phrases for a scrolling band up the photo's edge */
   band?: string[];
@@ -399,14 +420,17 @@ export function CaseStudy({
             </Rise>
           ))}
         </div>
-        <Rise className="mt-8">
-          <a
-            href={link.href}
-            className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
-          >
-            {link.label}
-            <Arrow />
-          </a>
+        <Rise className="mt-8 flex flex-wrap gap-3">
+          {(Array.isArray(link) ? link : [link]).map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+            >
+              {l.label}
+              <Arrow />
+            </a>
+          ))}
         </Rise>
         <div className="mt-24 lg:mt-u-160">
           {metrics.map((m) => (
@@ -414,6 +438,160 @@ export function CaseStudy({
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------- narrative */
+
+type LinkList = { label: string; links: { label: string; href: string }[] };
+
+// A titled passage for content without points or figures: the heading on the
+// left, the copy on the right (as the opening of the scopes section), then
+// an optional button and quiet lines of related links (as under the results
+// rows). Two narratives can sit side by side with `pair`.
+export function NarrativeSection({
+  id,
+  heading,
+  body,
+  link,
+  lists,
+  spacing = "pt-24 lg:pt-u-200",
+}: {
+  id: string;
+  heading?: string[];
+  body: string[];
+  link?: { label: string; href: string };
+  lists?: LinkList[];
+  spacing?: string;
+}) {
+  return (
+    <section aria-labelledby={heading ? id : undefined} className={`shell ${spacing}`}>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*640)] lg:items-end lg:gap-u-96">
+        {heading ? (
+          <RevealHeading id={id} className="display text-[40px] sm:text-[56px] lg:fs-u-64">
+            {heading.map((l) => (
+              <Line key={l} className="block">
+                {l}
+              </Line>
+            ))}
+          </RevealHeading>
+        ) : (
+          <div aria-hidden className="hidden lg:block" />
+        )}
+        <div className="flex flex-col gap-6 text-lg leading-[1.5] tracking-[-0.005em] text-fg/85">
+          {body.map((p) => (
+            <Rise as="p" key={p}>
+              {p}
+            </Rise>
+          ))}
+          {link && (
+            <Rise>
+              <a
+                href={link.href}
+                className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+              >
+                {link.label}
+                <Arrow />
+              </a>
+            </Rise>
+          )}
+        </div>
+      </div>
+      {lists && (
+        <div className="mt-12 flex flex-col lg:mt-u-72">
+          {lists.map((l) => (
+            <Rise key={l.label} className="flex flex-col gap-4 border-t border-fg/15 py-6 md:flex-row md:items-baseline md:gap-10">
+              <p className="shrink-0 text-sm leading-none text-fg/50 md:w-[220px]">{l.label}</p>
+              <ul className="flex flex-wrap gap-x-8 gap-y-3">
+                {l.links.map((k) => (
+                  <li key={k.href}>
+                    <TextLink href={k.href} className="text-navy">
+                      {k.label}
+                    </TextLink>
+                  </li>
+                ))}
+              </ul>
+            </Rise>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** Two short narratives side by side (e.g. safety and mobilization). */
+export function NarrativePair({
+  items,
+}: {
+  items: { id: string; heading: string[]; body: string[]; link?: { label: string; href: string } }[];
+}) {
+  return (
+    <section className="shell pt-24 lg:pt-u-200">
+      <div className="grid gap-16 lg:grid-cols-2 lg:gap-u-96">
+        {items.map((it) => (
+          <div key={it.id} aria-labelledby={it.id} className="flex flex-col border-t border-fg/15 pt-8 lg:pt-u-40">
+            <RevealHeading id={it.id} className="display text-[34px] sm:text-[44px] lg:fs-u-48">
+              {it.heading.map((l) => (
+                <Line key={l} className="block">
+                  {l}
+                </Line>
+              ))}
+            </RevealHeading>
+            {it.body.map((p) => (
+              <Rise as="p" key={p} className="mt-6 max-w-[560px] text-lg leading-[1.5] tracking-[-0.005em] text-fg/85">
+                {p}
+              </Rise>
+            ))}
+            {it.link && (
+              <Rise className="mt-6">
+                <TextLink href={it.link.href} className="text-navy">
+                  {it.link.label}
+                </TextLink>
+              </Rise>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------------------------------- facts */
+
+// Reference facts in a ruled grid (after the Contact page's detail panels
+// and the About results figures): small grey label, the fact beneath.
+export function FactsSection({
+  id,
+  heading,
+  facts,
+  link,
+}: {
+  id: string;
+  heading: string;
+  facts: { label: string; value: string }[];
+  link?: { label: string; href: string };
+}) {
+  return (
+    <section aria-labelledby={id} className="shell pt-24 lg:pt-u-160">
+      <div className="flex flex-col gap-6 border-t border-fg/15 pt-8 md:flex-row md:items-baseline md:justify-between lg:pt-u-40">
+        <h2 id={id} className="text-xl leading-[1.25] font-semibold tracking-[-0.01em]">
+          {heading}
+        </h2>
+        {link && (
+          <TextLink href={link.href} className="text-navy">
+            {link.label}
+          </TextLink>
+        )}
+      </div>
+      <dl className="mt-8 grid gap-px bg-fg/10 sm:grid-cols-2 lg:mt-u-40 lg:grid-cols-4">
+        {facts.map((f, i) => (
+          <Rise key={f.label} order={i} className="flex h-full flex-col gap-3 bg-bg py-6 pr-6 sm:px-6">
+            <dt className="text-sm leading-none text-fg/50">{f.label}</dt>
+            <dd className="text-lg leading-[1.35] font-medium tracking-[-0.005em] tabular-nums">{f.value}</dd>
+          </Rise>
+        ))}
+      </dl>
     </section>
   );
 }

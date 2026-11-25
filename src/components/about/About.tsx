@@ -93,7 +93,7 @@ export function AboutQuote({
   spacing = "pt-24 lg:pt-u-160",
 }: {
   quote: string;
-  by: string;
+  by?: string;
   dark?: boolean;
   /** light variant only: the space above the quote */
   spacing?: string;
@@ -114,10 +114,12 @@ export function AboutQuote({
             className="max-w-[1100px] text-[26px] leading-[1.15] font-medium tracking-[-0.015em] sm:text-[34px] lg:w-u-1100 lg:max-w-none lg:fs-u-44"
           />
         </blockquote>
-        <Rise as="div" delay={0.3} className="mt-8 flex items-center gap-3 lg:mt-u-40">
-          <span aria-hidden className={`h-px w-10 ${dark ? "bg-bg/50" : "bg-fg/40"}`} />
-          <figcaption className={`text-base leading-[1.3] ${dark ? "text-bg/70" : "text-fg/60"}`}>{by}</figcaption>
-        </Rise>
+        {by && (
+          <Rise as="div" delay={0.3} className="mt-8 flex items-center gap-3 lg:mt-u-40">
+            <span aria-hidden className={`h-px w-10 ${dark ? "bg-bg/50" : "bg-fg/40"}`} />
+            <figcaption className={`text-base leading-[1.3] ${dark ? "text-bg/70" : "text-fg/60"}`}>{by}</figcaption>
+          </Rise>
+        )}
       </figure>
     </section>
   );
@@ -271,7 +273,7 @@ export function AboutFramework() {
               />
               <Texture opacity={0.12} />
               <img src="/about/ws-band.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[31%] w-full" />
-              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.01em] [word-spacing:0.07em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
+              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.02em] [word-spacing:0.07em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
                 {w.name}
               </h3>
             </div>

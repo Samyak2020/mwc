@@ -82,8 +82,8 @@ function utilities() {
 // Government: a federal hydro dam. The reservoir is drawn as a cut block of
 // water behind a concrete gravity dam; the spillway runs down the middle,
 // the powerhouse sits at the toe and a line carries the power away.
-function government() {
-  const s = new Scene();
+/** also drawn by the government industry hero, on a ground-only scene */
+export function government(s: Scene = new Scene()) {
   s.plate(-110, -110, 110, 110, 5).next();
   // reservoir: cut section on the right, water surface on top with ripples
   const w = 60;
@@ -121,8 +121,8 @@ function government() {
   return s.shapes;
 }
 
-function commercial() {
-  const s = new Scene();
+/** also drawn by the commercial industry hero, on a ground-only scene */
+export function commercial(s: Scene = new Scene()) {
   s.plate(-110, -110, 110, 110, 5).next();
   s.grove(-74, -82, 8, 44, 9).next();
   // factory with a row of gables, back right
@@ -150,8 +150,8 @@ function commercial() {
   return s.shapes;
 }
 
-function oil() {
-  const s = new Scene();
+/** also drawn by the oil industry hero, on a ground-only scene */
+export function oil(s: Scene = new Scene()) {
   s.plate(-110, -110, 110, 110, 5).next();
   s.grove(44, -92, 6, 30, 15).grove(-98, -6, 5, 16, 47).next();
   // storage tanks with a stair rail
