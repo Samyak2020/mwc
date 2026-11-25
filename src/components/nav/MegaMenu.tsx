@@ -23,12 +23,12 @@ import {
 export { companyGroups, industries, projectGroups, serviceGroups, type MenuKey };
 
 // Compact dropdowns (after mistral.ai): one panel per category, opening under
-// its own trigger. Small uppercase column labels, thin dividers between
-// columns, and the drawing or picture on the right.
-const labelCls =
-  "text-[11px] leading-none font-medium tracking-[0.08em] text-fg/45 uppercase";
+// its own trigger. Quiet sentence-case column labels, thin dividers between
+// columns, one link style in every menu, and the drawing or picture on the
+// right. Links carry no arrow at rest; it slides in on hover or focus.
+const labelCls = "text-sm leading-none text-fg/50";
 const linkCls =
-  "group/link flex items-center justify-between gap-4 text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
+  "group/link flex min-h-10 items-center justify-between gap-4 py-2 text-base leading-[1.25] text-fg transition-colors duration-[var(--duration-base)] hover:text-navy focus-visible:text-navy";
 
 function Chev() {
   return (
@@ -37,7 +37,7 @@ function Chev() {
       width="6"
       height="10"
       viewBox="0 0 6 10"
-      className="shrink-0 opacity-40 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-0.5 group-hover/link:opacity-100 group-focus-visible/link:opacity-100"
+      className="shrink-0 -translate-x-1 opacity-0 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-0 group-hover/link:opacity-100 group-focus-visible/link:translate-x-0 group-focus-visible/link:opacity-100"
     >
       <path
         d="M1 1l4 4-4 4"
@@ -81,7 +81,7 @@ function Column({
 }) {
   return (
     <div
-      className={`border-l border-fg/10 px-10 pt-7 pb-9 first:border-l-0 ${className}`}
+      className={`border-l border-fg/10 px-8 pt-8 pb-8 first:border-l-0 ${className}`}
     >
       {href ? (
         <a
@@ -93,7 +93,7 @@ function Column({
       ) : (
         <p className={labelCls}>{label}</p>
       )}
-      <div className="mt-5">{children}</div>
+      <div className="mt-4">{children}</div>
     </div>
   );
 }
@@ -109,7 +109,7 @@ function IndustriesPanel() {
             <li key={ind.key} className="border-b border-fg/10 last:border-b-0">
               <a
                 href={ind.href}
-                className={`${linkCls} py-3 text-[17px] leading-[1.2] tracking-[0.005em] ${hover === i ? "text-navy" : ""}`}
+                className={`${linkCls} ${hover === i ? "text-navy" : ""}`}
                 onPointerEnter={() => setHover(i)}
                 onFocus={() => setHover(i)}
               >
@@ -122,12 +122,8 @@ function IndustriesPanel() {
       </Column>
 
       {/* the hovered industry, drawn: rebuilt from scratch on every change */}
-      <div className="relative m-2 ml-4 w-[460px] overflow-hidden rounded-[2px] bg-[#f2f3f8]">
-        <p className="absolute top-3 left-3 z-10 flex items-center gap-2 text-[11px] leading-none font-medium tracking-[0.06em] text-fg/60 uppercase">
-          <span aria-hidden className="size-1.5 bg-sky" />
-          {current.label}
-        </p>
-        <div className="flex h-full items-center px-2 pt-6">
+      <div className="relative m-2 w-[460px] overflow-hidden rounded-[2px] bg-[#f2f3f8]">
+        <div className="flex h-full items-center p-2">
           <IndustryGraphic key={current.key} industry={current.key} />
         </div>
       </div>
@@ -156,13 +152,10 @@ function LinksPanel({
           href={g.href}
           className="shrink-0"
         >
-          <ul className="flex flex-col gap-3" style={{ width: widths[gi] }}>
+          <ul className="flex flex-col" style={{ width: widths[gi] }}>
             {g.links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  className={`${linkCls} text-[15px] leading-[1.3] tracking-[0.005em]`}
-                >
+              <li key={l.href} className="border-b border-fg/10 last:border-b-0">
+                <a href={l.href} className={linkCls}>
                   {l.label}
                   <Chev />
                 </a>
@@ -170,7 +163,7 @@ function LinksPanel({
             ))}
           </ul>
           {viewAll && gi === groups.length - 1 && (
-            <div className="mt-6">
+            <div className="mt-5">
               <ViewAll href={viewAll[0]}>{viewAll[1]}</ViewAll>
             </div>
           )}
@@ -179,13 +172,9 @@ function LinksPanel({
       {/* image placeholder until imagery is chosen */}
       <div
         aria-hidden
-        className="relative m-2 ml-4 min-h-[240px] w-[300px] shrink-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]"
+        className="relative m-2 min-h-[240px] w-[300px] shrink-0 overflow-hidden rounded-[2px] bg-[#e3e9f2]"
       >
         <Texture opacity={0.25} />
-        <p className="absolute top-3 left-3 flex items-center gap-2 text-[11px] leading-none font-medium tracking-[0.06em] text-fg/40 uppercase">
-          <span className="size-1.5 bg-fg/30" />
-          Image
-        </p>
       </div>
     </div>
   );
@@ -219,7 +208,7 @@ export function MenuContent({ menu }: { menu: MenuKey }) {
           <LinksPanel
             groups={serviceGroups}
             viewAll={["/all-services", "View all services"]}
-            widths={[280, 280]}
+            widths={[304, 304]}
           />
         ) : menu === "projects" ? (
           <LinksPanel
@@ -259,7 +248,7 @@ function Group({
           width="12"
           height="8"
           viewBox="0 0 12 8"
-          className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          className={`transition-transform duration-[var(--duration-base)] ${open ? "rotate-180" : ""}`}
         >
           <path
             d="M1 1.5l5 5 5-5"

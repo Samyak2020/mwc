@@ -279,17 +279,16 @@ export function RowsSection({
               </Line>
             ))}
           </RevealHeading>
-          <span aria-hidden className="mt-8 block h-px w-14 bg-fg/20" />
         </div>
         <RiseEach
           as="ul"
           itemAs="li"
-          className="mt-14 flex flex-col gap-14 lg:mt-u-96 lg:gap-u-80"
+          className="mt-14 flex flex-col gap-8 lg:mt-u-96 lg:gap-u-24"
         >
           {items.map((it, i) => (
             <div
               key={it.lead}
-              className="grid items-center gap-8 md:grid-cols-[minmax(0,280px)_minmax(0,1fr)] md:gap-14"
+              className="grid items-center gap-8 md:grid-cols-[minmax(0,240px)_minmax(0,1fr)] md:gap-14"
             >
               <Frame>{it.icon && <LineIcon icon={it.icon} />}</Frame>
               <div>
@@ -322,7 +321,7 @@ export function RowsSection({
 // square cell holding a row's drawing
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative mx-auto flex aspect-square w-full max-w-[280px] items-center justify-center p-10">
+    <div className="relative mx-auto flex aspect-square w-full max-w-[240px] items-center justify-center p-6">
       <div className="h-full w-full [&_svg]:mx-auto [&_svg]:h-full">
         {children}
       </div>
