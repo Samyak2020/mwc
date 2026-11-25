@@ -589,3 +589,16 @@ body {
     animation: none;
   }
 }
+
+/* Government case cards: how much of each pinned card shows above the next
+   (its title strip), and the card padding; tighter on short laptop screens */
+.case-card {
+  --strip: clamp(220px, calc(var(--u) * 304), 320px);
+  --pad: calc(var(--u) * 120);
+}
+@media (max-height: 900px) {
+  .case-card {
+    --strip: clamp(196px, calc(var(--u) * 252), 272px);
+    --pad: calc(var(--u) * 68);
+  }
+}

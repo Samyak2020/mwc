@@ -91,17 +91,20 @@ export function AboutQuote({
   by,
   dark = false,
   spacing = "pt-24 lg:pt-u-160",
+  gap = "mt-24 lg:mt-u-160",
 }: {
   quote: string;
   by?: string;
   dark?: boolean;
   /** light variant only: the space above the quote */
   spacing?: string;
+  /** dark variant only: the space above the navy band */
+  gap?: string;
 }) {
   return (
     <section
       data-nav-theme={dark ? "dark" : "light"}
-      className={dark ? "relative mt-24 overflow-hidden bg-navy py-24 text-bg/90 lg:mt-u-160 lg:py-u-160" : spacing}
+      className={dark ? `relative overflow-hidden bg-navy py-24 text-bg/90 lg:py-u-160 ${gap}` : spacing}
     >
       {/* the logo's mountain, drawn across the foot of the navy band */}
       {dark && (

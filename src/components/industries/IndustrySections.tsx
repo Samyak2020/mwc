@@ -86,12 +86,12 @@ export function IndustryHero({
 // the drawing kept to a single object in fine linework.
 export function IndustryHeroMinimal({
   title,
-  intro,
   scene,
   band,
 }: {
   title: string;
-  intro: string;
+  /** no longer shown: the hero carries the title, its button and the drawing */
+  intro?: string;
   scene: React.ReactNode;
   /** phrases for the scrolling sky band along the foot of the hero */
   band?: string[];
@@ -116,13 +116,7 @@ export function IndustryHeroMinimal({
             </Line>
           ))}
         </RevealHeading>
-        <Rise
-          delay={0.5}
-          className="mt-auto flex flex-col items-start gap-6 lg:mt-[calc(var(--u)*150)]"
-        >
-          <p className="max-w-[400px] text-lg leading-[1.3] font-medium">
-            {intro}
-          </p>
+        <Rise delay={0.5} className="mt-10 flex items-start lg:mt-u-56">
           <a
             href="/contact"
             className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
@@ -234,7 +228,7 @@ export function ProblemSection({
   );
   if (!stack)
     return (
-      <section aria-labelledby={id} className="shell pt-28 lg:pt-u-200">
+      <section id={`${id}-top`} aria-labelledby={id} className="shell scroll-mt-16 pt-28 lg:pt-u-200">
         {intro(true)}
         {cards}
       </section>
@@ -242,7 +236,7 @@ export function ProblemSection({
   // desktop: the whole section pins and steps through the layer stack;
   // phones and tablets keep the cards
   return (
-    <section aria-labelledby={id} className="shell pt-28 lg:pt-u-152">
+    <section id={`${id}-top`} aria-labelledby={id} className="shell scroll-mt-16 pt-36 lg:pt-u-280">
       <div className="lg:hidden">
         {intro(true)}
         {cards}
@@ -608,14 +602,17 @@ export function ServicesSection({
   heading,
   groups,
   more,
+  spacing = "pt-32 lg:pt-u-200",
 }: {
   id: string;
   heading: string[];
   groups: ServiceGroup[];
   more: { label: string; href: string };
+  /** top padding; tighter after a full-bleed block such as the case cards */
+  spacing?: string;
 }) {
   return (
-    <section aria-labelledby={id} className="shell pt-40 lg:pt-u-320">
+    <section aria-labelledby={id} className={`shell ${spacing}`}>
       <RevealHeading
         id={id}
         className="display text-[40px] sm:text-[56px] lg:fs-u-64"

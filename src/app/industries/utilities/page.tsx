@@ -28,7 +28,7 @@ export default function UtilitiesPage() {
         <AboutQuote
           quote="The MWC team runs smoothly and integrates exceptionally well with our internal teams and contractors. They understand our processes, manage personalities effectively, and keep projects moving even when conditions change. Their presence reduces risk and increases confidence across the job."
           by="Project Manager – Utility Capital Projects"
-          spacing="pt-20 lg:pt-u-120"
+          spacing="pt-24 lg:pt-u-200"
         />
 
         <ProblemSection
@@ -70,9 +70,9 @@ export default function UtilitiesPage() {
             "An electric utility’s customer programs group had a manager, a supervisor and one coordinator, with no project schedules or project-level cost control. Commission-mandated charging, solar and distributed energy programs were falling behind, and budgets sat largely unspent by October. MWC stood up a program management office across hundreds of projects and taught the client team to run accruals. Construction managers verified field work through daily logs in Procore.",
           ]}
           metrics={[
-            { value: "90%", text: "Annual authorization spent, up from 20%" },
-            { value: "30-45", text: "Days to permit, down from three months" },
-            { value: "$60-$70M", text: "Delivered, including 150+ Level 2 chargers, five fast charging sites and a dual-feed microgrid for a municipal wastewater system" },
+            { value: "90%", text: "20% to 90% of annual authorization spent" },
+            { value: "30-45", text: "Permitting cut from three months to 30-45 days" },
+            { value: "$60-$70M", text: "$60-$70M delivered, including 150+ Level 2 chargers, five fast charging sites and a dual-feed microgrid for a municipal wastewater system" },
           ]}
           link={{ label: "See the Results", href: "/resources/after-action-reports/commission-mandated-customer-programs" }}
         />
@@ -101,7 +101,7 @@ export default function UtilitiesPage() {
             },
           ]}
           related={{
-            label: "Related projects",
+            label: "Related Projects",
             links: [
               { label: "Electric Vehicle Charging and Demand-Side Management", href: "/projects/electric-vehicle-charging" },
               { label: "Transmission, Distribution and Substations", href: "/projects/transmission-distribution" },
@@ -155,6 +155,7 @@ export default function UtilitiesPage() {
 
         <AboutQuote
           dark
+          gap="mt-20 lg:mt-u-104"
           quote="MWC’s scheduling work has been recognized at the highest levels of leadership. Their ability to recover schedules, align stakeholders, and maintain critical path integrity under pressure directly contributes to on-time delivery."
           by="Senior Stakeholder – Scheduling & Planning"
         />

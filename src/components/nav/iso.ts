@@ -118,6 +118,26 @@ export class Scene {
     return this;
   }
 
+  /** a heaped pile (coal, spoil): a peaked mound on an elliptical base, its
+   *  left and right slopes as two faces, the peak nudged off-centre */
+  heap(x: number, y: number, z: number, r: number, h: number, lean = 0.18) {
+    const P: V3 = [x - r * lean, y - r * lean * 0.5, z + h];
+    const base = (a0: number, a1: number) => {
+      const out: V3[] = [];
+      for (let k = 0; k <= 8; k++) {
+        const a = ((a0 + ((a1 - a0) * k) / 8) * Math.PI) / 180;
+        out.push([x + r * Math.cos(a), y + r * Math.sin(a), z]);
+      }
+      return out;
+    };
+    this.poly([P, ...base(135, 45)], "left");
+    this.poly([P, ...base(45, -45)], "right");
+    // a couple of gullies down the slopes
+    this.line([P, [x + r * 0.55, y + r * 0.55, z + h * 0.15]], "faint");
+    this.line([P, [x - r * 0.1, y + r * 0.85, z + h * 0.1]], "faint");
+    return this;
+  }
+
   /** gable roof prism, ridge along y, front gable facing +y */
   gable(x: number, y: number, z: number, w: number, d: number, hr: number) {
     const m = x + w / 2;

@@ -21,9 +21,20 @@ export type IconKey =
   | "thermal"
   | "ashpond"
   | "service"
-  | "water";
+  | "water"
+  | "demolition"
+  | "federal";
 
-type Built = { base: Shape[]; float: Shape[]; vb: string; foot?: [number, number, number, number] };
+type Built = {
+  base: Shape[];
+  float: Shape[];
+  vb: string;
+  foot?: [number, number, number, number];
+  /** paths that coal or water runs along, for drawings that move */
+  flows?: { d: string; slow?: boolean }[];
+  /** screen points that dust rises from */
+  puffs?: [number, number][];
+};
 
 // A Scene that remembers how far its projected points reach, so each
 // drawing gets a tight viewBox and fills its frame.
@@ -203,6 +214,115 @@ function build(key: IconKey): Built {
       b.grove(-36, 34, 3, 12, 79, 4).grove(38, 38, 2, 8, 83, 4);
       return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-46, -46, 46, 46] };
     }
+    case "demolition": {
+      // a coal plant being taken down: the stack cut to a stump, half the
+      // boiler house gone to its bare frame with a wall section falling, a
+      // high-reach excavator biting at the broken edge (dust rising), rubble
+      // and sorted spoil heaps, the coal conveyor stripped back to its
+      // trestles, and trucks hauling debris out along the road
+      b.box(-56, -50, 0, 112, 100, 4);
+      const run = (pts: [number, number, number][]) => `M${pts.map((v) => b.pt(v)).join(" L")}`;
+      // haul road
+      b.line([[-56, 12, 4.1], [56, 12, 4.1]], "faint").line([[-56, 18, 4.1], [56, 18, 4.1]], "faint");
+      b.grove(46, -44, 3, 10, 107, 4);
+      // the stack, cut down to a stump with a ragged rim
+      b.cyl(-46, -36, 4, 5, 22).band(-46, -36, 18, 5, "accent");
+      b.line([[-50, -36, 26], [-48, -38, 23], [-46, -39, 27], [-44, -38, 24], [-42, -36, 26]], "faint");
+      // what is left of the boiler house
+      b.box(-38, -46, 4, 10, 24, 26).box(-28, -46, 4, 6, 24, 18);
+      // the demolished half: its bare steel frame, columns and floor beams
+      // stepping down toward the excavator
+      const cols: [number, number][] = [[-22, 22], [-14, 18], [-6, 13], [2, 8]];
+      for (const [x, h] of cols) b.line([[x, -46, 4], [x, -46, 4 + h]], "faint").line([[x, -34, 4], [x, -34, 4 + h]], "faint").line([[x, -22, 4], [x, -22, 4 + h]]);
+      for (const lv of [12, 18]) {
+        const span = cols.filter(([, h]) => h + 4 >= lv);
+        const x1 = span[span.length - 1][0];
+        b.line([[-22, -22, lv], [x1, -22, lv]]).line([[-22, -46, lv], [x1, -46, lv]], "faint");
+        for (const [x] of span) b.line([[x, -46, lv], [x, -22, lv]], "faint");
+      }
+      // a wall panel peeling away from the broken edge
+      b.poly([[-22, -22, 4], [-22, -22, 22], [-17, -17, 16], [-17, -17, 4]], "left");
+      // rubble at the foot, and broken pieces
+      b.heap(-8, -12, 4, 10, 6, 0.3);
+      b.box(-20, -8, 4, 4, 3, 2).box(0, -18, 4, 3, 4, 2).box(-14, -2, 4, 5, 3, 1.5);
+      // high-reach excavator working the edge
+      b.box(6, -10, 4, 13, 7, 3).box(8, -9, 7, 9, 5, 4).box(14, -9, 11, 3, 3, 4, true);
+      b.line([[9, -7, 11], [-2, -16, 32], [-13, -21, 25]], "accent").line([[-13, -21, 25], [-16, -23, 20]], "accent").line([[-13, -21, 25], [-17, -20, 22]], "accent");
+      // the coal conveyor, stripped: one stub of belt, then bare trestles
+      b.box(20, -30, 4, 10, 10, 18);
+      for (const x of [34, 42, 50]) b.lattice(x, -25, 4, 1.6, 1, 14 - (x - 34) * 0.3, 2);
+      b.poly([[30, -27, 20], [38, -27, 18.5], [38, -23, 18.5], [30, -23, 20]], "top");
+      b.poly([[30, -23, 20], [38, -23, 18.5], [38, -23, 17], [30, -23, 18.5]], "left");
+      // sorted spoil heaps: concrete, and scrap steel
+      b.heap(36, 2, 4, 12, 9, 0.2);
+      b.heap(-36, 32, 4, 11, 7, 0.25);
+      for (const [x, y] of [[-28, 40], [-22, 36], [-26, 44]] as const) b.line([[x, y, 4.2], [x + 5, y - 2, 6]], "accent");
+      // roll-off containers and a loaded truck on the road
+      b.box(14, 24, 4, 10, 6, 4).box(28, 26, 4, 10, 6, 4);
+      b.box(-2, 13, 4, 14, 4, 5, true).box(12, 13, 4, 5, 4, 6);
+      // the closed tanks, flat discs now
+      for (const [x, y] of [[40, 40], [50, 34]] as const) b.cyl(x, y, 4, 5, 1, "left", "top");
+      b.grove(-50, 46, 3, 8, 113, 4).grove(52, 48, 2, 7, 117, 4);
+      return {
+        base: b.shapes,
+        float: f.shapes,
+        vb: fit(b, f),
+        foot: [-56, -50, 56, 50],
+        // trucks hauling debris out along the road
+        flows: [{ d: run([[-50, 15, 4.4], [54, 15, 4.4]]), slow: true }],
+        // dust where the excavator bites and off the rubble
+        puffs: [b.p([-15, -22, 22]), b.p([-8, -12, 10])],
+      };
+    }
+    case "federal": {
+      // a water utility's three programmes: the dam being raised (new crest
+      // and a crane on it) with its reservoir behind, pumped storage (an upper
+      // reservoir on the hill, penstocks down to a powerhouse and its lower
+      // pond) and a pipeline on supports carrying water away across the site
+      b.box(-56, -50, 0, 112, 100, 4);
+      const run = (pts: [number, number, number][]) => `M${pts.map((v) => b.pt(v)).join(" L")}`;
+      // main reservoir and the dam holding it
+      b.poly([[-56, -50, 13], [18, -50, 13], [18, -20, 13], [-56, -20, 13]], "water", "accent");
+      b.line([[-46, -42, 13.2], [-20, -42, 13.2]], "faint").line([[-30, -30, 13.2], [6, -30, 13.2]], "faint");
+      b.box(-56, -20, 4, 74, 8, 12);
+      for (const x of [-44, -32, -20, -8, 4]) b.line([[x, -12, 6], [x, -12, 15]], "faint");
+      // the raise: a new crest section, and a crane working on it
+      b.box(-40, -20, 16, 40, 8, 4, true);
+      b.lattice(10, -16, 16, 1.6, 1, 18, 2);
+      b.line([[10, -16, 34], [-14, -16, 34]]).line([[-12, -16, 34], [-12, -16, 25]], "accent");
+      // pumped storage: the upper reservoir on its hill
+      b.box(24, -50, 4, 32, 30, 30);
+      b.poly([[27, -47, 34.2], [53, -47, 34.2], [53, -23, 34.2], [27, -23, 34.2]], "water", "accent");
+      // river below the dam
+      b.poly([[-56, -10, 4.2], [-18, -10, 4.2], [-26, 2, 4.2], [-56, 6, 4.2]], "water", "faint");
+      // penstocks down the hill face to the powerhouse
+      for (const x of [34, 40]) b.line([[x, -20, 30], [x, -6, 14], [x, 6, 14]]);
+      b.box(28, 6, 4, 22, 14, 13);
+      b.box(30, 8, 17, 6, 10, 3, true);
+      // the lower pond
+      b.poly([[24, 26, 4.2], [54, 26, 4.2], [54, 46, 4.2], [24, 46, 4.2]], "water", "faint");
+      // the pipeline on its supports, from the dam toe out across the site
+      const pipe: [number, number, number][] = [[-14, -10, 8], [-14, 14, 8], [12, 34, 8], [12, 50, 8]];
+      for (const [x, y] of [[-14, -4], [-14, 6], [-10, 18], [-2, 24], [6, 29], [12, 42]] as const) b.box(x - 1, y - 1, 4, 2, 2, 3);
+      b.line(pipe, "accent");
+      b.line(pipe.map(([x, y, zz]) => [x + 1.4, y + 1.4, zz - 1.2] as [number, number, number]), "faint");
+      // power out from the powerhouse
+      b.lattice(-36, 30, 4, 3.2, 1.2, 28, 2);
+      b.wire([28, 13, 14], [-36, 30, 32], 3);
+      b.grove(-48, 44, 3, 8, 127, 4).grove(52, 0, 2, 6, 131, 4);
+      return {
+        base: b.shapes,
+        float: f.shapes,
+        vb: fit(b, f),
+        foot: [-56, -50, 56, 50],
+        flows: [
+          // water down the penstocks, along the pipeline, over the spillway
+          { d: run([[37, -20, 30.6], [37, -6, 14.6], [37, 6, 14.6]]) },
+          { d: run(pipe.map(([x, y, zz]) => [x, y, zz + 0.6] as [number, number, number])), slow: true },
+          { d: run([[-50, -36, 13.4], [8, -36, 13.4]]), slow: true },
+        ],
+      };
+    }
     case "water": {
       // water and storage: a ground storage tank on the plate, a reservoir cut
       // into it and a pipeline between them
@@ -219,6 +339,7 @@ function build(key: IconKey): Built {
 }
 
 const cache = new Map<IconKey, Built>();
+export const iconShapes = (k: IconKey) => get(k);
 const get = (k: IconKey) => cache.get(k) ?? (cache.set(k, build(k)), cache.get(k)!);
 
 // same palette as the Industries menu graphics (IndustryGraphic)
@@ -268,7 +389,7 @@ function Paths({ shapes, uid }: { shapes: Shape[]; uid: string }) {
   );
 }
 
-const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal", "ashpond", "service", "water"];
+const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal", "ashpond", "service", "water", "demolition", "federal"];
 const C30 = Math.cos(Math.PI / 6);
 const pt = (x: number, y: number) => `${(240 + (x - y) * C30).toFixed(1)} ${(190 + (x + y) * 0.5).toFixed(1)}`;
 

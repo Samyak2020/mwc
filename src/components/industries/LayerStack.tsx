@@ -247,19 +247,34 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
   const extra = extraFor(n);
   const compact = n > 3;
   const vb = { x: 10, y: -210 - extra, w: 575, h: 560 + extra };
+  const need = Math.round((640 * vb.h) / vb.w + 80);
   const pctY = (y: number) => `${((y - vb.y) / vb.h) * 100}%`;
   const railTop = layers[0].cy - 70;
   const railBot = layers[n - 1].cy + 70;
 
   return (
-    <div ref={wrap} style={{ height: `${n * 100}vh` }} className="relative">
-      {/* the whole section pins under the nav: heading and intro on top, the
-          stack filling the rest of the screen below them */}
-      <div className="sticky top-16 flex h-[calc(100svh-64px)] flex-col pt-8 pb-8 xl:top-[72px] xl:h-[calc(100svh-72px)] lg:pt-u-48">
-        {header}
-        <div className="mt-6 grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] items-center gap-12 lg:mt-u-64 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-u-72">
-          {/* the stack and its rail, sized by the height left on screen */}
-          <div className="relative h-full max-h-full max-w-full justify-self-start" style={{ aspectRatio: `${vb.w} / ${vb.h}` }}>
+    <>
+    {header}
+    <div ref={wrap} style={{ height: `${n * 100}vh` }} className="relative mt-6 lg:mt-u-24">
+      {/* the heading scrolls by; the stack pins under the nav with the whole
+          screen to itself, so it keeps its size on short laptop screens */}
+      <div
+        className="sticky flex flex-col py-8 lg:py-u-40"
+        // no taller than the drawing needs at its widest (its column is 640
+        // units), centred in the screen under the nav
+        style={{
+          height: `min(calc(100svh - 72px), calc(var(--u) * ${need}))`,
+          top: `max(72px, calc(50svh + 36px - var(--u) * ${need / 2}))`,
+        }}
+      >
+        {/* same columns as the heading and intro above, so the detail lines up with the intro text */}
+        <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*640)] lg:gap-u-96">
+          {/* the stack and its rail, as large as the cell allows at its own proportions */}
+          <div className="flex h-full min-h-0 w-full items-center [container-type:size]">
+          <div
+            className="relative"
+            style={{ aspectRatio: `${vb.w} / ${vb.h}`, width: `min(100cqw, 100cqh * ${(vb.w / vb.h).toFixed(4)})` }}
+          >
             <svg viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`} className="block h-full w-full" aria-hidden>
               <defs>
                 <linearGradient id={u("top")} x1="0" y1="0" x2="1" y2="1">
@@ -357,7 +372,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
                 onClick={() => go(i)}
                 aria-current={i === active ? "step" : undefined}
                 // four stops sit closer together, so number and label share one line
-                className={`absolute -translate-y-1/2 text-left ${compact ? "flex items-center gap-2 whitespace-nowrap" : "w-[150px]"}`}
+                className={`absolute -translate-y-1/2 text-left ${compact ? "flex w-[124px] items-start gap-2" : "w-[150px]"}`}
                 style={{ left: `${((RAIL_X + 18 - vb.x) / vb.w) * 100}%`, top: pctY(L.cy) }}
               >
                 <span
@@ -367,19 +382,16 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className={`hidden text-sm leading-[1.25] transition-colors duration-[var(--duration-base)] lg:block ${compact ? "" : "mt-1.5"} ${i === active ? "text-fg" : "text-fg/45"}`}>
+                <span className={`hidden text-sm leading-[1.25] transition-colors duration-[var(--duration-base)] lg:block ${compact ? "mt-0.5" : "mt-1.5"} ${i === active ? "text-fg" : "text-fg/45"}`}>
                   {items[i].lead}
                 </span>
               </button>
             ))}
           </div>
+          </div>
 
           {/* detail for the active step */}
           <div aria-live="polite">
-            <p className="border-b border-fg/15 pb-2 text-right text-sm leading-none tabular-nums">
-              <span className="text-fg">{String(active + 1).padStart(2, "0")}</span>
-              <span className="text-fg/40"> / {String(n).padStart(2, "0")}</span>
-            </p>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={active}
@@ -387,7 +399,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
                 animate={{ opacity: 1, y: 0, transition: { duration: duration.base, ease: ease.out } }}
                 exit={{ opacity: 0, y: -6, transition: { duration: duration.fast, ease: ease.in } }}
               >
-                <p className="mt-6 text-2xl leading-[1.2] font-semibold tracking-[-0.01em] lg:text-[28px]">{items[active].lead}</p>
+                <p className="text-2xl leading-[1.2] font-semibold tracking-[-0.01em] lg:text-[28px]">{items[active].lead}</p>
                 <p className="mt-4 max-w-[460px] text-lg leading-[1.55] text-fg/70">{items[active].text}</p>
               </motion.div>
             </AnimatePresence>
@@ -395,5 +407,6 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
         </div>
       </div>
     </div>
+    </>
   );
 }

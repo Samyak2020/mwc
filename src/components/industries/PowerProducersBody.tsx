@@ -10,7 +10,7 @@ export function PowerProducersBody() {
     <AboutQuote
       quote="During critical outages, MWC brought structure, accountability, and schedule discipline that kept the work focused and safe. Their construction managers and schedulers were proactive, detail-oriented, and trusted by both field crews and leadership."
       by="Outage / Construction Lead"
-      spacing="pt-20 lg:pt-u-120"
+      spacing="pt-24 lg:pt-u-200"
     />
 
     <ProblemSection
@@ -80,6 +80,7 @@ export function PowerProducersBody() {
 
     <ServicesSection
       id="services-heading"
+      spacing="pt-36 lg:pt-u-280"
       heading={["From Scope Development", "to Return to Service"]}
       more={{ label: "Compare All Services", href: "/all-services" }}
       groups={[
@@ -129,6 +130,7 @@ export function PowerProducersBody() {
 
     <AboutQuote
       dark
+      gap="mt-20 lg:mt-u-104"
       quote="MWC’s forecasting and project controls capabilities are exceptional. Closing monthly forecasts within hundreds of dollars on large, complex programs is not typical and it has significantly improved our financial confidence and decision-making."
       by="Capital Planner / Financial Controls Manager"
     />
