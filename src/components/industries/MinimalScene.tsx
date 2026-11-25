@@ -12,13 +12,33 @@ import { duration, ease, industryHero } from "@/lib/motion";
 // and in front of it. Each industry builds its own SceneData.
 
 export type Mark = { d: string; c: "grid" | "pl" | "ld" | "mk" };
+/** what moves in a hero drawing, all in the drawing's own coordinates */
+export type SceneMotion = {
+  /** paths that current or water runs along, as travelling dashes */
+  flows?: { d: string; faint?: boolean; slow?: boolean }[];
+  /** points that steam rises from */
+  puffs?: [number, number][];
+  /** a crane hook: cable from top to bottom, and the load hanging on it */
+  lift?: { top: [number, number]; bottom: [number, number]; load: Shape[]; travel: number };
+  /** shapes that rock about a pivot (a pumpjack beam) */
+  rock?: { shapes: Shape[]; pivot: [number, number]; angle: number };
+  /** a flame that flickers from its base */
+  flame?: Shape[];
+};
 export type SceneData = {
   marks: Mark[];
   shapes: Shape[];
   far: Shape[];
   near: Shape[];
   rotors: { x: number; y: number; r: number }[];
+  motion?: SceneMotion;
 };
+
+/** remove from `shapes` every shape drawn identically in `take`; returns both */
+export function pluck(shapes: Shape[], take: Shape[]) {
+  const ds = new Set(take.map((t) => t.d));
+  return { rest: shapes.filter((sh) => !ds.has(sh.d)), taken: shapes.filter((sh) => ds.has(sh.d)) };
+}
 
 /** the survey grid and the site's plot, drawn on the ground of `s` */
 export function siteMarks(s: Scene, [x0, y0, x1, y1] = [-110, -110, 110, 110]): Mark[] {
@@ -40,6 +60,24 @@ export function siteMarks(s: Scene, [x0, y0, x1, y1] = [-110, -110, 110, 110]): 
 
 /** place by screen axes: u runs left → right, v runs back → front */
 export const at = (u: number, v: number) => [(u + v) / 2, (v - u) / 2] as const;
+
+/** faint wind turbines at screen spots (u, v, height); their rotors spin */
+export function turbines(far: Scene, spots: readonly (readonly [number, number, number])[]): SceneData["rotors"] {
+  return spots.map(([u, v, h]) => {
+    const [x, y] = at(u, v);
+    far.cyl(x, y, 0, 1.3, h, "left", "top").box(x - 3, y - 1.5, h - 1, 6, 3, 3);
+    const [hx, hy] = far.p([x + 3, y, h + 0.5]);
+    return { x: hx, y: hy, r: h * 0.36 };
+  });
+}
+
+/** low bushes at screen spots, behind (v < 0) or in front of the plot */
+export function bushes(far: Scene, near: Scene, spots: readonly (readonly [number, number])[]) {
+  for (const [u, v] of spots) {
+    const [x, y] = at(u, v);
+    (v < 0 ? far : near).bush(x, y, 0, 1.1);
+  }
+}
 
 // faces a shade off the ground (#0a48a6), so hidden edges stay hidden
 const fills: Record<Tone, string> = {
@@ -68,7 +106,24 @@ export function MinimalScene({ data, className = "" }: { data: SceneData; classN
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const uid = useId().replace(/:/g, "");
-  const { marks, shapes, far, near, rotors } = data;
+  const { marks, shapes, far, near, rotors, motion: mo } = data;
+  const solid = (sh: Shape, i: number) => {
+    const st = stroke(sh);
+    return (
+      <path
+        key={i}
+        d={sh.d}
+        fill={fills[sh.tone]}
+        stroke={st.c}
+        strokeOpacity={st.o}
+        strokeWidth={st.w}
+        vectorEffect="non-scaling-stroke"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    );
+  };
+  const spline = { calcMode: "spline" as const, keyTimes: "0;0.5;1", keySplines: "0.45 0 0.55 1;0.45 0 0.55 1" };
   const faint = (list: Shape[]) =>
     list.map((sh, i) => (
       <path
@@ -170,6 +225,96 @@ export function MinimalScene({ data, className = "" }: { data: SceneData; classN
             <motion.g {...enter(3)}>
               <g opacity={0.22}>{faint(near)}</g>
             </motion.g>
+            {/* what moves: current and water along their paths, steam, the crane,
+                the pumpjack and its flame (all still under reduced motion) */}
+            {mo && (
+              <motion.g {...enter(3)}>
+                {mo.flows?.map((fl, i) => (
+                  <path
+                    key={`f${i}`}
+                    d={fl.d}
+                    fill="none"
+                    stroke="#c9f0ff"
+                    strokeOpacity={fl.faint ? 0.45 : 0.95}
+                    strokeWidth={1.6}
+                    strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
+                    className={reduce ? undefined : fl.slow ? "mf-flow mf-flow-slow" : "mf-flow"}
+                    strokeDasharray={reduce ? "0 1" : undefined}
+                    style={{ animationDelay: `${-i * 0.37}s` }}
+                  />
+                ))}
+                {!reduce &&
+                  mo.puffs?.map(([x, y], i) =>
+                    [0, 1, 2].map((k) => (
+                      <circle key={`p${i}-${k}`} cx={x} cy={y} r={4} fill="#ffffff" opacity={0}>
+                        <animate attributeName="cy" values={`${y};${y - 34}`} dur="4.2s" begin={`${-(k * 1.4 + i * 0.7)}s`} repeatCount="indefinite" />
+                        <animate attributeName="r" values="3;11" dur="4.2s" begin={`${-(k * 1.4 + i * 0.7)}s`} repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0;0.32;0" keyTimes="0;0.25;1" dur="4.2s" begin={`${-(k * 1.4 + i * 0.7)}s`} repeatCount="indefinite" />
+                      </circle>
+                    )),
+                  )}
+                {mo.lift && (
+                  <g>
+                    <line
+                      x1={mo.lift.top[0]}
+                      y1={mo.lift.top[1]}
+                      x2={mo.lift.bottom[0]}
+                      y2={mo.lift.bottom[1]}
+                      stroke="#9fe0ff"
+                      strokeOpacity={0.9}
+                      strokeWidth={0.9}
+                      vectorEffect="non-scaling-stroke"
+                    >
+                      {!reduce && (
+                        <animate
+                          attributeName="y2"
+                          values={`${mo.lift.bottom[1]};${mo.lift.bottom[1] - mo.lift.travel};${mo.lift.bottom[1]}`}
+                          dur="7s"
+                          repeatCount="indefinite"
+                          {...spline}
+                        />
+                      )}
+                    </line>
+                    <g>
+                      {mo.lift.load.map(solid)}
+                      {!reduce && (
+                        <animateTransform
+                          attributeName="transform"
+                          type="translate"
+                          values={`0 0;0 ${-mo.lift.travel};0 0`}
+                          dur="7s"
+                          repeatCount="indefinite"
+                          {...spline}
+                        />
+                      )}
+                    </g>
+                  </g>
+                )}
+                {mo.rock && (
+                  <g>
+                    {mo.rock.shapes.map(solid)}
+                    {!reduce && (
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        values={`${-mo.rock.angle} ${mo.rock.pivot[0]} ${mo.rock.pivot[1]};${mo.rock.angle} ${mo.rock.pivot[0]} ${mo.rock.pivot[1]};${-mo.rock.angle} ${mo.rock.pivot[0]} ${mo.rock.pivot[1]}`}
+                        dur="3.2s"
+                        repeatCount="indefinite"
+                        {...spline}
+                      />
+                    )}
+                  </g>
+                )}
+                {mo.flame && (
+                  <g className={reduce ? undefined : "mf-flame"}>
+                    {mo.flame.map((sh, i) => (
+                      <path key={i} d={sh.d} fill="#ffd690" fillOpacity={0.85} stroke="#ffc46b" strokeWidth={0.8} vectorEffect="non-scaling-stroke" />
+                    ))}
+                  </g>
+                )}
+              </motion.g>
+            )}
           </g>
         </motion.g>
       </svg>

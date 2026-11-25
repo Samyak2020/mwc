@@ -20,7 +20,7 @@ export function Leadership() {
         {/* left: about at the top, certification block at the bottom */}
         <div className="flex flex-col justify-between gap-12">
           <Rise className="flex flex-col">
-            <p className="font-display text-[32px] leading-[0.94] font-extrabold tracking-[-0.02em] [word-spacing:0.07em] text-fg uppercase lg:fs-u-40">
+            <p className="font-display text-[32px] leading-[0.94] font-extrabold tracking-[-0.03em] [word-spacing:0.09em] text-fg uppercase lg:fs-u-40">
               Andrew Schaaf
             </p>
             <p className="mt-3 text-lg leading-[1.5] tracking-[-0.005em] text-fg/50">Owner and President of MWC</p>

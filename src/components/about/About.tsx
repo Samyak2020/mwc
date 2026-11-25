@@ -273,7 +273,7 @@ export function AboutFramework() {
               />
               <Texture opacity={0.12} />
               <img src="/about/ws-band.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[31%] w-full" />
-              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.02em] [word-spacing:0.07em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
+              <h3 className="absolute bottom-5 left-5 w-[220px] font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.03em] [word-spacing:0.09em] uppercase lg:bottom-u-24 lg:left-u-24 lg:fs-u-32">
                 {w.name}
               </h3>
             </div>

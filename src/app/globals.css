@@ -75,15 +75,15 @@ body {
 /* Display headings: Switzer in capitals. Capitals lose word shapes, so words
    must separate clearly: Switzer's space is only 0.18em, which next to open
    capital sidebearings reads like a letter gap, so word spacing opens it to
-   0.25em while letters keep their drawn spacing. Extrabold rather
+   0.27em while letters keep their drawn spacing. Extrabold rather
    than black keeps counters open; leading just under 1 keeps stacked lines a
    block without touching; balanced breaks so no line dangles. */
 .display {
   font-family: var(--font-display);
   font-weight: 800;
   line-height: 0.94;
-  letter-spacing: -0.02em;
-  word-spacing: 0.07em;
+  letter-spacing: -0.03em;
+  word-spacing: 0.09em;
   text-transform: uppercase;
   text-wrap: balance;
   font-kerning: normal;
@@ -535,6 +535,42 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .ps-rotor {
+    animation: none;
+  }
+}
+
+/* Industry hero drawings: current and water travel along their paths as
+   short dashes; the flare flickers from its base. */
+.mf-flow {
+  stroke-dasharray: 3 11;
+  animation: mf-flow 1.3s linear infinite;
+}
+.mf-flow-slow {
+  animation-duration: 2.4s;
+}
+@keyframes mf-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+.mf-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: mf-flame 0.7s ease-in-out infinite alternate;
+}
+@keyframes mf-flame {
+  from {
+    transform: scale(0.92, 0.82);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.05, 1.12);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mf-flow,
+  .mf-flame {
     animation: none;
   }
 }

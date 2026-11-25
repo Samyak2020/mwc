@@ -177,7 +177,7 @@ function WorkstreamCard({ ws, rowX, enabled }: { ws: Workstream; rowX: MotionVal
         <img src="/comp1r/ws-band.svg" alt="" aria-hidden className="absolute bottom-0 left-0 h-[29.17%] w-full" />
 
         <h3
-          className={`absolute bottom-5 left-5 w-[240px] font-display text-[32px] leading-[0.94] font-extrabold tracking-[-0.02em] [word-spacing:0.07em] text-bg lg:bottom-auto lg:left-u-24 lg:fs-u-40 ${ws.titleClass}`}
+          className={`absolute bottom-5 left-5 w-[240px] font-display text-[32px] leading-[0.94] font-extrabold tracking-[-0.03em] [word-spacing:0.09em] text-bg lg:bottom-auto lg:left-u-24 lg:fs-u-40 ${ws.titleClass}`}
         >
           {ws.title}
         </h3>

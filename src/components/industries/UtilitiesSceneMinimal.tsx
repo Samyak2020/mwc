@@ -1,7 +1,7 @@
 "use client";
 
 import { Scene } from "@/components/nav/iso";
-import { MinimalScene, at, siteMarks, type SceneData } from "./MinimalScene";
+import { MinimalScene, at, bushes, siteMarks, turbines, type SceneData } from "./MinimalScene";
 
 // Utilities hero: the Industries-menu utilities drawing at hero detail, on
 // its plot. Water tower back left, a transmission line crossing the site from
@@ -90,7 +90,33 @@ function build(): SceneData {
     const [x, y] = at(u, v);
     (v < 0 ? far : near).tree(x, y, 0, 0.9);
   }
-  return { marks, shapes: s.shapes, far: far.shapes, near: near.shapes, rotors: [] };
+  // the generation this grid carries: two turbines far off, left of the line
+  const rotors = turbines(far, [
+    [-280, -220, 50],
+    [-170, -300, 56],
+  ]);
+  bushes(far, near, [[-240, -120], [120, -300], [300, -170], [-360, 120], [-200, 260], [160, 260]]);
+  // motion: current along every conductor, in from the line beyond the plot,
+  // down the feeder into the substation and out on the service drops
+  const fl = new Scene();
+  let from: [number, number, number] = [40, -380, 76];
+  for (const [tx, ty] of [[40, -230], [40, -78]]) {
+    for (const k of [-28, 28]) fl.wire([from[0] + k, from[1], from[2]], [tx + k, ty, 76], 7);
+    from = [tx, ty, 76];
+  }
+  const faintCount = fl.shapes.length;
+  for (const x of [12, 68]) fl.wire([x, -78, 76], [x, 46, 76], 7);
+  for (const x of [16, 64]) fl.wire([x, -78, 88], [x, 46, 88], 6);
+  fl.wire([12, 46, 76], [-26, 46, 34], 3);
+  fl.wire([64, 46, 76], [100, 52, 30], 4).wire([100, 52, 30], [94, 35, 14], 2).wire([100, 52, 30], [94, 83, 14], 2);
+  from = [40, 46, 76];
+  const nearStart = fl.shapes.length;
+  for (const [tx, ty] of [[40, 200], [40, 350]]) {
+    for (const k of [-28, 28]) fl.wire([from[0] + k, from[1], from[2]], [tx + k, ty, 76], 7);
+    from = [tx, ty, 76];
+  }
+  const flows = fl.shapes.map((sh, i) => ({ d: sh.d, faint: i < faintCount || i >= nearStart }));
+  return { marks, shapes: s.shapes, far: far.shapes, near: near.shapes, rotors, motion: { flows } };
 }
 let cached: SceneData | null = null;
 

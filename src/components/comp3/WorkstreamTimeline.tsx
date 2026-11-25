@@ -193,7 +193,7 @@ export function WorkstreamTimeline() {
                     transition={fade}
                   >
                     <CardPhoto src={ws.image} />
-                    <h3 className="absolute top-[calc(50%-32px)] left-1/2 w-[300px] -translate-x-1/2 text-center font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.02em] [word-spacing:0.07em] text-bg uppercase lg:w-u-330 lg:fs-u-32">
+                    <h3 className="absolute top-[calc(50%-32px)] left-1/2 w-[300px] -translate-x-1/2 text-center font-display text-[28px] leading-[0.94] font-extrabold tracking-[-0.03em] [word-spacing:0.09em] text-bg uppercase lg:w-u-330 lg:fs-u-32">
                       {ws.title}
                     </h3>
                   </motion.div>
