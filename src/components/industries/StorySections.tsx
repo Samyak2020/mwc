@@ -8,6 +8,7 @@ import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise } from "@/components/motion/Rise";
 import { Arrow } from "@/components/ui/Arrow";
 import { Band } from "@/components/about/Band";
+import { ServiceTabs } from "./ServiceTabs";
 import type { ProjectRecord } from "./ProjectSections";
 
 // A project page laid out as an editorial story (after letsgrowcanada.ca's
@@ -546,29 +547,18 @@ export function StoryRecordList({ id, heading, records }: { id: string; heading?
 
 // After the reference's share list: the section's name in the label column,
 // each link a full-width hairline row with an arrow at the end.
+// The page's related links, in the industry pages' services pattern: the big
+// heading, the groups (Services, Industries) as tabs on the left, the open
+// group's links as rows beside them.
 export function StoryLinks({ lists }: { lists: { label: string; links: L[] }[] }) {
   return (
-    <section data-nav-theme="light" aria-label="Related services and industries" className="shell pt-28 text-fg lg:pt-u-200">
-      <div className="flex flex-col gap-16 lg:gap-u-96">
-        {lists.map((list) => (
-          <div key={list.label} className={grid}>
-            <h2 className={labelCol}>{list.label}</h2>
-            <ul className={bodyCol}>
-              {list.links.map((k) => (
-                <li key={k.href} className="border-t border-fg/20 last:border-b">
-                  <a
-                    href={k.href}
-                    className="group flex items-center justify-between gap-6 py-5 text-lg leading-[1.3] font-semibold transition-colors duration-[var(--duration-base)] hover:text-navy lg:py-u-24 lg:text-xl"
-                  >
-                    {k.label}
-                    <Arrow />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <section data-nav-theme="light" aria-labelledby="more-heading" className="shell pt-28 text-fg lg:pt-u-200">
+      <RevealHeading id="more-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
+        <Line className="block">More to Explore</Line>
+      </RevealHeading>
+      <Rise className="mt-14 lg:mt-u-104">
+        <ServiceTabs groups={lists.map((l) => ({ label: l.label, items: l.links.map((k) => ({ lead: k.label, href: k.href })) }))} />
+      </Rise>
     </section>
   );
 }

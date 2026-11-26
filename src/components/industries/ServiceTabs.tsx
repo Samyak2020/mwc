@@ -7,7 +7,7 @@ import { duration, ease } from "@/lib/motion";
 
 type Group = {
   label: string;
-  items: { lead: string; text: string; href: string }[];
+  items: { lead: string; text?: string; href: string }[];
 };
 
 // Services, after a tabbed reference: the categories listed on the left with a
@@ -79,15 +79,17 @@ export function ServiceTabs({
               <li key={it.lead} className="border-t border-fg/15 last:border-b">
                 <a
                   href={it.href}
-                  className="cta group grid gap-3 py-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] lg:items-baseline lg:gap-u-56 lg:py-u-32"
+                  className={`cta group grid gap-3 py-7 lg:items-baseline lg:gap-u-56 lg:py-u-32 ${it.text ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto]" : "grid-cols-[minmax(0,1fr)_auto] items-baseline"}`}
                 >
                   <span className="text-xl leading-[1.25] font-semibold tracking-[-0.01em] transition-colors duration-[var(--duration-base)] group-hover:text-navy">
                     {it.lead}
                   </span>
-                  <span className="max-w-[520px] text-base leading-[1.55] text-fg/70">
-                    {it.text}
-                  </span>
-                  <span className="hidden text-fg/60 transition-colors duration-[var(--duration-base)] group-hover:text-navy lg:block">
+                  {it.text && (
+                    <span className="max-w-[520px] text-base leading-[1.55] text-fg/70">
+                      {it.text}
+                    </span>
+                  )}
+                  <span className={`${it.text ? "hidden lg:block" : ""} text-fg/60 transition-colors duration-[var(--duration-base)] group-hover:text-navy`}>
                     <Arrow width={18} />
                   </span>
                 </a>
