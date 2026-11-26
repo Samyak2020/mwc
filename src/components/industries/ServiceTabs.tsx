@@ -15,9 +15,12 @@ type Group = {
 export function ServiceTabs({
   groups,
   footer,
+  fit,
 }: {
   groups: Group[];
   footer?: React.ReactNode;
+  /** hold the panel at the longest group's height instead of a fixed 320px */
+  fit?: boolean;
 }) {
   const [open, setOpen] = useState(0);
   const reduce = useReducedMotion();
@@ -64,7 +67,9 @@ export function ServiceTabs({
         id={`${uid}-panel`}
         role="tabpanel"
         aria-labelledby={`${uid}-tab-${open}`}
-        className="min-h-[320px]"
+        className={fit ? "lg:min-h-[var(--fit)]" : "min-h-[320px]"}
+        // a title-only row: 28px above and below, a 25px line, a 1px rule
+        style={fit ? { ["--fit" as string]: `calc(${Math.max(...groups.map((x) => x.items.length))} * 82px)` } : undefined}
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.ul

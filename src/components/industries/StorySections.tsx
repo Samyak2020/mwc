@@ -257,7 +257,7 @@ export function StoryRecords({ id, heading, records }: { id: string; heading: st
 
   // measurements: the horizontal run, the stops along the rail, and the title
   // at its two places (centred, and settled in the corner)
-  const [m, setM] = useState({ run: 0, vh: 800, at: [] as number[], cx: 0, cy: 0, ex: 0, ey: 0, shifts: [] as number[] });
+  const [m, setM] = useState({ run: 0, vh: 800, at: [] as number[], cx: 0, cy: 0, ex: 0, ey: 0, shifts: [] as number[], slack: 0 });
   const END_SCALE = 0.5;
   useLayoutEffect(() => {
     const measure = () => {
@@ -286,6 +286,9 @@ export function StoryRecords({ id, heading, records }: { id: string; heading: st
         ex: r0 + (at[0] ?? 0),
         ey: railY - 32 - 36 - hh * END_SCALE,
         shifts: lines.current.map((l) => (maxLine - (l?.offsetWidth ?? 0)) / 2),
+        // the stage is a screen tall; what sits under the records is taken back
+        // once it unpins, so the next section follows the records, not the screen
+        slack: Math.max(0, s.getBoundingClientRect().bottom - Math.max(...stops.current.map((el) => el?.getBoundingClientRect().bottom ?? 0))),
       });
       void w;
     };
@@ -346,7 +349,7 @@ export function StoryRecords({ id, heading, records }: { id: string; heading: st
       </div>
 
       {/* desktop: pinned, in beats */}
-      <div ref={wrap} className="relative hidden lg:block" style={{ height: `calc(100svh - 72px + ${Math.round(total)}px)` }}>
+      <div ref={wrap} className="relative hidden lg:block" style={{ height: `calc(100svh - 72px + ${Math.round(total)}px)`, marginBottom: -Math.round(m.slack) }}>
         <div
           ref={stage}
           className="sticky top-[72px] h-[calc(100svh-72px)] overflow-hidden"
@@ -552,12 +555,12 @@ export function StoryRecordList({ id, heading, records }: { id: string; heading?
 // group's links as rows beside them.
 export function StoryLinks({ lists }: { lists: { label: string; links: L[] }[] }) {
   return (
-    <section data-nav-theme="light" aria-labelledby="more-heading" className="shell pt-28 text-fg lg:pt-u-200">
+    <section data-nav-theme="light" aria-labelledby="more-heading" className="shell pt-28 text-fg lg:pt-[calc(var(--u)*208)] lg:mb-[calc(var(--u)*-40)]">
       <RevealHeading id="more-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
-        <Line className="block">More to Explore</Line>
+        <Line className="block">Related</Line>
       </RevealHeading>
       <Rise className="mt-14 lg:mt-u-104">
-        <ServiceTabs groups={lists.map((l) => ({ label: l.label, items: l.links.map((k) => ({ lead: k.label, href: k.href })) }))} />
+        <ServiceTabs fit groups={lists.map((l) => ({ label: l.label, items: l.links.map((k) => ({ lead: k.label, href: k.href })) }))} />
       </Rise>
     </section>
   );
