@@ -1,4 +1,5 @@
 // Client Resources content: categories and the (placeholder) resource list.
+// Photos under /resources/ are MWC's own field and team shots (client Drive).
 
 export const categories = [
   "Brochure",
@@ -27,7 +28,7 @@ export const resources: Resource[] = [
     category: "Brochure",
     date: "November 4, 2026",
     meta: "PDF · 12 pages",
-    image: "/about-v2/hero.png",
+    image: "/resources/brochure-2026.jpg",
   },
   {
     title: "Delivering a 230 kV Substation Upgrade on Schedule",
@@ -46,7 +47,7 @@ export const resources: Resource[] = [
     category: "Articles",
     date: "October 21, 2026",
     meta: "6 min read",
-    image: "/comp1r/res-1.png",
+    image: "/resources/owners-rep.jpg",
   },
   {
     title: "Capability Statement: Power Generation",
@@ -55,7 +56,7 @@ export const resources: Resource[] = [
     category: "Capability Statements",
     date: "October 14, 2026",
     meta: "PDF · 2 pages",
-    image: "/comp4v2/ind-power.png",
+    image: "/resources/capability-power.jpg",
   },
   {
     title: "Project Controls and Scheduling",
@@ -64,7 +65,7 @@ export const resources: Resource[] = [
     category: "Service Descriptions",
     date: "October 7, 2026",
     meta: "PDF · 4 pages",
-    image: "/about-v2/ws-plan.png",
+    image: "/resources/project-controls.jpg",
   },
   {
     title: "From Kickoff to Closeout: Our Project Workflow",
@@ -73,7 +74,7 @@ export const resources: Resource[] = [
     category: "Workflows",
     date: "September 30, 2026",
     meta: "Workflow",
-    image: "/about-v2/ws-build-a.png",
+    image: "/resources/workflow.jpg",
   },
   {
     title: "Restoring a Government Dam’s Spillway Gates",
@@ -109,7 +110,7 @@ export const resources: Resource[] = [
     category: "Service Descriptions",
     date: "September 2, 2026",
     meta: "PDF · 4 pages",
-    image: "/about-v2/ws-operate.png",
+    image: "/resources/field-oversight.jpg",
   },
   {
     title: "Change Order Review Workflow",
@@ -127,7 +128,7 @@ export const resources: Resource[] = [
     category: "Articles",
     date: "August 19, 2026",
     meta: "4 min read",
-    image: "/comp1r/res-3.png",
+    image: "/resources/team-alignment.jpg",
   },
   {
     title: "Industrial Services Brochure",

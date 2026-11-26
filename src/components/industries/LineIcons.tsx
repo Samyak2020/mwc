@@ -23,7 +23,9 @@ export type IconKey =
   | "service"
   | "water"
   | "demolition"
-  | "federal";
+  | "federal"
+  | "overhaul"
+  | "combined";
 
 type Built = {
   base: Shape[];
@@ -274,6 +276,63 @@ function build(key: IconKey): Built {
         puffs: [b.p([-15, -22, 22]), b.p([-8, -12, 10])],
       };
     }
+    case "overhaul": {
+      // a turbine overhaul inside its outage window: the boiler and stack
+      // behind, the turbine hall opened to its frame, the overhead crane
+      // lifting the top half of a casing clear (it hangs and sways), the
+      // rotor and parts set down on the laydown area
+      b.box(-56, -50, 0, 112, 100, 4);
+      b.grove(46, -44, 3, 10, 141, 4);
+      b.cyl(-48, -42, 4, 5, 58).band(-48, -42, 52, 5, "accent");
+      b.box(-42, -50, 4, 22, 16, 42);
+      // turbine hall frame: back columns and roof beams
+      const X0 = -34, X1 = 30, Y0 = -22, Y1 = 12, H = 46;
+      for (const x of [X0, -12, 10, X1]) b.line([[x, Y0, 4], [x, Y0, H]], "faint");
+      b.line([[X0, Y0, H], [X1, Y0, H]], "faint").line([[X0, Y0, H], [X0, Y1, H]], "faint");
+      // turbine deck and the casings on it: HP, IP, the opened LP, generator
+      b.box(-30, -12, 4, 56, 18, 8);
+      b.box(-26, -9, 12, 9, 12, 7).box(-15, -10, 12, 11, 14, 8);
+      b.box(-2, -10, 12, 12, 14, 5);
+      b.box(12, -8, 12, 11, 10, 7, true);
+      // the overhead crane bridge across the hall
+      b.line([[-4, Y0, 42], [-4, Y1, 42]]).line([[6, Y0, 42], [6, Y1, 42]]);
+      // laydown: the rotor on stands, crates and a tool container
+      b.box(28, 22, 4, 2, 2, 4).box(46, 22, 4, 2, 2, 4);
+      b.box(26, 22, 8, 24, 3, 3, true);
+      b.box(-40, 24, 4, 10, 8, 5).box(-26, 28, 4, 7, 6, 4).box(4, 30, 4, 14, 7, 6);
+      // front columns of the hall, over everything inside it
+      for (const x of [X0, -12, 10, X1]) b.line([[x, Y1, 4], [x, Y1, H]]);
+      b.line([[X0, Y1, H], [X1, Y1, H]]).line([[X1, Y0, H], [X1, Y1, H]]);
+      b.grove(-50, 44, 3, 8, 143, 4).grove(52, 46, 2, 7, 147, 4);
+      // the lifted casing half and its hook, floating
+      f.line([[1, -3, 42], [1, -3, 30]], "accent");
+      f.box(-4, -10, 24, 12, 14, 5);
+      return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-56, -50, 56, 50], puffs: [b.p([-48, -42, 64])] };
+    }
+    case "combined": {
+      // two combined cycle units in their upgrade: each a gas turbine with its
+      // inlet house, exhaust duct, heat recovery steam generator and stack;
+      // the steam turbine hall between them; the front unit's uprated turbine
+      // and new exhaust section picked out, scaffold up the front stack
+      b.box(-56, -50, 0, 112, 100, 4);
+      b.grove(46, -44, 3, 10, 151, 4);
+      const unit = (y0: number, up: boolean) => {
+        b.box(-52, y0 - 2, 14, 8, 16, 10);
+        b.box(-44, y0, 4, 24, 12, 11, up);
+        b.box(-20, y0 + 1, 4, 8, 10, 15, up);
+        b.box(-12, y0 - 2, 4, 26, 16, 32);
+        for (const z of [14, 24]) b.line([[-12, y0 + 14, z], [14, y0 + 14, z]], "faint");
+        b.cyl(20, y0 + 6, 4, 4.5, 50).band(20, y0 + 6, 46, 4.5, "accent");
+      };
+      unit(-38, false);
+      b.box(26, -20, 4, 24, 16, 18);
+      b.box(26, -20, 22, 24, 16, 2, true);
+      unit(6, true);
+      b.lattice(28, 12, 4, 2.4, 1.6, 34, 4);
+      b.box(-30, 32, 4, 12, 8, 5).box(-14, 34, 4, 8, 6, 4);
+      b.grove(-48, 44, 3, 8, 153, 4).grove(50, 42, 2, 7, 157, 4);
+      return { base: b.shapes, float: f.shapes, vb: fit(b, f), foot: [-56, -50, 56, 50], puffs: [b.p([20, -32, 56]), b.p([20, 12, 56])] };
+    }
     case "federal": {
       // a water utility's three programmes: the dam being raised (new crest
       // and a crane on it) with its reservoir behind, pumped storage (an upper
@@ -389,7 +448,7 @@ function Paths({ shapes, uid }: { shapes: Shape[]; uid: string }) {
   );
 }
 
-const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal", "ashpond", "service", "water", "demolition", "federal"];
+const ICONS: IconKey[] = ["estimates", "package", "costs", "globe", "coins", "pylon", "batteries", "thermal", "ashpond", "service", "water", "demolition", "federal", "overhaul", "combined"];
 const C30 = Math.cos(Math.PI / 6);
 const pt = (x: number, y: number) => `${(240 + (x - y) * C30).toFixed(1)} ${(190 + (x + y) * 0.5).toFixed(1)}`;
 
