@@ -43,7 +43,7 @@ function Heading({ id, lines, className = "" }: { id?: string; lines: string[]; 
 function LinkLine({ list }: { list: { label: string; links: L[] } }) {
   return (
     <div className="flex flex-col gap-4 border-t border-fg/15 py-5 md:flex-row md:items-baseline md:gap-8">
-      <p className="shrink-0 text-sm leading-none text-fg/50 md:w-[200px]">{list.label}</p>
+      <p className="shrink-0 text-sm leading-[1.3] font-medium text-fg/65 md:w-[248px]">{list.label}</p>
       <ul className="flex flex-wrap gap-x-8 gap-y-3">
         {list.links.map((k) => (
           <li key={k.href}>
@@ -205,15 +205,17 @@ function ScheduleBars() {
 export function AudienceRouter({ audiences }: { audiences: { title: string; text: string; href: string }[] }) {
   return (
     <section aria-label="Who this page is for" className="shell pt-16 lg:pt-u-96">
-      <div className="grid gap-3 md:grid-cols-2 lg:gap-u-16">
+      <div className="grid gap-10 md:grid-cols-2 md:gap-8 lg:gap-u-32">
         {audiences.map((a, i) => (
           <Rise key={a.href} order={i}>
-            <a href={a.href} className="group relative flex h-full flex-col justify-between gap-10 bg-[#f1f3f6] p-6 transition-colors duration-[var(--duration-base)] hover:bg-[#e8ecf2] sm:p-10 lg:p-u-48">
-              <span className="text-2xl leading-[1.2] font-semibold tracking-[-0.01em] lg:text-[28px]">{a.title}</span>
-              <span className="flex items-end justify-between gap-6">
-                <span className="max-w-[420px] text-base leading-[1.5] text-fg/70 lg:text-lg">{a.text}</span>
-                <span className="grid size-11 shrink-0 place-items-center rounded-full border border-fg/25 text-fg transition-colors duration-[var(--duration-base)] group-hover:border-navy group-hover:bg-navy group-hover:text-bg">
-                  <svg aria-hidden width="14" height="14" viewBox="0 0 20 20" className="rotate-90">
+            {/* each reader's way in: a ruled column with who it's for, the
+                section it jumps to, and an arrow pointing down the page */}
+            <a href={a.href} className="group flex h-full flex-col gap-4 border-t-2 border-fg pt-6 lg:gap-u-16 lg:pt-u-24">
+              <span className="text-2xl leading-[1.2] font-semibold tracking-[-0.01em] transition-colors duration-[var(--duration-base)] group-hover:text-navy lg:text-[28px]">{a.title}</span>
+              <span className="flex items-start justify-between gap-6">
+                <span className="max-w-[420px] text-lg leading-[1.45] text-fg/75">{a.text}</span>
+                <span className="mt-1 shrink-0 text-fg/60 transition-[color,transform] duration-[var(--duration-base)] group-hover:translate-y-1 group-hover:text-navy">
+                  <svg aria-hidden width="18" height="18" viewBox="0 0 20 20" className="rotate-90">
                     <path
                       d="M17.7 10.7a1 1 0 0 0 0-1.4l-5-5a1 1 0 1 0-1.4 1.4L14.6 9H3a1 1 0 1 0 0 2h11.6l-3.3 3.3a1 1 0 1 0 1.4 1.4l5-5Z"
                       fill="currentColor"
@@ -233,8 +235,7 @@ export function AudienceRouter({ audiences }: { audiences: { title: string; text
 export function ProofSheet({ body, link, lists }: { body: string; link: L; lists: { label: string; links: L[] }[] }) {
   return (
     <section className="shell pt-16 lg:pt-u-120">
-      <Rise className="relative grid gap-8 bg-[#f1f3f6] p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-u-72 lg:p-u-56">
-        <RegMarks size={14} className="text-fg/60" />
+      <Rise className="relative grid gap-8 rounded-[4px] bg-[#f1f3f6] p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-u-72 lg:p-u-56">
         <div className="flex flex-col items-start gap-6">
           <p className="text-xl leading-[1.45] font-medium tracking-[-0.01em] lg:text-2xl">{body}</p>
           <a href={link.href} className={outlineBtn}>
