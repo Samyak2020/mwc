@@ -7,6 +7,7 @@ import { GeneratorVector } from "@/components/comp4/GeneratorVector";
 import { Rise } from "@/components/motion/Rise";
 import { PHOTO_QUALITY } from "@/lib/motion";
 import { Arrow } from "@/components/ui/Arrow";
+import { NavLogoV2 } from "@/components/SiteNav";
 
 // Comp 4 footer CTA (Figma "Project Lead Image" 639:4271, 1440×730, sky):
 // "Bring us your project" + button, and the generator: line-art on the left,
@@ -68,13 +69,13 @@ export function Cta4({
           <div className="absolute top-[-10.83%] left-[-121.92%] h-[122.29%] w-[246.77%]">
             <Image src="/comp4/gen-photo.png" alt="" fill sizes="(min-width: 1024px) 65vw, 100vw" quality={PHOTO_QUALITY} className="object-fill" />
           </div>
-          {/* MWC mark on the door (1025, 435.5 → 38.6×29.3) */}
-          <img
-            src="/comp4/logo-white.svg"
-            alt=""
-            aria-hidden
-            className="absolute top-[24.2%] left-[82.98%] w-[10.22%]"
-          />
+          {/* the MWC mark on the door: the nav logo, in full colour as a decal */}
+          <div
+            className="absolute top-[24.2%] left-[61%] w-[33%] [&>svg]:h-auto [&>svg]:w-full"
+            style={{ ["--logo-ridge" as string]: "url(#mwc-nav-ridge)", ["--logo-body" as string]: "url(#mwc-nav-body)", ["--logo-text" as string]: "#000611" }}
+          >
+            <NavLogoV2 />
+          </div>
         </div>
       </div>
     </section>

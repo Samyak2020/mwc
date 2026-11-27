@@ -28,7 +28,7 @@ export function StageDial({
   const ticks = useRef<SVGGElement>(null);
   const needle = useRef<SVGLineElement>(null);
   const names = useRef<(HTMLButtonElement | null)[]>([]);
-  const geo = useRef({ cx: 0, cy: 0, r: 400, gap: 56 });
+  const geo = useRef({ cx: 0, cy: 0, r: 400, gap: 56, k: 1 });
   const last = useRef(0);
   const n = stages.length;
 
@@ -40,7 +40,7 @@ export function StageDial({
 
     const set: DialApi = (f) => {
       last.current = f;
-      const { cx, cy, r, gap } = geo.current;
+      const { cx, cy, r, gap, k } = geo.current;
       g.setAttribute("transform", `translate(${cx} ${cy}) rotate(${(-f * STEP).toFixed(3)})`);
       names.current.forEach((b, i) => {
         if (!b) return;
@@ -51,7 +51,7 @@ export function StageDial({
         const x = cx + Math.cos(a) * (r + gap);
         const y = cy + Math.sin(a) * (r + gap);
         b.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translateY(-50%)`;
-        b.style.fontSize = `${(28 + 20 * e).toFixed(2)}px`;
+        b.style.fontSize = `${((28 + 20 * e) * k).toFixed(2)}px`;
         const gone = Math.abs(d) > 1.6;
         b.style.opacity = gone ? "0" : (0.45 + 0.55 * e).toFixed(3);
         b.tabIndex = gone ? -1 : 0;
@@ -78,7 +78,10 @@ export function StageDial({
       }
       const cx = headLeft + 20 - r;
       const cy = H * 0.56;
-      geo.current = { cx, cy, r, gap: Math.min(W * 0.03, 44) };
+      // type scale: full size on big screens, smaller on laptops (a 1440×900
+      // or a MacBook screen gets about 80%), never below 70%
+      const k = Math.max(0.7, Math.min(1, W / 1600, H / 1100));
+      geo.current = { cx, cy, r, gap: Math.min(W * 0.03, 44) * k, k };
       const c = arc.current;
       if (c) {
         c.setAttribute("cx", String(cx));

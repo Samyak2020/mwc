@@ -365,7 +365,7 @@ export function FieldJourney({ light = false, soft = false, intro: introProp = f
         {intro && (
           <div ref={inkRef} aria-hidden className="shell pointer-events-none absolute inset-0 h-full">
             <h2
-              className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[40px] text-fg"
+              className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[clamp(28px,min(calc(var(--u)*34),3.9svh),40px)] text-fg"
             >
               {HEAD_LINES.map((l, i) => (
                 <span
@@ -442,7 +442,7 @@ export function FieldJourney({ light = false, soft = false, intro: introProp = f
           <h2
             ref={headRef}
             id="field-heading"
-            className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[40px]"
+            className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[clamp(28px,min(calc(var(--u)*34),3.9svh),40px)]"
           >
             {HEAD_LINES.map((l, i) => (
               <span
