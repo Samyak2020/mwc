@@ -372,7 +372,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
                 onClick={() => go(i)}
                 aria-current={i === active ? "step" : undefined}
                 // four stops sit closer together, so number and label share one line
-                className={`absolute -translate-y-1/2 text-left ${compact ? "flex w-max items-start gap-2 whitespace-nowrap" : "w-[150px]"}`}
+                className={`absolute -translate-y-1/2 text-left ${compact ? "flex w-[150px] items-start gap-2" : "w-[150px]"}`}
                 style={{ left: `${((RAIL_X + 18 - vb.x) / vb.w) * 100}%`, top: pctY(L.cy) }}
               >
                 <span
