@@ -27,7 +27,7 @@ export function Cta4({
       data-nav-theme="dark"
       aria-labelledby="cta-heading"
       // flush: sits straight under a full-bleed section (About), no gap above
-      className={`relative h-[560px] overflow-hidden bg-sky text-bg sm:h-[640px] lg:h-u-730 ${flush ? "" : "mt-24 lg:mt-u-174"}`}
+      className={`relative overflow-hidden bg-sky text-bg ${flush ? "" : "mt-24 lg:mt-u-174"}`}
     >
       <div className="relative flex flex-col items-center gap-8 px-4 pt-16 text-center lg:pt-u-109">
         {/* v2 (Figma 728:1206): 56px, 918 wide, 32 above the button */}
@@ -53,10 +53,12 @@ export function Cta4({
         </Rise>
       </div>
 
-      {/* "Generators" (639:4278): 730×512 artwork box at x 350 (centre −370),
-          y 311; the photo half covers x 711–1089 */}
+      {/* "Generators" (639:4278): 730×512 artwork box, x 350 (centre −370).
+          It follows the heading and button in the flow, so a longer heading
+          pushes it down instead of under it; the negative bottom margin crops
+          its foot as the fixed-height frame used to (92 at 1440) */}
       <div
-        className="absolute top-[300px] left-1/2 h-[290px] w-[414px] -translate-x-[51%] sm:top-[330px] sm:h-[370px] sm:w-[528px] lg:top-u-311 lg:left-[calc(50%-var(--u)*370)] lg:h-u-512 lg:w-u-730 lg:translate-x-0"
+        className="relative left-1/2 mt-4 -mb-[30px] h-[290px] w-[414px] -translate-x-[51%] sm:mt-[26px] sm:-mb-[60px] sm:h-[370px] sm:w-[528px] lg:left-[calc(50%-var(--u)*370)] lg:mt-[calc(var(--u)*14)] lg:-mb-[calc(var(--u)*92)] lg:h-u-512 lg:w-u-730 lg:translate-x-0"
         onPointerEnter={on}
         onPointerLeave={off}
       >
