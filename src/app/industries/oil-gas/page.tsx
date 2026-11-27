@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   description: "Turnaround planning, construction management and safety oversight for upstream, midstream and downstream oil and gas.",
 };
 
-// Industries: Oil and Gas (copy: "MWC Website Content 2"). Built around the
-// shutdown window: the five commitments sit on a timeline of before, during
-// (the fixed window, shaded) and startup; the case study follows; safety and
+// Industries: Oil and Gas (copy: "MWC Website Content 2"). The five
+// commitments read as ruled rows in shutdown order (before, during, startup);
+// the case study follows; safety and
 // mobilization share a navy band with the figures behind them. No testimonial
 // in the doc, so no quotes. The doc's bracketed note for Andrew is left out.
 export default function OilGasPage() {

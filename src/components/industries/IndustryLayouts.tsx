@@ -1,14 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useLayoutEffect, useRef } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { Rise } from "@/components/motion/Rise";
 import { Arrow } from "@/components/ui/Arrow";
 import { RegMarks } from "@/components/ui/RegMarks";
 import { type IconKey } from "./LineIcons";
 import { CaseScene, Terrain } from "./CaseScene";
-import { duration, ease } from "@/lib/motion";
+import { duration, ease, scrollSpring } from "@/lib/motion";
 
 // Page-specific layouts for the Government, Commercial and Oil and Gas pages,
 // built from the site's own parts: blueprint-blue panels with registration
@@ -388,8 +388,84 @@ export function TimelineSection({
           {body}
         </Rise>
       </div>
-      <ShutdownTimeline phases={phases} />
+      <RailedRows items={phases.flatMap((p) => p.items)} />
     </section>
+  );
+}
+
+// The commitments as ruled rows (title beside its line, in shutdown order),
+// in the same columns as the project pages' points, with the records' rail
+// down the left: ruled ticks, a longer tick at each row, and a dot that
+// travels down with the scroll, turning the rail and each row's tick blue.
+function RailedRows({ items }: { items: { lead: string; text: string }[] }) {
+  const list = useRef<HTMLUListElement>(null);
+  const reduce = useReducedMotion();
+  const [stops, setStops] = useState<number[]>([]);
+  const [lit, setLit] = useState(0);
+
+  // each row's tick sits level with its title
+  useLayoutEffect(() => {
+    const ul = list.current;
+    if (!ul) return;
+    const measure = () => {
+      const h = ul.offsetHeight || 1;
+      setStops(
+        [...ul.children].map((li) => {
+          const el = li as HTMLElement;
+          const t = el.querySelector("p");
+          return (el.offsetTop + (t ? t.offsetTop + t.offsetHeight / 2 : 0)) / h;
+        }),
+      );
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(ul);
+    return () => ro.disconnect();
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: list, offset: ["start 60%", "end 60%"] });
+  const smooth = useSpring(scrollYProgress, scrollSpring);
+  const at = reduce ? scrollYProgress : smooth;
+  const dotTop = useTransform(at, (v) => Math.min(1, Math.max(0, v)) * 100 + "%");
+  useMotionValueEvent(at, "change", (v) => setLit(stops.filter((st) => v >= st).length));
+
+  return (
+    <div className="mt-16 grid gap-6 lg:mt-u-120 lg:grid-cols-12 lg:gap-x-[calc(var(--u)*24)]">
+      <div className="relative lg:col-span-8 lg:col-start-4">
+        <div aria-hidden className="pointer-events-none absolute inset-y-0 left-[calc(var(--u)*-128)] hidden w-6 lg:block">
+          {/* grey rule with ticks every 16 and 64 */}
+          <span className="absolute inset-y-0 left-3 w-px bg-fg/20" />
+          <span className="absolute inset-y-0 left-3 w-[10px] [background-image:repeating-linear-gradient(to_bottom,rgb(0_6_17/0.18)_0_1px,transparent_1px_16px),repeating-linear-gradient(to_bottom,rgb(0_6_17/0.18)_0_1px,transparent_1px_64px)] [background-size:5px_100%,10px_100%] [background-repeat:no-repeat]" />
+          {/* blue behind the dot */}
+          <motion.span className="absolute top-0 left-3 h-full w-px origin-top bg-sky" style={{ scaleY: at }} />
+          {/* a longer tick level with each row's title */}
+          {stops.map((st, i) => (
+            <span
+              key={i}
+              className={"absolute left-1 h-px w-[17px] transition-colors duration-[var(--duration-base)] " + (i < lit ? "bg-sky" : "bg-fg/40")}
+              style={{ top: st * 100 + "%" }}
+            />
+          ))}
+          <motion.span
+            className="absolute left-[7px] size-[11px] -translate-y-1/2 rounded-full bg-sky shadow-[0_0_0_4px_rgb(32_137_216/0.15)]"
+            style={{ top: dotTop }}
+          />
+        </div>
+        <ul ref={list}>
+          {items.map((it, i) => (
+            <Rise
+              as="li"
+              key={it.lead}
+              order={i}
+              className="relative grid gap-2 border-t border-fg/20 py-6 last:border-b sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] sm:gap-8 lg:py-u-28"
+            >
+              <p className="text-lg leading-[1.3] font-semibold">{it.lead}</p>
+              <p className="text-base leading-[1.55] text-fg/70">{it.text}</p>
+            </Rise>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
@@ -397,6 +473,93 @@ export function TimelineSection({
 
 // On navy, as the site's dark quote bands: safety with the training figure
 // that backs it, mobilization with the team growing and shrinking.
+/** the 24-hour shift ruler: day and night shift bands over the hours, and
+ *  MWC's coverage drawn across both in accent blue */
+function ShiftRuler() {
+  const reduce = useReducedMotion();
+  const hours = Array.from({ length: 25 }, (_, h) => h);
+  const x = (h: number) => (h / 24) * 100;
+  return (
+    <div aria-hidden className="relative w-full select-none">
+      {/* the two shifts: day 06–18, night 18–06 (wraps the ends) */}
+      <div className="relative h-14">
+        <div className="absolute inset-y-0 flex items-center gap-2 rounded-[4px] bg-bg/[0.12] px-3" style={{ left: x(6) + "%", width: x(12) + "%" }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" className="shrink-0 text-bg/80">
+            <circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </div>
+        <div className="absolute inset-y-0 left-0 rounded-[4px] bg-bg/[0.05]" style={{ width: x(6) + "%" }} />
+        <div className="absolute inset-y-0 flex items-center rounded-[4px] bg-bg/[0.05] px-3" style={{ left: x(18) + "%", right: 0 }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" className="shrink-0 text-bg/80">
+            <path d="M12.5 10.2A5.5 5.5 0 0 1 5.8 3.5a5.5 5.5 0 1 0 6.7 6.7Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+      {/* coverage: one unbroken line across the day */}
+      <div className="relative mt-4 h-[3px]">
+        <span className="absolute inset-0 bg-bg/15" />
+        <motion.span
+          className="absolute inset-0 origin-left bg-sky"
+          initial={reduce ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+          transition={{ duration: duration.slow * 2, ease: ease.out, delay: 0.2 }}
+        />
+      </div>
+      {/* the hours */}
+      <div className="relative mt-3 h-8">
+        {hours.map((h) => (
+          <span
+            key={h}
+            className={"absolute top-0 w-px " + (h % 6 === 0 ? "h-3 bg-bg/60" : "h-1.5 bg-bg/30")}
+            style={{ left: "calc(" + x(h) + "% - " + (h === 24 ? 1 : 0) + "px)" }}
+          />
+        ))}
+        {[0, 6, 12, 18, 24].map((h) => (
+          <span
+            key={h}
+            className={"absolute top-4 text-xs leading-none text-bg/55 tabular-nums " + (h === 0 ? "" : h === 24 ? "-translate-x-full" : "-translate-x-1/2")}
+            style={{ left: x(h) + "%" }}
+          >
+            {String(h).padStart(2, "0")}:00
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** the crew over a turnaround: one person, up to the full team at the
+ *  shutdown, and back down at startup; the peak in accent blue */
+function CrewCurve() {
+  const reduce = useReducedMotion();
+  const crew = [1, 2, 3, 5, 8, 11, 12, 12, 11, 7, 4, 2, 1];
+  const top = Math.max(...crew);
+  return (
+    <div aria-hidden className="w-full select-none">
+      <div className="flex h-[176px] items-end gap-[6px] border-b border-bg/30 pb-[6px]">
+        {crew.map((n, i) => (
+          <motion.div
+            key={i}
+            className="flex flex-1 flex-col-reverse gap-[4px]"
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+            transition={{ duration: duration.base, ease: ease.out, delay: 0.15 + i * 0.06 }}
+          >
+            {Array.from({ length: n }, (_, k) => (
+              <span key={k} className={"h-[10px] rounded-[1px] " + (n >= top - 1 ? "bg-sky" : "bg-bg/45")} />
+            ))}
+          </motion.div>
+        ))}
+      </div>
+      {/* the same ruled ticks as the site's rails */}
+      <div className="mt-2 h-2 [background-image:repeating-linear-gradient(to_right,rgb(251_252_255/0.3)_0_1px,transparent_1px_16px)] [background-size:100%_6px] [background-repeat:no-repeat]" />
+    </div>
+  );
+}
+
 export function SafetyMobilizeBand({
   safety,
   mobilize,
@@ -404,51 +567,52 @@ export function SafetyMobilizeBand({
   safety: { id: string; heading: string[]; body: string; figure?: { value: string; text: string }; link: L };
   mobilize: { id: string; heading: string[]; body: string; from?: string; to?: string };
 }) {
-  const reduce = useReducedMotion();
-  const steps = [1, 2, 4, 7, 11, 16];
+  // two rows, each its text beside a drawing of what it says: the shift
+  // coverage for safety, the crew rising and falling for mobilization;
+  // the second mirrors the first
   return (
     <section data-nav-theme="dark" className="mt-24 bg-navy py-24 text-bg lg:mt-u-200 lg:py-u-160">
-      <div className="shell grid gap-16 lg:grid-cols-2 lg:gap-u-120">
-        <article aria-labelledby={safety.id} className="flex flex-col gap-6">
-          <Heading id={safety.id} lines={safety.heading} className="text-bg lg:fs-u-48" />
-          <Rise as="p" className="text-lg leading-[1.5] text-bg/80">
-            {safety.body}
-          </Rise>
-          {safety.figure && (
-            <Rise className="flex items-baseline gap-5 border-t border-bg/20 pt-6">
-              <span className="display shrink-0 text-[48px] leading-none text-bg lg:fs-u-64">{safety.figure.value}</span>
-              <span className="text-base leading-[1.45] text-bg/70">{safety.figure.text}</span>
+      <div className="shell flex flex-col">
+        <article
+          aria-labelledby={safety.id}
+          className="grid items-center gap-12 lg:grid-cols-2 lg:gap-u-120"
+        >
+          <div className="flex flex-col gap-6">
+            <Heading id={safety.id} lines={safety.heading} className="text-bg lg:fs-u-48" />
+            <Rise as="p" className="max-w-[560px] text-lg leading-[1.5] text-bg/80">
+              {safety.body}
             </Rise>
-          )}
+            {safety.figure && (
+              <Rise className="flex items-baseline gap-5 border-t border-bg/20 pt-6">
+                <span className="display shrink-0 text-[48px] leading-none text-bg lg:fs-u-64">{safety.figure.value}</span>
+                <span className="text-base leading-[1.45] text-bg/70">{safety.figure.text}</span>
+              </Rise>
+            )}
+            <Rise>
+              <TextLink href={safety.link.href} className="text-bg">
+                {safety.link.label}
+              </TextLink>
+            </Rise>
+          </div>
           <Rise>
-            <TextLink href={safety.link.href} className="text-bg">
-              {safety.link.label}
-            </TextLink>
+            <ShiftRuler />
           </Rise>
         </article>
-        <article aria-labelledby={mobilize.id} className="flex flex-col gap-6">
-          <Heading id={mobilize.id} lines={mobilize.heading} className="text-bg lg:fs-u-48" />
-          <Rise as="p" className="text-lg leading-[1.5] text-bg/80">
-            {mobilize.body}
-          </Rise>
-          {/* the team scaling up for the shutdown */}
-          <div aria-hidden className="mt-2 border-t border-bg/20 pt-6">
-            <div className="flex items-end gap-3">
-              {steps.map((n, i) => (
-                <motion.div
-                  key={n}
-                  className="grid flex-1 grid-cols-4 content-end gap-1"
-                  initial={reduce ? false : { opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: duration.base, ease: ease.out, delay: 0.2 + i * 0.12 }}
-                >
-                  {Array.from({ length: n }, (_, k) => (
-                    <span key={k} className={`aspect-square ${i === steps.length - 1 ? "bg-sky" : "bg-bg/55"}`} />
-                  ))}
-                </motion.div>
-              ))}
-            </div>
+
+        <div aria-hidden className="my-20 h-px bg-bg/15 lg:my-u-120" />
+
+        <article
+          aria-labelledby={mobilize.id}
+          className="grid items-center gap-12 lg:grid-cols-2 lg:gap-u-120"
+        >
+          <div className="flex flex-col gap-6 lg:order-2">
+            <Heading id={mobilize.id} lines={mobilize.heading} className="text-bg lg:fs-u-48" />
+            <Rise as="p" className="max-w-[560px] text-lg leading-[1.5] text-bg/80">
+              {mobilize.body}
+            </Rise>
+          </div>
+          <div className="lg:order-1">
+            <CrewCurve />
             {mobilize.from && mobilize.to && (
               <div className="mt-3 flex justify-between text-sm text-bg/60">
                 <span>{mobilize.from}</span>
