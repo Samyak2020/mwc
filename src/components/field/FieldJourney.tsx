@@ -138,7 +138,18 @@ const INTRO = 0.9; // extra pinned scroll for the intro, in screen heights
 const HEAD_LINES = ["Project Support", "Built Around Your Scope"];
 const HEAD_START = 2.4; // heading scale while centred (40px settled, 96px centred)
 
-export function FieldJourney({ light = false, soft = false, intro = false }: { light?: boolean; soft?: boolean; intro?: boolean } = {}) {
+export function FieldJourney({ light = false, soft = false, intro: introProp = false }: { light?: boolean; soft?: boolean; intro?: boolean } = {}) {
+  // the intro is a desktop moment: on a phone the small heading alone on a
+  // white screen reads as a gap, so there the section starts on the blue
+  const [wide, setWide] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setWide(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  const intro = introProp && wide;
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -201,7 +212,13 @@ export function FieldJourney({ light = false, soft = false, intro = false }: { l
     let head = { dx: 0, dy: 0, s0: HEAD_START, shifts: [0, 0, 0] };
     const measureHead = () => {
       const h = headRef.current;
-      if (!h || !intro) return;
+      if (!h) return;
+      if (!intro) {
+        // leaving the intro (a narrow screen): drop what it set on the heading
+        h.style.transform = "";
+        headLines.current.forEach((l) => l && (l.style.transform = ""));
+        return;
+      }
       const prev = h.style.transform;
       h.style.transform = "none";
       const lines = headLines.current.slice(0, HEAD_LINES.length).map((l) => l?.offsetWidth ?? 0);
@@ -446,7 +463,7 @@ export function FieldJourney({ light = false, soft = false, intro = false }: { l
             <motion.div
               key={`title-${stage}`}
               {...swap}
-              className="absolute top-[54%] left-4 flex items-baseline gap-3 lg:sr-only"
+              className="sr-only"
             >
               <p aria-hidden className="display text-[28px] lg:fs-u-40">
                 {s.n}.
@@ -462,19 +479,23 @@ export function FieldJourney({ light = false, soft = false, intro = false }: { l
             <motion.div
               key={`body-${stage}`}
               {...swap}
-              className={`pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 rounded-[4px] p-5 lg:inset-x-auto lg:top-auto lg:bottom-[calc(var(--u)*104)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
+              className={`pointer-events-auto absolute inset-x-4 bottom-4 flex flex-col gap-4 rounded-[4px] p-5 lg:inset-x-auto lg:top-auto lg:gap-8 lg:bottom-[calc(var(--u)*104)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
                 light ? "bg-white" : soft ? "bg-[#073d8f]" : "bg-night"
               }`}
             >
+              {/* phones: the stage title heads the card (desktop has the ruler) */}
+              <p aria-hidden className="display text-[24px] sm:text-[28px] lg:hidden">
+                {s.n}. {s.title}
+              </p>
               <p className="text-[15px] leading-[1.5] font-medium tracking-[-0.005em] lg:text-base">{s.description}</p>
               {/* the services as menu rows, as in the nav: ruled, each with a
                   chevron that nudges toward its page on hover */}
-              <ul className="hidden flex-col border-t border-bg/20 lg:flex">
+              <ul className="flex flex-col border-t border-bg/20">
                 {s.services.map((name) => (
                   <li key={name} className="border-b border-bg/20">
                     <a
                       href="#"
-                      className="group/link flex min-h-9 items-center justify-between gap-4 py-1.5 text-base leading-[1.25] font-medium decoration-bg/50 underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+                      className="group/link flex min-h-9 items-center justify-between gap-4 py-1.5 text-[15px] lg:text-base leading-[1.25] font-medium decoration-bg/50 underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
                     >
                       {name}
                       <svg
