@@ -173,7 +173,7 @@ export function CareersPositions() {
         <div className={grid}>
           <div>
             <RevealHeading id="positions-heading" className="display text-[40px] [word-spacing:0.14em] sm:text-[56px] lg:fs-u-64">
-              <Line className="block">Be a part of MWC</Line>
+              <Line className="block">Be a Part of MWC</Line>
             </RevealHeading>
             <RiseEach className="mt-10 border-t border-bg/15 lg:mt-u-64">
               {positions.map((r) => (

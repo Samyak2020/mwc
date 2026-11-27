@@ -17,7 +17,7 @@ export const SOLAR_RECORDS: ProjectRecord[] = [
         term: "Scope",
         text: "Hundreds of solar installations serving low-income households, schools, veterans’ organizations and tribal communities, in a program of about $38M",
       },
-      { term: "MWC’s role", text: "Program management office, scheduling, permitting by jurisdiction, electrical design and field construction management" },
+      { term: "MWC’s Role", text: "Program management office, scheduling, permitting by jurisdiction, electrical design and field construction management" },
       { term: "Result", text: "Permitting cut from three months to 30 to 45 days" },
     ],
     workstreams: [
@@ -35,7 +35,7 @@ export const SOLAR_RECORDS: ProjectRecord[] = [
     facts: [
       { term: "Owner", text: "Water and power utility" },
       { term: "Scope", text: "A large pumped storage project, alongside a dam raise and pipeline, with a 10+ year schedule" },
-      { term: "MWC’s role", text: "Program scheduling and coordination with federal partners" },
+      { term: "MWC’s Role", text: "Program scheduling and coordination with federal partners" },
       { term: "Result", text: "Schedule updates moved from every other month to monthly, delivered on time" },
     ],
     workstreams: [
@@ -59,7 +59,7 @@ export const TD_RECORDS: ProjectRecord[] = [
         text: "New and upgraded electric services across a territory adding about 35,000 meters a year, including single-phase services up to 600 or 800 amps",
       },
       {
-        term: "MWC’s role",
+        term: "MWC’s Role",
         text: "Service coordination, senior coordination, program management, training and quality review, with about 12 coordinators at peak",
       },
       {
@@ -88,7 +88,7 @@ export const EV_RECORDS: ProjectRecord[] = [
         text: "150+ Level 2 charging stations, 5 direct current fast charging sites (about $15M), residential battery storage and distributed energy management",
       },
       {
-        term: "MWC’s role",
+        term: "MWC’s Role",
         text: "Program management office, integrated schedules, monthly forecasts and accruals, permitting, electrical design, document control and field construction management",
       },
       { term: "Result", text: "The utility relies on MWC to drive its long-range program forecast, with the program running since 2018." },
@@ -112,7 +112,7 @@ export const MICROGRID_RECORDS: ProjectRecord[] = [
     facts: [
       { term: "Owner", text: "Electric utility, serving a municipal wastewater treatment system" },
       { term: "Scope", text: "Dual-feed microgrid with new switchgear and backup generation" },
-      { term: "MWC’s role", text: "Program management, scheduling, permitting and field construction management" },
+      { term: "MWC’s Role", text: "Program management, scheduling, permitting and field construction management" },
       { term: "Result", text: "Critical infrastructure resiliency for the treatment system, which stayed in operation during construction" },
     ],
     workstreams: [

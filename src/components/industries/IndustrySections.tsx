@@ -119,7 +119,7 @@ export function IndustryHeroMinimal({
         <Rise delay={0.5} className="mt-10 flex items-start lg:mt-u-56">
           <a
             href="/contact"
-            className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+            className="cta btn flex items-center justify-center gap-[9px] bg-sky px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
           >
             Talk to a Project Lead
             <Arrow />
@@ -209,7 +209,7 @@ export function ProblemSection({
           className="flex h-full flex-col border-y border-fg/15 pt-5 pb-7"
         >
           <p className="text-sm leading-none text-fg/45 tabular-nums">
-            [{String(i + 1).padStart(2, "0")}]
+            [{String(i + 1)}]
           </p>
           <p className="mt-3 text-xl leading-[1.25] font-semibold tracking-[-0.01em]">
             {it.lead}
@@ -251,7 +251,7 @@ export function ProblemSection({
 /* --------------------------------------------- capabilities-style rows */
 
 // After zettafleet.com's capabilities: a pale panel with a centred heading;
-// each row pairs a line drawing in a corner-marked frame with an "01 / 05"
+// each row pairs a line drawing in a corner-marked frame with an "1/5"
 // count over a hairline, the title, the detail and an optional link.
 export function RowsSection({
   id,
@@ -265,7 +265,7 @@ export function RowsSection({
   /** a closing line of related links under the rows, e.g. related projects */
   related?: { label: string; links: { label: string; href: string }[] };
 }) {
-  const total = String(items.length).padStart(2, "0");
+  const total = String(items.length);
   return (
     <section aria-labelledby={id} className="shell pt-24 lg:pt-u-160">
       <ExpandPanel className="px-5 pt-14 pb-16 sm:px-10 lg:px-u-96 lg:pt-u-160 lg:pb-u-120">
@@ -295,9 +295,9 @@ export function RowsSection({
               <div>
                 <p className="border-b border-fg/15 pb-2 text-right text-sm leading-none tabular-nums">
                   <span className="text-fg">
-                    {String(i + 1).padStart(2, "0")}
+                    {String(i + 1)}
                   </span>
-                  <span className="text-fg/40"> / {total}</span>
+                  <span className="text-fg/40">/{total}</span>
                 </p>
                 <p className="mt-5 text-xl leading-[1.25] font-semibold tracking-[-0.01em]">
                   {it.lead}
@@ -419,7 +419,7 @@ export function CaseStudy({
             <a
               key={l.href}
               href={l.href}
-              className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+              className="cta btn inline-flex items-center gap-[9px] btn-dark bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
             >
               {l.label}
               <Arrow />
@@ -483,7 +483,7 @@ export function NarrativeSection({
             <Rise>
               <a
                 href={link.href}
-                className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+                className="cta btn inline-flex items-center gap-[9px] btn-dark bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
               >
                 {link.label}
                 <Arrow />

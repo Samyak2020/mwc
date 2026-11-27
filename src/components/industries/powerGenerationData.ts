@@ -13,7 +13,7 @@ export const POWER_GEN_RECORDS: ProjectRecord[] = [
       { term: "Owner", text: "Investor-owned utility" },
       { term: "Scope", text: "Major and minor turbine overhauls inside fixed outage windows" },
       {
-        term: "MWC’s role",
+        term: "MWC’s Role",
         text: "Turbine technical advisors on both 12-hour shifts, an integrated turbine schedule, project controls, safety management and material coordination",
       },
       {
@@ -37,7 +37,7 @@ export const POWER_GEN_RECORDS: ProjectRecord[] = [
     facts: [
       { term: "Owner", text: "Independent power producer" },
       { term: "Scope", text: "17+ projects, including turbine uprates, exhaust upgrades, generator and controls upgrades, and fire protection" },
-      { term: "MWC’s role", text: "Scope development, estimating, bids, construction work packages and field construction management" },
+      { term: "MWC’s Role", text: "Scope development, estimating, bids, construction work packages and field construction management" },
       {
         term: "Result",
         text: "One exhaust upgrade finished about 32% under budget. When a supplier couldn’t rebuild relief valves mid-outage, the team changed course and still finished on time.",
@@ -60,7 +60,7 @@ export const POWER_GEN_RECORDS: ProjectRecord[] = [
       { term: "Owner", text: "Investor-owned utility with co-owners" },
       { term: "Scope", text: "Pond closures, a bottom ash monofill, dewatering, and monitoring and extraction wells" },
       {
-        term: "MWC’s role",
+        term: "MWC’s Role",
         text: "Program management, coordination with the engineer of record, contractor bids, and field checks on production rates, dust control and compaction testing",
       },
       { term: "Result", text: "Extraction wells installed, dewatering underway, and standardized piping layouts that lower long-term maintenance cost" },
@@ -81,7 +81,7 @@ export const POWER_GEN_RECORDS: ProjectRecord[] = [
     facts: [
       { term: "Owner", text: "County board of commissioners" },
       { term: "Scope", text: "Removal of every above-grade structure to prevailing grade" },
-      { term: "MWC’s role", text: "Independent technical advisor, tracking every waste stream and certifying completion" },
+      { term: "MWC’s Role", text: "Independent technical advisor, tracking every waste stream and certifying completion" },
       { term: "Result", text: "About 751 tons of asbestos abatement and 161,000 tons of recycled ferrous metal tracked to final destination" },
     ],
     workstreams: [

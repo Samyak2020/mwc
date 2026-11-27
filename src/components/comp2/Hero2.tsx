@@ -6,7 +6,8 @@ import { Cropped } from "@/components/ui/Cropped";
 import { Texture } from "@/components/ui/Texture";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
 import { FadeIn } from "@/components/motion/Stagger";
-import { comp2Hero, heroSequence, scrollSpring } from "@/lib/motion";
+import Image from "next/image";
+import { comp2Hero, heroSequence, PHOTO_QUALITY, scrollSpring } from "@/lib/motion";
 import { Arrow } from "@/components/ui/Arrow";
 
 // Comp 2 hero (updated Figma "Hero Image" 573:451, 1440×1014): full-bleed
@@ -17,7 +18,10 @@ export function Hero2({
   fullHeight = false,
   flatOverlay = false,
   v2 = false,
+  left = false,
 }: {
+  /** Homepage (Figma 1040:850): full-height photo, headline set left */
+  left?: boolean;
   /** Comp 4 v2 (Figma 728:1110): wider 3-line headline (1159), 24px intro */
   v2?: boolean;
   description?: string;
@@ -41,6 +45,58 @@ export function Hero2({
     return () => window.removeEventListener("resize", update);
   }, [unit]);
   const photoY = useTransform(() => (reduce ? 0 : p.get() * comp2Hero.depth.sky * unit.get()));
+
+  // Homepage hero (Figma "Hero2" 1040:850): the field photo full bleed, the
+  // headline set left on its dark top-left, the intro and a navy button
+  // under it. The photo is dark enough there to carry white type unaided.
+  if (left)
+    return (
+      <header
+        ref={ref}
+        data-hero
+        data-nav-theme="dark"
+        className="relative isolate flex h-svh min-h-[560px] flex-col overflow-hidden bg-night text-bg"
+      >
+        <div aria-hidden className="absolute inset-0">
+          {/* Figma shows this photo stretched about 14% taller than its source
+              (1440×2194 for a 1792×2388 file); match it so the crew reads as designed */}
+          <motion.div className="absolute inset-x-0 -top-[4%] -bottom-[4%] origin-[60%_55%] scale-y-[1.143]" style={{ y: photoY }}>
+            <Image
+              src="/home/hero-hd.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              quality={PHOTO_QUALITY}
+              className="object-cover object-[60%_55%]"
+            />
+          </motion.div>
+        </div>
+
+        <div className="shell relative pt-32 lg:pt-[min(calc(var(--u)*178),20svh)] lg:pl-u-40">
+          <RevealHeading
+            as="h1"
+            trigger="load"
+            delay={heroSequence.headlineDelay}
+            className="display text-[40px] leading-[0.9] sm:text-[56px] lg:w-u-1160 lg:fs-u-80"
+          >
+            <Line className="block">Predictable Outcomes for</Line>
+            <Line className="block">High-Risk Capital</Line>
+            <Line className="block">Projects</Line>
+          </RevealHeading>
+          <FadeIn delay={heroSequence.chromeDelay} className="mt-6 flex max-w-[551px] flex-col items-start gap-[30px]">
+            <p className="text-xl leading-[1.1] sm:text-2xl lg:fs-u-24">{description}</p>
+            <a
+              href="/contact"
+              className="cta btn btn-dark flex items-center justify-center gap-[9px] bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
+            >
+              Talk to a Project Lead
+              <Arrow />
+            </a>
+          </FadeIn>
+        </div>
+      </header>
+    );
 
   if (fullHeight)
     return (
@@ -120,7 +176,7 @@ export function Hero2({
             </p>
             <a
               href="/contact"
-              className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg [text-shadow:none]"
+              className="cta btn flex items-center justify-center gap-[9px] bg-sky px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg [text-shadow:none]"
             >
               Talk to a Project Lead
               <Arrow />
@@ -169,7 +225,7 @@ export function Hero2({
           </p>
           <a
             href="/contact"
-            className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-fg"
+            className="cta btn flex items-center justify-center gap-[9px] bg-sky px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] whitespace-nowrap text-bg"
           >
             Talk to a Project Lead
             <Arrow />

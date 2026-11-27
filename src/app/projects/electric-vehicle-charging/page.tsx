@@ -21,7 +21,7 @@ export default function ElectricVehicleChargingPage() {
       <main>
         <StoryHero
           title={["Electric Vehicle Charging and","Demand-Side Management","Program Delivery"]}
-          band={["Electric vehicle charging","Demand-side management","Program delivery","Permitting","Field verification"]}
+          band={["Electric Vehicle Charging","Demand-Side Management","Program Delivery","Permitting","Field Verification"]}
         />
 
         <StoryIntro text="A charging program is hundreds of small construction projects, each with its own permit, customer and utility review. MWC runs them as one program, with an electrical designer who has worked inside utility service coordination and construction managers who confirm each site before closeout." />
@@ -30,10 +30,10 @@ export default function ElectricVehicleChargingPage() {
           id="sites-heading"
           label="Hundreds of Sites Run as One Program"
           points={[
-            { lead: "Participant engagement", text: "An escalation path built within the utility’s outreach rules keeps customers moving toward installation." },
-            { lead: "Electrical design", text: "Site designs are prepared to the utility’s own review standards." },
-            { lead: "Field verification", text: "Construction managers log daily progress in Procore and confirm installations before closeout." },
-            { lead: "Long-range planning", text: "Equipment replacement is built into the forecast years ahead, including a request for proposal for fast charger replacement." },
+            { lead: "Participant Engagement", text: "An escalation path built within the utility’s outreach rules keeps customers moving toward installation." },
+            { lead: "Electrical Design", text: "Site designs are prepared to the utility’s own review standards." },
+            { lead: "Field Verification", text: "Construction managers log daily progress in Procore and confirm installations before closeout." },
+            { lead: "Long-Range Planning", text: "Equipment replacement is built into the forecast years ahead, including a request for proposal for fast charger replacement." },
           ]}
         />
 

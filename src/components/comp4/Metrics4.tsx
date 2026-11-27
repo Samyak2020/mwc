@@ -1,5 +1,8 @@
+import Image from "next/image";
 import { RevealHeading, Line } from "@/components/motion/LineReveal";
-import { RiseEach } from "@/components/motion/Rise";
+import { Rise } from "@/components/motion/Rise";
+import { CountUpMetric } from "@/components/industries/CountUp";
+import { StickyBottom } from "@/components/industries/StickyBottom";
 
 const metrics = [
   { value: "$220M", label: "Capital project value supported" },
@@ -8,30 +11,33 @@ const metrics = [
   { value: "120+", label: "Combined years of relevant field experience" },
 ];
 
-// Comp 4 "Project Experience and Performance" (Figma 639:4387–4406): white,
-// heading + a 2×2 metric grid
-// with ruled rows on the right (x 500, 908 wide).
+// "Project Experience and Performance", laid out as the industry pages' case
+// study ("17 Projects, 2 Acquired Plants, 1 Owner's Representative"): a field
+// photograph and the heading on the left, entering level with the figures and
+// then holding at the foot of the screen; the figures count up on the right,
+// one ruled row each.
 export function Metrics4() {
   return (
-    <section aria-labelledby="experience-heading" className="shell pt-24 text-fg lg:pt-u-110">
-      {/* heading and metrics share the page's right-hand column */}
-      <div className="lg:ml-[calc(var(--u)*468)]">
-        <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:w-u-911 lg:fs-u-56">
-          <Line className="block">Project Experience and</Line>
-          <Line className="block">Performance</Line>
-        </RevealHeading>
+    <section
+      aria-labelledby="experience-heading"
+      className="shell grid gap-12 pt-24 text-fg lg:grid-cols-[minmax(0,1fr)_calc(var(--u)*560)] lg:gap-u-96 lg:pt-u-160"
+    >
+      <div>
+        <StickyBottom gap={72} className="lg:sticky">
+          <Rise className="relative mb-8 aspect-[3/2] w-[180px] overflow-hidden rounded-[4px] lg:mb-u-40 lg:w-u-220">
+            <Image src="/resources/field-oversight.jpg" alt="" fill sizes="220px" className="object-cover object-[50%_30%]" />
+          </Rise>
+          <RevealHeading id="experience-heading" className="display text-[40px] sm:text-[56px] lg:fs-u-64">
+            <Line className="block text-fg/45">Project Experience and</Line>
+            <Line className="block text-fg">Performance</Line>
+          </RevealHeading>
+        </StickyBottom>
+      </div>
 
-        <RiseEach as="ul" itemAs="li" className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:mt-u-92 lg:w-u-908">
-          {metrics.map((m, i) => (
-            <div
-              key={m.label}
-              className={`flex flex-col gap-8 border-t border-fg/20 pt-10 pb-12 pl-5 lg:gap-u-40 lg:pt-u-40 lg:pb-u-48 ${i % 2 ? "sm:pl-[calc(var(--u)*31)]" : ""}`}
-            >
-              <p className="display text-[48px] lg:fs-u-56">{m.value}</p>
-              <p className="max-w-[329px] text-lg leading-[1.5] tracking-[0.005em]">{m.label}</p>
-            </div>
-          ))}
-        </RiseEach>
+      <div>
+        {metrics.map((m) => (
+          <CountUpMetric key={m.label} value={m.value} text={m.label} />
+        ))}
       </div>
     </section>
   );

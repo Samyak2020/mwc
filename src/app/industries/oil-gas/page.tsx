@@ -25,7 +25,7 @@ export default function OilGasPage() {
           title="Turnaround Planning and Project Management for Oil and Gas"
           intro="Turnaround planning, construction management and safety oversight for upstream, midstream and downstream oil and gas."
           scene={<OilSceneMinimal className="h-full w-full" />}
-          band={["Turnarounds", "Upstream, midstream and downstream", "Shutdown planning", "Owner-side control", "Safety oversight"]}
+          band={["Turnarounds", "Upstream, Midstream and Downstream", "Shutdown Planning", "Owner-Side Control", "Safety Oversight"]}
         />
 
         <TimelineSection
@@ -37,7 +37,7 @@ export default function OilGasPage() {
               span: 1,
               items: [
                 {
-                  lead: "Long-lead parts ordered early",
+                  lead: "Long-Lead Parts Ordered Early",
                   text: "Prior inspection findings and outage reports are reviewed so parts are identified and ordered well before shutdown.",
                 },
               ],
@@ -46,22 +46,22 @@ export default function OilGasPage() {
               span: 3,
               items: [
                 {
-                  lead: "Owner-side presence on both shifts",
+                  lead: "Owner-Side Presence on Both Shifts",
                   text: "Advisors and construction managers cover day and night shifts and attend every shift change and outage meeting.",
                 },
                 {
-                  lead: "Claims checked the same day",
+                  lead: "Claims Checked the Same Day",
                   text: "Time and material sheets are reconciled against actual headcount and work performed before they become disputes.",
                 },
                 {
-                  lead: "Delays explained in real time",
+                  lead: "Delays Explained in Real Time",
                   text: "When the schedule slips, plant staff and leadership see the cause and impact as it happens, through an integrated Primavera P6 schedule reported through your control center.",
                 },
               ],
             },
             {
               span: 1,
-              items: [{ lead: "Capacity without permanent staff", text: "The team scales up for the shutdown and steps back down at startup." }],
+              items: [{ lead: "Capacity Without Permanent Staff", text: "The team scales up for the shutdown and steps back down at startup." }],
             },
           ]}
         />

@@ -21,7 +21,7 @@ import { heroSequence, PHOTO_QUALITY } from "@/lib/motion";
 // and a full-bleed call to action.
 
 const ctaCls =
-  "cta btn inline-flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg";
+  "cta btn inline-flex items-center justify-center gap-[9px] btn-dark bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg";
 
 /* --------------------------------------------------------------- hero */
 
@@ -249,7 +249,7 @@ export function AboutFramework() {
               href="/all-services"
               className="text-base font-medium text-navy underline decoration-transparent decoration-1 underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-base)] hover:decoration-current"
             >
-              View all services
+              View All Services
             </a>
           </div>
         </div>
@@ -355,11 +355,11 @@ export function AboutResults() {
 /* --------------------------------------------------------- experience */
 
 const disciplines: { name: string; icon: SoftKey }[] = [
-  { name: "Project management", icon: "pm" },
+  { name: "Project Management", icon: "pm" },
   { name: "Engineering", icon: "engineering" },
   { name: "Construction", icon: "construction" },
   { name: "Operations", icon: "operations" },
-  { name: "Project controls", icon: "controls" },
+  { name: "Project Controls", icon: "controls" },
 ];
 
 export function AboutExperience() {

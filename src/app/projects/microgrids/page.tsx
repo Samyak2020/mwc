@@ -21,7 +21,7 @@ export default function MicrogridsPage() {
       <main>
         <StoryHero
           title={["Microgrid Project Management","for Critical Facilities"]}
-          band={["Microgrids","Critical facilities","Switchgear tie-ins","Backup generation","Utility coordination"]}
+          band={["Microgrids","Critical Facilities","Switchgear Tie-Ins","Backup Generation","Utility Coordination"]}
         />
 
         <StoryIntro text="The most demanding part of a microgrid is the cutover: connecting new switchgear and generation while the facility keeps running. MWC plans each tie-in with your operations team and coordinates the dual-feed design and energization with the serving utility." />
@@ -30,9 +30,9 @@ export default function MicrogridsPage() {
           id="cutover-heading"
           label="Critical Loads Energized Through Every Cutover"
           points={[
-            { lead: "Switchgear tie-ins", text: "Cutovers are sequenced with facility operations so critical loads stay energized." },
-            { lead: "Backup fuel selection", text: "Fuel is chosen for permitted run hours. Natural gas can often be permitted for more hours than diesel." },
-            { lead: "Utility coordination", text: "Dual-feed design and energization are coordinated with the serving utility’s requirements." },
+            { lead: "Switchgear Tie-Ins", text: "Cutovers are sequenced with facility operations so critical loads stay energized." },
+            { lead: "Backup Fuel Selection", text: "Fuel is chosen for permitted run hours. Natural gas can often be permitted for more hours than diesel." },
+            { lead: "Utility Coordination", text: "Dual-feed design and energization are coordinated with the serving utility’s requirements." },
           ]}
         />
 

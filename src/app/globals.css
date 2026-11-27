@@ -364,8 +364,10 @@ body {
 }
 /* the CTA: paper on a dark hero, navy on paper */
 .nav-cta {
-  background-color: var(--nav-cta-bg, var(--color-bg));
-  color: var(--nav-cta-ink, var(--color-fg));
+  /* on a dark ground: accent blue, filling navy on hover */
+  --btn-fill: var(--nav-cta-fill, var(--color-navy));
+  background-color: var(--nav-cta-bg, var(--color-sky));
+  color: var(--nav-cta-ink, #fff);
   transition:
     transform var(--duration-fast) var(--ease-out),
     color var(--duration-base) var(--ease-out),
@@ -375,6 +377,7 @@ body {
 .nav-open .nav-cta {
   --nav-cta-bg: var(--color-navy);
   --nav-cta-ink: var(--color-bg);
+  --nav-cta-fill: var(--color-sky);
 }
 .nav-bar.is-solid {
   background-color: var(--color-bg);

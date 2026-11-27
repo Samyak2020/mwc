@@ -22,13 +22,13 @@ export function PowerProducersBody() {
       ]}
       lead="MWC puts an owner’s representative at the plant to close those gaps:"
       items={[
-        { lead: "Estimates in two stages", icon: "estimates", text: "Plus or minus 30% for future fiscal year planning, then plus or minus 20% for final approval." },
+        { lead: "Estimates in Two Stages", icon: "estimates", text: "Plus or minus 30% for future fiscal year planning, then plus or minus 20% for final approval." },
         {
-          lead: "Contractor readiness", icon: "package",
+          lead: "Contractor Readiness", icon: "package",
           text: "Each contractor receives a construction work package, attends a pre-construction meeting and submits an execution plan before mobilizing.",
         },
         {
-          lead: "Cost tracking during the outage", icon: "costs",
+          lead: "Cost Tracking During the Outage", icon: "costs",
           text: "Commitments, actual costs and cost-to-complete are tracked by project and reported at the asset level.",
         },
       ]}
@@ -39,24 +39,24 @@ export function PowerProducersBody() {
       heading={["Field Teams for Every", "Ownership Model"]}
       items={[
         {
-          lead: "International owners", icon: "globe",
+          lead: "International Owners", icon: "globe",
           text: "MWC puts experienced construction managers on your U.S. sites and reports in the format your head office expects, without adding headcount.",
         },
         {
-          lead: "Fund-owned platforms", icon: "coins",
+          lead: "Fund-Owned Platforms", icon: "coins",
           text: "A project manager at your site verifies contractor progress, cost and schedule against the numbers your investment committee reviews.",
         },
         {
-          lead: "New market developers", icon: "pylon",
+          lead: "New Market Developers", icon: "pylon",
           text: "Teams experienced with utility interconnection and commissioning give you execution capacity in a new market from the first week.",
         },
         {
-          lead: "Storage developers", icon: "batteries",
+          lead: "Storage Developers", icon: "batteries",
           text: "One construction management and commissioning playbook, carried by the same team from site to site, keeps every project consistent.",
           link: { label: "Solar and Battery Energy Storage Projects", href: "/projects/solar-battery-storage" },
         },
         {
-          lead: "Thermal operators", icon: "thermal",
+          lead: "Thermal Operators", icon: "thermal",
           text: "MWC handles outage planning, turnaround construction management and sustaining capital delivery under long-term master service agreements.",
           link: { label: "Power Generation Projects", href: "/projects/power-generation" },
         },

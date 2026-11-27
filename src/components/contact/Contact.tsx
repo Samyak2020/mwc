@@ -5,18 +5,17 @@ import { useId, useState } from "react";
 import { industries } from "@/components/nav/navData";
 import { Rise } from "@/components/motion/Rise";
 import { Arrow } from "@/components/ui/Arrow";
-import { RegMarks } from "@/components/ui/RegMarks";
 import { PHOTO_QUALITY } from "@/lib/motion";
 
-// Contact (layout after gigaenergy.com/contact), drafting-sheet style: the site's paper ground, the form drawn as
-// ruled boxes (outlined, no fill, square corners) with square chips and the
-// navy raised submit. The photo keeps its colour; the contact details sit on
-// it as blueprint-blue panels with registration marks. Addresses and links
-// are placeholders.
+// Contact (layout after gigaenergy.com/contact): the form on the site's paper
+// ground, outlined fields with the site's 4px corner, and the navy raised
+// submit. The field photograph carries the page; the contact details sit on it
+// as one solid navy sheet of ruled rows, links set as plain underlined text.
+// Addresses and links are placeholders.
 
 const label = "text-[15px] leading-[1.3] font-medium text-fg/80";
 const field =
-  "w-full border border-fg/30 bg-transparent px-5 py-3.5 text-[17px] text-fg placeholder:text-fg/60 outline-none transition-colors duration-[var(--duration-fast)] hover:border-fg/60 focus-visible:border-navy focus-visible:ring-1 focus-visible:ring-navy";
+  "w-full rounded-[4px] border border-fg/30 bg-transparent px-5 py-3.5 text-[17px] text-fg placeholder:text-fg/40 outline-none transition-colors duration-[var(--duration-fast)] hover:border-fg/60 focus-visible:border-navy focus-visible:ring-1 focus-visible:ring-navy";
 
 const budgets = ["Under $1M", "$1M – $10M", "$10M – $50M", "$50M+", "Not yet defined"];
 
@@ -40,8 +39,7 @@ function Form() {
 
   if (sent)
     return (
-      <div className="relative mt-16 border border-fg/20 p-8" role="status">
-        <RegMarks className="text-fg/70" />
+      <div className="mt-16 rounded-[4px] border border-fg/20 p-8" role="status">
         <p className="display text-[28px] leading-none">Thank you</p>
         <p className="mt-4 max-w-[420px] text-fg/70">A project lead will be in touch within one business day.</p>
       </div>
@@ -85,7 +83,7 @@ function Form() {
                 type="button"
                 aria-pressed={on}
                 onClick={() => toggle(ind.key)}
-                className={`min-h-10 border px-4 text-sm leading-none font-medium transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy ${
+                className={`min-h-10 rounded-[4px] border px-4 text-sm leading-none font-medium transition-colors duration-[var(--duration-fast)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy ${
                   on ? "border-navy bg-navy text-bg" : "border-fg/30 text-fg/75 hover:border-fg/60 hover:text-fg"
                 }`}
               >
@@ -131,7 +129,7 @@ function Form() {
       <Field id={`${uid}-file`} text="Attach a project brief (optional) – up to 5MB">
         <label
           htmlFor={`${uid}-file`}
-          className="relative flex min-h-[110px] cursor-pointer items-center justify-center border border-dashed border-fg/30 px-5 text-center text-fg/70 transition-colors hover:border-fg/60"
+          className="flex min-h-[112px] cursor-pointer items-center justify-center rounded-[4px] border border-dashed border-fg/30 px-5 text-center text-fg/70 transition-colors duration-[var(--duration-fast)] hover:border-fg/60"
         >
           {file ?? (
             <span>
@@ -166,64 +164,58 @@ function Form() {
 
 /* ----------------------------------------------- details on the photo */
 
-const pill =
-  "inline-flex min-h-8 items-center border border-bg/40 px-3 text-[13px] leading-none font-medium text-bg transition-colors duration-[var(--duration-fast)] hover:border-bg hover:bg-bg hover:text-[#0a48a6]";
-const panel = "relative bg-[#0a48a6]/90 text-bg backdrop-blur-md outline outline-1 outline-bg/25";
-const row = "flex items-center justify-between gap-4 px-6 py-5";
+// one solid sheet of ruled rows: the label on the left, the way to reach us on
+// the right, links as plain underlined text
+const link =
+  "text-[15px] font-medium text-bg underline decoration-bg/40 underline-offset-4 transition-[text-decoration-color] duration-[var(--duration-fast)] hover:decoration-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bg";
+const row = "flex flex-col gap-1 px-6 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6";
+const lead = "text-[17px] leading-[1.3]";
 
 function Details() {
   return (
-    <div className="flex flex-col gap-3">
-      <div className={panel}>
-        <RegMarks />
-        <div className={row}>
-          <p className="text-[17px]">Project enquiries</p>
-          <a href="mailto:projects@mwconsultllc.com" className={pill}>
-            projects@mwconsultllc.com
-          </a>
-        </div>
-        <div className={`${row} border-t border-bg/20`}>
-          <p className="text-[17px]">General enquiries</p>
-          <a href="mailto:info@mwconsultllc.com" className={pill}>
-            info@mwconsultllc.com
-          </a>
-        </div>
+    <div className="divide-y divide-bg/15 overflow-hidden rounded-[4px] bg-navy text-bg">
+      <div className={row}>
+        <p className={lead}>Project enquiries</p>
+        <a href="mailto:projects@mwconsultllc.com" className={link}>
+          projects@mwconsultllc.com
+        </a>
       </div>
-
-      <div className={`${panel} grid grid-cols-[minmax(0,1fr)_auto]`}>
-        <RegMarks />
-        <div className="px-6 py-5">
-          <p className="text-[17px]">Address</p>
-          <p className="mt-3 max-w-[240px] text-sm leading-[1.5] text-pretty text-bg/75">
+      <div className={row}>
+        <p className={lead}>General enquiries</p>
+        <a href="mailto:info@mwconsultllc.com" className={link}>
+          info@mwconsultllc.com
+        </a>
+      </div>
+      <div className="grid items-start gap-3 px-6 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-6">
+        <div>
+          <p className={lead}>Address</p>
+          <p className="mt-2 max-w-[240px] text-sm leading-[1.5] text-pretty text-bg/70">
             Veteran-led, supporting projects across the US from our Arizona office.
           </p>
         </div>
-        <address className="border-l border-bg/20 px-6 py-5 text-[15px] leading-[1.45] text-bg/90 not-italic">
+        <address className="sm:text-right text-[15px] leading-[1.5] text-bg/90 not-italic tabular-nums">
           [Street address],
           <br />
           [City], AZ [ZIP]
           <br />
-          <br />
-          (623) 738-6988
+          <a href="tel:+16237386988" className={`${link} mt-3 inline-block`}>
+            (623) 738-6988
+          </a>
         </address>
       </div>
-
-      <div className={panel}>
-        <RegMarks />
-        <div className={row}>
-          <p className="text-[17px]">
-            Join us <span className="ml-1 text-[13px] font-medium text-bg/70">(open positions)</span>
-          </p>
-          <a href="/careers" className={pill}>
-            Careers
-          </a>
-        </div>
-        <div className={`${row} border-t border-bg/20`}>
-          <p className="text-[17px]">Socials</p>
-          <a href="#" className={pill}>
-            LinkedIn
-          </a>
-        </div>
+      <div className={row}>
+        <p className={lead}>
+          Join us <span className="ml-1 text-sm text-bg/70">(open positions)</span>
+        </p>
+        <a href="/careers" className={link}>
+          Careers
+        </a>
+      </div>
+      <div className={row}>
+        <p className={lead}>Socials</p>
+        <a href="#" className={link}>
+          LinkedIn
+        </a>
       </div>
     </div>
   );

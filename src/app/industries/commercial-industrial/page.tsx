@@ -26,7 +26,7 @@ export default function CommercialIndustrialPage() {
           title="Construction Project Management for Commercial and Industrial Projects"
           intro="Construction project management and owner’s representation for commercial and industrial owners and general contractors."
           scene={<CommercialSceneMinimal className="h-full w-full" />}
-          band={["Facility owners", "General contractors", "Shutdown planning", "Utility coordination", "Project controls"]}
+          band={["Facility Owners", "General Contractors", "Shutdown Planning", "Utility Coordination", "Project Controls"]}
         />
 
         <AudienceRouter
@@ -52,18 +52,18 @@ export default function CommercialIndustrialPage() {
           lead="MWC works as your owner’s representative and coordinates directly with plant operations:"
           items={[
             {
-              lead: "Shutdown planning",
+              lead: "Shutdown Planning",
               stack: "shutdown",
               text: "Tie-ins and outages are scheduled with your operations team and sequenced around production.",
             },
-            { lead: "Contractor access", stack: "access", text: "Work areas, laydown and access are planned to protect existing equipment." },
+            { lead: "Contractor Access", stack: "access", text: "Work areas, laydown and access are planned to protect existing equipment." },
             {
-              lead: "Utility coordination",
+              lead: "Utility Coordination",
               stack: "utility",
               text: "Service applications, interconnection and energization are managed with the serving utility.",
             },
             {
-              lead: "Backup generation",
+              lead: "Backup Generation",
               stack: "generator",
               text: "Fuel choices are evaluated against permitted run hours. Natural gas can often be permitted for more hours than diesel.",
             },

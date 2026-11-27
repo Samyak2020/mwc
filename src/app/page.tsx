@@ -26,9 +26,9 @@ export default function Home() {
     <>
       <SiteNav v2 />
       <main>
-        <Hero2 fullHeight flatOverlay v2 description="The experience to run complex capital projects." />
+        <Hero2 left description="The experience to run complex capital projects." />
         <IndustryPanels />
-        <FieldJourney soft />
+        <FieldJourney soft intro />
         <Metrics4 />
         <Rise>
           <TrustedBy label={false} className="mt-16 lg:mt-u-108" />

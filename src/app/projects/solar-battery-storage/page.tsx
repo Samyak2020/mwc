@@ -21,7 +21,7 @@ export default function SolarBatteryStoragePage() {
       <main>
         <StoryHero
           title={["Solar Construction Management","and BESS Construction"]}
-          band={["Solar construction","Battery energy storage","Notice to proceed","Interconnection","Commercial operation"]}
+          band={["Solar Construction","Battery Energy Storage","Notice to Proceed","Interconnection","Commercial Operation"]}
         />
 
         <StoryIntro text="Every solar or storage project is approved with a budget, a schedule and an interconnection date, and many of the decisions that affect all three are made during construction. MWC places a senior construction manager or owner’s representative on site from notice to proceed through commercial operation. They work with your engineering, procurement and construction contractor to verify progress before each payment, review changes against the contract and close turnover documentation." />
@@ -31,8 +31,8 @@ export default function SolarBatteryStoragePage() {
           label="Built to Spec From Notice to Proceed to Commercial Operation"
           points={[
             { lead: "Constructability", text: "Designs are reviewed before work is sequenced." },
-            { lead: "Long-lead equipment", text: "Module, inverter and transformer deliveries are tracked against the schedule." },
-            { lead: "Installed work", text: "Work is inspected as it goes in, and milestones are verified before payment." },
+            { lead: "Long-Lead Equipment", text: "Module, inverter and transformer deliveries are tracked against the schedule." },
+            { lead: "Installed Work", text: "Work is inspected as it goes in, and milestones are verified before payment." },
             { lead: "Interconnection", text: "The utility’s milestones and the contractor’s sit on one calendar, with one-lines, protection schemes and controls reviewed before construction." },
             { lead: "Turnover", text: "Punch lists, warranties and as-built documentation are closed before handover." },
           ]}

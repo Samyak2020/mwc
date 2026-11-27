@@ -25,7 +25,7 @@ export default function GovernmentPage() {
           title="SDVOSB Project Management for Federal, State and Local Government"
           intro="SDVOSB project management and independent oversight for federal, state, local and tribal infrastructure projects."
           scene={<GovernmentSceneMinimal className="h-full w-full" />}
-          band={["SDVOSB certified", "Independent oversight", "Federal, state and local", "Board-ready reporting", "Multiyear schedules"]}
+          band={["SDVOSB Certified", "Independent Oversight", "Federal, State and Local", "Board-Ready Reporting", "Multiyear Schedules"]}
         />
 
         <AboutQuote quote="MWC is a reliable, high-trust partner for complex utility and capital projects." spacing="pt-24 lg:pt-u-200" />
@@ -39,19 +39,19 @@ export default function GovernmentPage() {
           ]}
           lead="MWC provides independent oversight as your technical advisor:"
           items={[
-            { lead: "Define completion", stack: "completion", text: "The final site condition is set at the start, so done means the same thing to every party." },
+            { lead: "Define Completion", stack: "completion", text: "The final site condition is set at the start, so done means the same thing to every party." },
             {
-              lead: "Track the waste",
+              lead: "Track the Waste",
               stack: "waste",
               text: "The responsible party must report where asbestos, hazardous waste, recyclables and demolition debris go.",
             },
             {
-              lead: "Review and report",
+              lead: "Review and Report",
               stack: "report",
               text: "MWC reviews monthly reports, holds regular update meetings and briefs elected officials at public meetings.",
             },
             {
-              lead: "Certify on the record",
+              lead: "Certify on the Record",
               stack: "certify",
               text: "Completion is certified only after review of the completion report, inspection records and regulatory correspondence.",
             },
@@ -133,7 +133,7 @@ export default function GovernmentPage() {
               value: "Service-disabled veteran-owned small business (SDVOSB), certified by the U.S. Small Business Administration and eligible for federal set-aside contracts",
             },
             { label: "Unique Entity Identifier", value: "U9WJDCH3V369" },
-            { label: "Commercial and Government Entity code", value: "96A46" },
+            { label: "Commercial and Government Entity Code", value: "96A46" },
             { value: "Registered in SAM.gov" },
           ]}
         />

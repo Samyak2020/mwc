@@ -75,7 +75,7 @@ export function ResourcesList() {
         <Rise className="mt-7">
         <a
           href="/client-resources"
-          className="cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+          className="cta btn inline-flex items-center gap-[9px] btn-dark bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
         >
           See All Resources
           <Arrow />

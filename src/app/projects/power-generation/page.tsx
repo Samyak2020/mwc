@@ -22,7 +22,7 @@ export default function PowerGenerationPage() {
         <StoryHero
           title={["Power Plant Project Management", "for Coal, Gas and Combined", "Cycle Plants"]}
           image={{ src: "/projects/power-generation/hero.jpg", alt: "Two MWC leads on site at a combined cycle plant" }}
-          band={["Power generation", "Outage management", "Turbine overhauls", "Combined cycle upgrades", "Coal ash closure", "Plant demolition"]}
+          band={["Power Generation", "Outage Management", "Turbine Overhauls", "Combined Cycle Upgrades", "Coal Ash Closure", "Plant Demolition"]}
         />
 
         <StoryIntro text="Plant projects run best when plant staff, the manufacturer and contractors work from one schedule, one scope and one set of facts. MWC project managers, schedulers and construction managers work beside your plant staff every day to make that happen, from the first outage scope through final site restoration." />
@@ -32,19 +32,19 @@ export default function PowerGenerationPage() {
           label="Plant Projects"
           points={[
             {
-              lead: "Scope and change review",
+              lead: "Scope and Change Review",
               text: "Daily time and material sheets and change requests are reviewed with the contractor against the contracted scope, so questions are settled while the work is fresh.",
             },
             {
-              lead: "Parts planning",
+              lead: "Parts Planning",
               text: "Prior outage reports and inspection findings are reviewed so long-lead parts are ordered well before the unit comes down.",
             },
             {
-              lead: "Schedule integration",
+              lead: "Schedule Integration",
               text: "Each contractor schedule is built in Primavera P6 and integrated with the plant’s master outage and capital schedule.",
             },
             {
-              lead: "Approval thresholds",
+              lead: "Approval Thresholds",
               text: "Reauthorization limits are tracked by site, since one co-owned plant may require approval at 10% over and another at 20%.",
             },
           ]}

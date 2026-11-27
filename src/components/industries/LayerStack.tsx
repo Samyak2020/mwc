@@ -380,7 +380,7 @@ export function LayerStack({ items, header }: { items: StackItem[]; header?: Rea
                     i === active ? "bg-sky text-bg" : "text-fg/45 hover:text-fg"
                   }`}
                 >
-                  {String(i + 1).padStart(2, "0")}
+                  {String(i + 1)}
                 </span>
                 <span className={`hidden text-sm leading-[1.25] transition-colors duration-[var(--duration-base)] lg:block ${compact ? "mt-0.5" : "mt-1.5"} ${i === active ? "text-fg" : "text-fg/45"}`}>
                   {items[i].lead}

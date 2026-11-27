@@ -183,7 +183,7 @@ export function IndustryPanels() {
                         </div>
                         <a
                           href="#"
-                          className="cta btn flex items-center justify-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg lg:whitespace-nowrap"
+                          className="cta btn flex items-center justify-center gap-[9px] bg-sky px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg lg:whitespace-nowrap"
                         >
                           {industry.cta}
                           <Arrow />

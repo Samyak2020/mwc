@@ -21,7 +21,7 @@ export default function TransmissionDistributionPage() {
       <main>
         <StoryHero
           title={["Transmission, Distribution and","Substation Project Management"]}
-          band={["Transmission","Distribution","Substations","Service coordination","Field verification"]}
+          band={["Transmission","Distribution","Substations","Service Coordination","Field Verification"]}
         />
 
         <StoryIntro text="Service coordination is skilled field work: sizing transformers, deciding on underground conversions and scheduling line crews around builders and inspectors. MWC’s program is led by a manager who came up through utility service coordination. New coordinators follow a 90-day training plan with quality review, so they work to your standards and processes from the start." />
@@ -30,10 +30,10 @@ export default function TransmissionDistributionPage() {
           id="service-requests-heading"
           label="Service Requests Sized, Scheduled and Energized"
           points={[
-            { lead: "Field verification", text: "Coordinators complete 10 to 12 field walks a day and carry 60 to 120 active work orders each." },
-            { lead: "Technical sizing", text: "The serving transformer is located, conductors and transformers are sized for new load, and overhead-to-underground conversions are decided in the field." },
-            { lead: "Crew coordination", text: "Electricians, builders, designers, inspectors and line crews are scheduled around each request." },
-            { lead: "Quality review", text: "Supervision and quality checks take that load off utility supervisors." },
+            { lead: "Field Verification", text: "Coordinators complete 10 to 12 field walks a day and carry 60 to 120 active work orders each." },
+            { lead: "Technical Sizing", text: "The serving transformer is located, conductors and transformers are sized for new load, and overhead-to-underground conversions are decided in the field." },
+            { lead: "Crew Coordination", text: "Electricians, builders, designers, inspectors and line crews are scheduled around each request." },
+            { lead: "Quality Review", text: "Supervision and quality checks take that load off utility supervisors." },
           ]}
         />
 

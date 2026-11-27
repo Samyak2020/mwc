@@ -22,7 +22,7 @@ export default function UtilitiesPage() {
           title="Utility Project Management for Electric, Natural Gas and Water Utilities"
           intro="Utility project management, construction management and project controls for electric, natural gas and water utilities."
           scene={<UtilitiesSceneMinimal className="h-full w-full" />}
-          band={["Electric, gas and water", "Program management", "Permitting", "Project controls", "Service coordination"]}
+          band={["Electric, Gas and Water", "Program Management", "Permitting", "Project Controls", "Service Coordination"]}
         />
 
         <AboutQuote
@@ -41,22 +41,22 @@ export default function UtilitiesPage() {
           lead="MWC project managers, schedulers and construction managers join your team, work in your systems and are funded from the capital budget, not operations and maintenance:"
           items={[
             {
-              lead: "Procurement a year ahead",
+              lead: "Procurement a Year Ahead",
               stack: "procure",
               text: "Requests for proposals are standardized and run in the prior fiscal year, so contractors are ready to start in January.",
             },
             {
-              lead: "Permitting by jurisdiction",
+              lead: "Permitting by Jurisdiction",
               stack: "permit",
               text: "Schedules use permit and inspection durations specific to each town and county, and every submittal and inspection is managed.",
             },
             {
-              lead: "Integrated cost and schedule",
+              lead: "Integrated Cost and Schedule",
               stack: "schedule",
               text: "Schedules in Primavera P6 or Microsoft Project are tied to monthly forecasts and accruals, reported in dashboards your leadership and the commission can use.",
             },
             {
-              lead: "Your systems, not new ones",
+              lead: "Your Systems, Not New Ones",
               stack: "systems",
               text: "Work runs inside PowerPlan, Power BI, PowerClerk, Oracle Customer Care and Billing and Procore.",
             },
@@ -82,19 +82,19 @@ export default function UtilitiesPage() {
           heading={["Results Across Generation,", "Grid and Water"]}
           items={[
             {
-              lead: "Coal ash closure",
+              lead: "Coal Ash Closure",
               icon: "ashpond",
               text: "A nearly $500M obligation across two plants and two state regulators was packaged into a 10-year plan with correct cost shares for each co-owner.",
               link: { label: "See the Results", href: "/resources/after-action-reports/coal-ash-closure-program" },
             },
             {
-              lead: "Service coordination",
+              lead: "Service Coordination",
               icon: "service",
               text: "Service request times fell from 12 to 14 weeks to 6 to 8 weeks, with each coordinator carrying 60 to 120 active work orders.",
               link: { label: "See the Results", href: "/resources/after-action-reports/service-coordination-backlog" },
             },
             {
-              lead: "Water and storage",
+              lead: "Water and Storage",
               icon: "water",
               text: "Schedule updates on three 10-year programs moved from every other month to monthly, delivered on time.",
               link: { label: "See the Results", href: "/resources/after-action-reports/multi-agency-water-storage" },

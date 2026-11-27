@@ -127,7 +127,7 @@ export function ProjectTimeline({ id, heading, records }: { id: string; heading:
             <Terrain />
             <div className="shell relative py-14">
               <p className="text-sm font-semibold tracking-[0.02em] text-bg/70">
-                {String(i + 1).padStart(2, "0")} {r.stage}
+                {String(i + 1)} {r.stage}
               </p>
               <CaseScene icon={r.icon} ground={GROUNDS[i % GROUNDS.length]} tight className="mt-6 aspect-[4/3] w-full" />
               <div className="mt-6">
@@ -186,7 +186,7 @@ export function ProjectTimeline({ id, heading, records }: { id: string; heading:
                         <span
                           className={`text-sm leading-none font-semibold tabular-nums transition-opacity duration-[var(--duration-base)] ${i === active ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
                         >
-                          {String(i + 1).padStart(2, "0")} {r.stage}
+                          {String(i + 1)} {r.stage}
                         </span>
                       </button>
                     </li>

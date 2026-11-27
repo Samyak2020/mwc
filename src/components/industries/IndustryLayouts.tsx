@@ -28,7 +28,7 @@ function TextLink({ href, children, className = "" }: { href: string; children: 
   );
 }
 const outlineBtn =
-  "cta btn inline-flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg";
+  "cta btn inline-flex items-center gap-[9px] btn-dark bg-navy px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg";
 function Heading({ id, lines, className = "" }: { id?: string; lines: string[]; className?: string }) {
   return (
     <RevealHeading id={id} className={`display text-[36px] sm:text-[48px] ${className}`}>
@@ -72,7 +72,7 @@ export function CredentialPanel({ facts, link }: { facts: { label?: string; valu
           </h2>
           <a
             href={link.href}
-            className="cta btn flex items-center gap-[9px] border border-fg/40 bg-bg px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-fg"
+            className="cta btn flex items-center gap-[9px] bg-sky px-6 py-4 text-base leading-[1.1] font-semibold tracking-[-0.005em] text-bg"
           >
             {link.label}
             <Arrow />

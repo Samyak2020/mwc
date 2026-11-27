@@ -23,7 +23,7 @@ export default function CareersPage() {
           image="/careers-v2/hero.png"
           alt="MWC project team on site"
           titleClassName="text-[56px] leading-[0.85] sm:text-[96px] lg:fs-u-128"
-          band={["Careers at MWC", "Veteran-led", "Experience", "Strategy", "Modern mindset"]}
+          band={["Careers at MWC", "Veteran-Led", "Experience", "Strategy", "Modern Mindset"]}
         />
         <AboutQuote quote="Creative, reliable, and genuinely passionate about what they do." by="Customer" />
         <CareersPhotos />

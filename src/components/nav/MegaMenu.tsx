@@ -207,7 +207,7 @@ export function MenuContent({ menu }: { menu: MenuKey }) {
         ) : menu === "services" ? (
           <LinksPanel
             groups={serviceGroups}
-            viewAll={["/all-services", "View all services"]}
+            viewAll={["/all-services", "View All Services"]}
             widths={[304, 304]}
           />
         ) : menu === "projects" ? (
@@ -322,7 +322,7 @@ export function MobileMenu({
           className="mt-3 block py-2 text-base font-medium text-navy"
           onClick={onNavigate}
         >
-          View all services
+          View All Services
         </a>
       </Group>
       <Group title="Projects">

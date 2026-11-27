@@ -21,7 +21,7 @@ export default function PowerProducersPage() {
           title="Power Plant Consulting and Owner’s Representation for Power Producers"
           intro="Owner’s representative and construction management for independent power producers, developers and storage platforms."
           scene={<PowerSceneMinimal className="h-full w-full" />}
-          band={["Power producers", "Outage planning", "Sustaining capital", "Owner’s representation", "Return to service"]}
+          band={["Power Producers", "Outage Planning", "Sustaining Capital", "Owner’s Representation", "Return to Service"]}
         />
         <PowerProducersBody />
       </main>

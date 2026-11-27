@@ -5,6 +5,7 @@ import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { workstreams } from "@/components/comp2/Workstreams2";
 import { bladePath, buildScene, plotBounds, PLOTS, type Prim, type Scene, type ZoneId } from "@/components/field/scene";
 import { duration, ease, fieldJourney } from "@/lib/motion";
+import { StageDial, type DialApi } from "@/components/field/StageDial";
 
 // "Project Support Built Around Your Scope" as one isometric site (Figma
 // layout 614:4959). The section pins to the screen; the heading stays put,
@@ -129,7 +130,15 @@ const stages = workstreams.map((w, i) => ({ n: i + 1, title: w.title, descriptio
 
 /** `light`: the white version (comp 4): light faces, ink/navy lines, white scrims.
  *  `soft`: soft style on blueprint blue: pale gradient faces, white lines. */
-export function FieldJourney({ light = false, soft = false }: { light?: boolean; soft?: boolean } = {}) {
+/** `intro`: before the journey, the heading sits large and centred on the
+ *  page's white ground; then the blue opens out from behind it to fill the
+ *  screen (tall first, then wide, as the Power Generation panels do), the
+ *  heading settles into its corner and the site is revealed inside the blue. */
+const INTRO = 0.9; // extra pinned scroll for the intro, in screen heights
+const HEAD_LINES = ["Project Support", "Built Around Your Scope"];
+const HEAD_START = 2.4; // heading scale while centred (40px settled, 96px centred)
+
+export function FieldJourney({ light = false, soft = false, intro = false }: { light?: boolean; soft?: boolean; intro?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -138,6 +147,27 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
   const [ready, setReady] = useState(false);
   const reduce = useReducedMotion();
   const scene = useMemo(buildScene, []);
+  const dial = useRef<DialApi | null>(null);
+  const clipRef = useRef<HTMLDivElement>(null);
+  // the heading is drawn twice in the same place: in ink on the page and in
+  // white inside the blue, so each letter takes the colour of what's behind it
+  const headRef = useRef<HTMLHeadingElement>(null);
+  const inkRef = useRef<HTMLDivElement>(null);
+  const headLines = useRef<(HTMLSpanElement | null)[]>([]);
+  // the pinned scroll: the intro, then the journey
+  const total = fieldJourney.length + (intro ? INTRO : 0);
+  const introShare = intro ? INTRO / total : 0;
+  // scroll to a stage's held view (the dial's names are buttons)
+  const pick = (i: number) => {
+    const sec = sectionRef.current;
+    if (!sec) return;
+    const { enter, planToBuild, buildToOperate, exit } = fieldJourney.moves;
+    const holds = [(enter[1] + planToBuild[0]) / 2, (planToBuild[1] + buildToOperate[0]) / 2, (buildToOperate[1] + exit[0]) / 2, 0.97];
+    const y = sec.getBoundingClientRect().top + window.scrollY + (introShare + holds[i] * (1 - introShare)) * (sec.offsetHeight - window.innerHeight);
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(y);
+    else window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+  };
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
   const smooth = useSpring(scrollYProgress, fieldJourney.spring);
@@ -166,7 +196,72 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
     let views = makeViews(sticky.clientWidth, sticky.clientHeight);
     let lastStage = -1;
 
-    const apply = (raw: number) => {
+    // the heading's two places, measured without the intro transform:
+    // centred (scaled up, each line centred over the longest) and settled
+    let head = { dx: 0, dy: 0, s0: HEAD_START, shifts: [0, 0, 0] };
+    const measureHead = () => {
+      const h = headRef.current;
+      if (!h || !intro) return;
+      const prev = h.style.transform;
+      h.style.transform = "none";
+      const lines = headLines.current.slice(0, HEAD_LINES.length).map((l) => l?.offsetWidth ?? 0);
+      const box = sticky.getBoundingClientRect();
+      const r = h.getBoundingClientRect();
+      h.style.transform = prev;
+      const w = Math.max(...lines);
+      // as large as HEAD_START, but never wider than the screen less 16px a side
+      const s0 = Math.min(HEAD_START, (box.width - 32) / w);
+      head = {
+        dx: (box.width - w * s0) / 2 - (r.left - box.left),
+        dy: (box.height - r.height * s0) / 2 - (r.top - box.top),
+        s0,
+        shifts: lines.map((lw) => (w - lw) / 2),
+      };
+    };
+    measureHead();
+    const sec = sectionRef.current;
+
+    const showIntro = (t: number) => {
+      const clip = clipRef.current;
+      const h = headRef.current;
+      const inkH = inkRef.current?.querySelector("h2") as HTMLElement | null;
+      if (!clip || !h) return;
+      // the blue: grows tall from the middle first, then out to the edges
+      const kv = easeInOut(clamp01((t - 0.15) / 0.4));
+      const kh = easeInOut(clamp01((t - 0.4) / 0.6));
+      const side = 24 * (1 - kh);
+      const end = kh >= 1;
+      clip.style.clipPath = end ? "none" : `inset(${(50 * (1 - kv)).toFixed(3)}% ${side.toFixed(3)}% round ${(4 * (1 - kh)).toFixed(2)}px)`;
+      // the heading: centred and large, then into its corner
+      const sh = easeInOut(clamp01((t - 0.35) / 0.65));
+      const sc = head.s0 + (1 - head.s0) * sh;
+      // settled: no transform at all, so the type renders crisp rather than
+      // as a scaled bitmap
+      const tf =
+        sh >= 1 ? "" : `translate(${(head.dx * (1 - sh)).toFixed(1)}px, ${(head.dy * (1 - sh)).toFixed(1)}px) scale(${sc.toFixed(4)})`;
+      h.style.transform = tf;
+      if (inkH) inkH.style.transform = tf;
+      headLines.current.forEach((l, i) => {
+        if (l) l.style.transform = sh >= 1 ? "" : `translateX(${(head.shifts[i % HEAD_LINES.length] * (1 - sh)).toFixed(1)}px)`;
+      });
+      // the ink copy is only needed until the blue fills the screen
+      if (inkRef.current) inkRef.current.style.visibility = end ? "hidden" : "visible";
+      // the nav reads white ground until the blue reaches the top
+      if (sec) {
+        const theme = kh > 0.9 ? "dark" : "light";
+        if (sec.dataset.navTheme !== theme) {
+          sec.dataset.navTheme = theme;
+          if (theme === "dark" && soft) sec.setAttribute("data-nav-clear", "");
+          else sec.removeAttribute("data-nav-clear");
+          // the nav re-reads the page on scroll; the spring can settle after it stops
+          window.dispatchEvent(new Event("scroll"));
+        }
+      }
+    };
+
+    const apply = (whole: number) => {
+      if (intro) showIntro(reduce ? (whole < introShare / 2 ? 0 : 1) : clamp01(whole / introShare));
+      const raw = intro ? clamp01((whole - introShare) / (1 - introShare)) : whole;
       const st = stageAt(raw);
       if (st !== lastStage) {
         lastStage = st;
@@ -179,6 +274,8 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
       const e2 = seg(buildToOperate);
       const e3 = seg(exit);
       const pull = views.O.s * fieldJourney.midZoom;
+      // the dial: 0 at plan, 1 build, 2 operate, 3 decommission
+      dial.current?.(e1 + e2 + e3);
 
       const v =
         p <= enter[1]
@@ -219,6 +316,7 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
     const off = source.on("change", apply);
     const ro = new ResizeObserver(() => {
       views = makeViews(sticky.clientWidth, sticky.clientHeight);
+      measureHead();
       apply(source.get());
     });
     ro.observe(sticky);
@@ -226,7 +324,7 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
       off();
       ro.disconnect();
     };
-  }, [reduce, scene, scrollYProgress, smooth]);
+  }, [reduce, scene, scrollYProgress, smooth, intro, introShare, soft]);
 
   const s = stages[stage];
   const swap = {
@@ -238,14 +336,42 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
   return (
     <section
       ref={sectionRef}
-      data-nav-theme={light ? "light" : "dark"}
+      data-nav-theme={light || intro ? "light" : "dark"}
       // soft: full-bleed; the nav stays transparent over it, as on the hero
-      data-nav-clear={soft ? "" : undefined}
+      data-nav-clear={soft && !intro ? "" : undefined}
       aria-labelledby="field-heading"
-      className={`relative ${light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : soft ? "bg-[#0a48a6] text-bg [--fj-scrim:10_72_166]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
-      style={{ height: `calc(100svh * ${1 + fieldJourney.length})` }}
+      className={`relative ${intro ? "bg-bg text-bg [--fj-scrim:10_72_166]" : light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : soft ? "bg-[#0a48a6] text-bg [--fj-scrim:10_72_166]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
+      style={{ height: `calc(100svh * ${1 + total})` }}
     >
       <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden">
+        {/* intro: the heading in ink on the white page, under the blue */}
+        {intro && (
+          <div ref={inkRef} aria-hidden className="shell pointer-events-none absolute inset-0 h-full">
+            <h2
+              className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[40px] text-fg"
+            >
+              {HEAD_LINES.map((l, i) => (
+                <span
+                  key={l}
+                  ref={(el) => {
+                    headLines.current[i + HEAD_LINES.length] = el;
+                  }}
+                  className={intro ? "block sm:w-max" : ""}
+                >
+                  {l}
+                  {!intro && i < HEAD_LINES.length - 1 ? " " : ""}
+                </span>
+              ))}
+            </h2>
+          </div>
+        )}
+
+        {/* everything sits in the blue, which the intro opens out */}
+        <div
+          ref={clipRef}
+          className={`absolute inset-0 ${light ? "bg-bg text-fg [--fj-scrim:251_252_255]" : soft ? "bg-[#0a48a6] text-bg [--fj-scrim:10_72_166]" : "bg-night text-bg [--fj-scrim:0_6_17]"}`}
+          style={intro ? { clipPath: "inset(50% 24% round 4px)" } : undefined}
+        >
         {/* the site: fills the whole background */}
         <svg
           ref={svgRef}
@@ -285,18 +411,34 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
           <div className="absolute inset-x-0 top-0 h-[34%] bg-[linear-gradient(180deg,rgb(var(--fj-scrim)/0.9),rgb(var(--fj-scrim)/0))]" />
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.9),rgb(var(--fj-scrim)/0))]" />
           <div className="absolute inset-x-0 bottom-0 h-[52%] bg-[linear-gradient(0deg,rgb(var(--fj-scrim)/0.92)_35%,rgb(var(--fj-scrim)/0))] lg:hidden" />
-          <div className="absolute inset-y-0 left-0 hidden w-[36%] bg-[linear-gradient(90deg,rgb(var(--fj-scrim)/0.88),rgb(var(--fj-scrim)/0))] lg:block" />
-          {/* (no right-hand fade: the frosted details panel, 50%, keeps that copy readable) */}
+          <div className="absolute inset-y-0 left-0 hidden w-[44%] bg-[linear-gradient(90deg,rgb(var(--fj-scrim)/0.92)_45%,rgb(var(--fj-scrim)/0))] lg:block" />
+          {/* (no right-hand fade: the details panel keeps that copy readable) */}
         </div>
 
+        {/* desktop: the stage names on a circular ruler */}
+        <StageDial stages={stages} api={dial} onPick={pick} />
+
         <div className="shell pointer-events-none h-full">
-          {/* sticky heading: never changes. 64px, sitting 48px below the nav
-              bar (nav: 12px from the top, 66 tall) while the section is pinned */}
+          {/* sticky heading: 64px, 48px below the nav bar (nav: 12px from the
+              top, 66 tall) while the section is pinned; with the intro it
+              starts large and centred and settles here */}
           <h2
+            ref={headRef}
             id="field-heading"
-            className="display absolute top-24 left-4 max-w-[683px] text-[36px] sm:text-[48px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[64px]"
+            className="display absolute top-24 left-4 max-w-[683px] origin-top-left text-[32px] sm:text-[40px] lg:top-[calc(12px+var(--u)*66+48px)] lg:left-u-32 lg:w-u-683 lg:text-[40px]"
           >
-            Project Support Built Around Your Scope
+            {HEAD_LINES.map((l, i) => (
+              <span
+                key={l}
+                ref={(el) => {
+                  headLines.current[i] = el;
+                }}
+                className={intro ? "block sm:w-max" : ""}
+              >
+                {l}
+                {!intro && i < HEAD_LINES.length - 1 ? " " : ""}
+              </span>
+            ))}
           </h2>
 
           {/* left: number + workstream */}
@@ -304,7 +446,7 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
             <motion.div
               key={`title-${stage}`}
               {...swap}
-              className="absolute top-[54%] left-4 flex items-baseline gap-3 lg:top-[41.6%] lg:left-u-32 lg:w-u-378 lg:flex-col lg:items-start lg:gap-[calc(var(--u)*30)]"
+              className="absolute top-[54%] left-4 flex items-baseline gap-3 lg:sr-only"
             >
               <p aria-hidden className="display text-[28px] lg:fs-u-40">
                 {s.n}.
@@ -320,19 +462,30 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
             <motion.div
               key={`body-${stage}`}
               {...swap}
-              className={`pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 p-5 backdrop-blur-md lg:inset-x-auto lg:top-[calc(41.6%+40px)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
-                light ? "bg-white/50" : soft ? "bg-[#073d8f]/50" : "bg-night/50"
+              className={`pointer-events-auto absolute inset-x-4 top-[calc(54%+4.75rem)] flex flex-col gap-8 rounded-[4px] p-5 lg:inset-x-auto lg:top-auto lg:bottom-[calc(var(--u)*104)] lg:left-[calc(var(--u)*963-24px)] lg:w-[calc(var(--u)*445+48px)] lg:p-6 ${
+                light ? "bg-white" : soft ? "bg-[#073d8f]" : "bg-night"
               }`}
             >
               <p className="text-[15px] leading-[1.5] font-medium tracking-[-0.005em] lg:text-base">{s.description}</p>
-              <ul className="hidden flex-col gap-2 lg:flex">
+              {/* the services as menu rows, as in the nav: ruled, each with a
+                  chevron that nudges toward its page on hover */}
+              <ul className="hidden flex-col border-t border-bg/20 lg:flex">
                 {s.services.map((name) => (
-                  <li key={name}>
+                  <li key={name} className="border-b border-bg/20">
                     <a
                       href="#"
-                      className="block py-1 text-base leading-[1.3] font-bold tracking-[-0.005em] transition-colors hover:text-sky"
+                      className="group/link flex min-h-9 items-center justify-between gap-4 py-1.5 text-base leading-[1.25] font-medium decoration-bg/50 underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
                     >
                       {name}
+                      <svg
+                        aria-hidden
+                        width="6"
+                        height="10"
+                        viewBox="0 0 6 10"
+                        className="shrink-0 opacity-70 transition-[opacity,transform] duration-[var(--duration-base)] group-hover/link:translate-x-1 group-hover/link:opacity-100 group-focus-visible/link:translate-x-1 group-focus-visible/link:opacity-100"
+                      >
+                        <path d="M1 1l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </a>
                   </li>
                 ))}
@@ -340,6 +493,8 @@ export function FieldJourney({ light = false, soft = false }: { light?: boolean;
             </motion.div>
           </AnimatePresence>
         </div>
+        </div>
+
       </div>
     </section>
   );
